@@ -1,0 +1,77 @@
+@import '../../styles/settings';
+@import '../../styles/tools';
+
+
+@module: login;
+
+.@{module} {
+
+  display: grid;
+  height: 100vh;
+  justify-content: center;
+  /* align-self: center; */
+  align-items: center;
+  font-family: 'DM Sans', 'Open Sans', 'Segoe UI', sans-serif !important;
+
+  &__titre {
+    color: @dark-color;
+    font-weight: 500;
+    line-height: 1.1;
+  }
+  &__form-control{
+  box-shadow: none;
+    font-size: 1em ;
+    display: block;
+    width: 100%;
+    height: 35px;
+    padding: 6px 12px;
+    line-height: 1.42857;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+  }
+  &__form-group {
+    display: flex;
+    flex-direction: column;
+    width: 33%;
+    max-width: 33%;
+    flex: 0 0 33%;
+  }
+  &__label {
+    font-weight: 400;
+    margin-bottom: 5px;
+  }
+  &__card {
+    max-width: 310px;
+  }
+
+  &dsf {
+    max-width: 310px;
+  }
+  &__button{
+    &:hover{
+      cursor: pointer;
+      background: @primary-dark-color;
+    }
+background: @primary-color;
+    margin-top: 1.4rem;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    /* height: 100%; */
+    font-weight: 500;
+    font-size: 19px;
+    width: 16%;
+    max-width: 16%;
+    color: #ffffffff;
+    flex: 0 0 16%;
+
+  }
+  &__containerForm {
+    width: 970px;
+    .flex(@direction: column,@align: center)
+  }
+
+}

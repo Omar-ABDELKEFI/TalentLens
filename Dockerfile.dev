@@ -1,0 +1,31 @@
+FROM node:alpine
+
+
+#set the working folder for all other commands
+WORKDIR /app
+
+
+RUN node -v
+RUN apk add  libc6-compat
+RUN apk add  openssh-client
+RUN apk add  git
+
+#configuration ssh
+ADD .ssh/id_rsa /root/.ssh/id_rsa
+RUN chmod 600 /root/.ssh/id_rsa
+RUN echo "StrictHostKeyChecking no " > /root/.ssh/config
+
+
+COPY package.json .
+RUN npm install -g npm@7.19.0
+RUN npm install
+
+ADD . .
+RUN ls -la
+RUN chmod +x env.sh
+RUN npm run env
+RUN cp env-config.js ./public
+
+#determines the command that will be executed when the container starts
+CMD [ "npm", "run", "start"]
+

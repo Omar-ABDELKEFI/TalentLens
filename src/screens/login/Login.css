@@ -1,0 +1,33 @@
+.login {
+  display: grid;
+  height: 100vh;
+  justify-content: center;
+  /* align-self: center; */
+  align-items: center;
+  font-family: 'DM Sans', 'Open Sans', 'Segoe UI', sans-serif;
+}
+.login__titre {
+  font-weight: 500;
+  line-height: 1.1;
+}
+.login__form-group {
+  display: flex;
+  flex-direction: column;
+  width: 33%;
+  max-width: 33%;
+  flex: 0 0 33%;
+}
+.login__card {
+  max-width: 310px;
+}
+.logindsf {
+  max-width: 310px;
+}
+.login__containerForm {
+  width: 970px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+/*# sourceMappingURL=Login.css.map */
