@@ -1,48 +1,35 @@
-FROM node:13.7.0 as build-stage
+FROM node:alpine
 
+# Create and define the node_modules's cache directory.
 
 WORKDIR /app
 
-RUN apt-get -y install openssh-client
+RUN node -v
+RUN apk add  libc6-compat
+RUN apk add  openssh-client
+RUN apk add  git
+
+#configuration ssh
 ADD .ssh/id_rsa /root/.ssh/id_rsa
 RUN chmod 600 /root/.ssh/id_rsa
-
-
 RUN echo "StrictHostKeyChecking no " > /root/.ssh/config
-
-
 COPY package.json ./
-RUN npm -v
-RUN node -v
-RUN npm install
-COPY . .
-RUN npm run build
+COPY package-lock.json ./
+RUN npm ci
 
+#set the working folder for all other commands
 
-
-# production stage
-FROM nginx:stable-alpine as production-stage
-COPY --from=build-stage /app/public/ /usr/share/nginx/html/
-COPY --from=build-stage /app/build/ /usr/share/nginx/html/
-COPY  configs/certs/ /usr/local/etc/nginx/
-
-COPY  nginx/nginx.conf /etc/nginx/conf.d/default.conf
-
-
-#CMD ["nginx", "-g", "daemon off;"]
-EXPOSE 80
-
-# Copy .env file and shell script to container
-WORKDIR /usr/share/nginx/html
-COPY ./env.sh .
-COPY .env .
-
+ADD . .
 RUN ls -la
-
-# Make our shell script executable
 RUN chmod +x env.sh
-RUN ls -la
-RUN nginx -v
+RUN npm run env
+RUN cp env-config.js ./public
+#RUN cp -R /app/node_modules/* /cache/node_modules
 
-# Start Nginx server
-CMD ["/bin/sh", "-c", "/usr/share/nginx/html/env.sh && nginx -g \"daemon off;\""]
+
+
+
+#determines the command that will be executed when the container starts
+CMD [ "npm", "run", "start"]
+#CMD ["/bin/sh","docker cp front-app:/app/node_modules /home/oabdelkefi/htdocs/front-tekab-test/ && ls -la ./node-modules && npm run start"]
+#CMD ["/bin/sh", "-c", "ls -la /app/node_modules && ls -la /app/node_modules/ &&  cp -R /cache/node_modules/* /app/node_modules/ && ls -la /app/node_modules/ && pwd && npm run start"]

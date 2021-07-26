@@ -1,19 +1,15 @@
-version: '3.7'
-
+version: "3"
 services:
-  web:
+  web-dev:
     build:
       context: .
       dockerfile: Dockerfile
-    image: react_antd
-    container_name: react_antd
     ports:
-      - "8080:8080"
-    networks:
-      - ionnet
+      - "3000:3000"
+    volumes:
+      - ./src:/app/src
     environment:
       - CHOKIDAR_USEPOLLING=true
-networks:
-  ionnet:
-    external: true
-    name: ionnet
+    container_name: front-app
+
+
