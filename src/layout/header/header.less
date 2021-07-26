@@ -1,0 +1,62 @@
+@import '../../styles/settings';
+@import '../../styles/tools';
+
+@module: header;
+
+.@{module} {
+  &__container {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    background-color: #016fad;
+    color: white;
+    align-items: center;
+    height: 62px;
+  }
+  &__element {
+    display: flex;
+  }
+  &__second-element {
+    display: flex;
+    align-items: center;
+  }
+  &__element > span {
+    padding: 5px 15px;
+    font-size: 15px;
+    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+  }
+  &__caret {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-top: 4px dashed;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+    margin-left: 6px;
+    margin-top: 5px;
+  }
+  &__dropdown-btn {
+    display: flex;
+    align-items: center;
+  }
+  &__dropdown {
+    color: white;
+    padding: 5px;
+    cursor: pointer;
+  }
+  &__dropdown-content {
+    color: black;
+    padding: 15px;
+    background-color: #dcdcdc;
+    display: none;
+    position: absolute;
+    height: 60px;
+    top: 61px;
+  }
+  &__dropdown:hover .header__dropdown-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+  }
+}

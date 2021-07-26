@@ -3,11 +3,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 import Login from "./screens/login/Login";
+import Header from "@layout/header/header";
 
 ReactDOM.render(
   <React.StrictMode>
-
-    <Login />
+    <Header />
+    {/*<Login />*/}
   </React.StrictMode>,
   document.getElementById('root')
 );
