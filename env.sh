@@ -1,4 +1,6 @@
 #!/bin/sh
+
+cp -r /cache/node_modules/. /app/node_modules/
 echo "window.process={}"> ./env-config.js
 #printenv > .env
 echo "window.process.env  = {" >> ./env-config.js
@@ -10,3 +12,7 @@ echo "}" >> ./env-config.js
 
 sed -i 's/"true"/true/' ./env-config.js
 sed -i 's/"false"/false/' ./env-config.js
+
+
+
+exec npm start

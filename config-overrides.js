@@ -25,7 +25,7 @@ module.exports = override(
         style: true,
     }),
     addLessLoader({
-        paths: ['./src/styles', './node_modules'],
+        paths: ['./src/styles', './node_modules','~antd/dist'],
         javascriptEnabled: true,
         modifyVars: {
             '@dark-color': 'rgb(33, 37, 41)',
