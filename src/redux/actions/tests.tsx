@@ -88,35 +88,35 @@ export function updateTest(testId: any, question: any) {
     }
 }
 
-export function add_question(question: any) {
+export function create_candidate(candidate:any) {
     return (dispatch: any) => {
-        dispatch(request(question));
+        dispatch(request(candidate));
 
-        service.candidate.candidateCreate(question)
+        service.candidate.candidateCreate(candidate)
             .then(
                 (res: any) => {
-                    dispatch(success(question));
+                    dispatch(success(candidate));
                     console.log(res, "res")
 
 
                 },
                 (res: any) => {
-                    dispatch(failure(res.error));
-                    console.log(res.error)
+                    dispatch(failure(res.error.toString()));
+                    console.log(res.error.toString())
                 }
             );
     };
 
-    function request(question: any) {
-        return {type: testConstants.ADD_QUESTION_REQUEST, question: question};
+    function request(candidate: any) {
+        return {type: testConstants.CREATE_CANDIDATE_REQUEST, candidate: candidate};
     }
 
-    function success(question: any) {
-        return {type: testConstants.ADD_QUESTION_SUCCESS, question: question}
+    function success(candidate: any) {
+        return {type: testConstants.CREATE_CANDIDATE_SUCCESS, candidate: candidate}
     }
 
     function failure(error: any) {
-        return {type: testConstants.ADD_QUESTION_FAILURE, error}
+        return {type: testConstants.CREATE_CANDIDATE_FAILURE, error}
     }
 }
 
