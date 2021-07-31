@@ -1,4 +1,3 @@
-import { Dispatch } from 'redux';
 import React from "react";
 import service from "../../service/test-api";
 import {history} from "@redux/store";
@@ -10,25 +9,32 @@ export const userConstants = {
 };
 
 
-
-export function login(login:any, from:any) {
-    return (dispatch:any) => {
+export function login(login: any, from: any) {
+    return (dispatch: any) => {
         dispatch(request(login.email));
 
         service.login.loginCreate(login)
             .then(
-                (login:any) => {
+                (login: any) => {
                     dispatch(success(login));
                     history.push("/my-tests")
 
                 },
-                (error:any) => {
+                (error: any) => {
                     dispatch(failure(error.toString()));
                 }
             );
     };
 
-    function request(user:any) { return { type: userConstants.LOGIN_REQUEST, user } }
-    function success(user:any) { return { type: userConstants.LOGIN_SUCCESS, user } }
-    function failure(error:any) { return { type: userConstants.LOGIN_FAILURE, error } }
+    function request(user: any) {
+        return {type: userConstants.LOGIN_REQUEST, user}
+    }
+
+    function success(user: any) {
+        return {type: userConstants.LOGIN_SUCCESS, user}
+    }
+
+    function failure(error: any) {
+        return {type: userConstants.LOGIN_FAILURE, error}
+    }
 }

@@ -1,15 +1,33 @@
-import React, {useState} from 'react';
-import {Row, Col, Slider, InputNumber, Button} from 'antd'
-
-
+import React, {ChangeEvent, useState} from 'react';
+import {Row, Col, Slider, InputNumber, Button, Input,Modal} from 'antd'
+import { useDispatch, useSelector } from 'react-redux';
+import {actionTest} from "@redux/actions";
+import {useParams} from "react-router-dom";
 function AddCandidates() {
-    const [PassingScore, setPassingScore] = useState(1)
-    const [showFinalScore, setShowFinalScore] = useState(true)
-
+    const [PassingScore, setPassingScore] = useState(1);
+    const [valuesCandidate, setValuesCandidate] = useState<any>([])
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const dispatch=useDispatch()
+    let { idTest } = useParams();
     const onChangePassingScore = (value: any) => {
         console.log("passing score", PassingScore)
         setPassingScore(value)
     }
+    const onHandelChangeInput=(e:ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>)=>{
+        setValuesCandidate([{[String(e.target.name)]:e.target.value,"test":[{id:Number(idTest)}]}])
+    }
+    const showModal = () => {
+        setIsModalVisible(true);
+    };
+
+    const handleOk = () => {
+        dispatch(actionTest.create_candidate(valuesCandidate))
+        setIsModalVisible(false);
+    };
+
+    const handleCancel = () => {
+        setIsModalVisible(false);
+    };
     return (
         <>
             <Row justify="space-between">
@@ -49,9 +67,11 @@ function AddCandidates() {
 
                 <Col>
                     <div>
-                        <Button type="primary" style={{background: "#28a745", borderColor: "#28a745"}}>Primary
-                            Button</Button>
+                        <Button type="primary" style={{background: "#28a745", borderColor: "#28a745"}} onClick={showModal}>add candidate</Button>
                     </div>
+                    <Modal title="add candidate" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+                        <span>Email candidate</span><Input name="email" onChange={onHandelChangeInput}/>
+                    </Modal>
                 </Col>
             </Row>
 

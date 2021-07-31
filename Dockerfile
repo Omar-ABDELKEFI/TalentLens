@@ -15,7 +15,7 @@ RUN chmod 600 /root/.ssh/id_ed25519
 RUN echo "StrictHostKeyChecking no " > /root/.ssh/config
 COPY package.json ./
 COPY package-lock.json ./
-RUN npm ci
+RUN npm i
 
 #set the working folder for all other commands
 

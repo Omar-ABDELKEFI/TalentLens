@@ -3,16 +3,16 @@ import service from '../../service/test-api';
 import './Login.less';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import * as userActions  from '../../redux/actions/index';
+import {actionLogin}  from '../../redux/actions/index';
+import {log} from "util";
 function Login() {
     const [login, setLogin] = useState({email: "", password: ""})
-    const [submitted, setSubmitted] = useState(false);
     const loggingIn = useSelector((state:any) => state.authentication.loggingIn);
     const dispatch = useDispatch();
     const handleSubmit = (e: React.SyntheticEvent) => {
         e.preventDefault()
         const {from}={from:{pathname:"/"}}
-         dispatch(userActions.login(login,from))
+         dispatch(actionLogin.login(login,from))
     }
     return (
         <div className="login" onSubmit={handleSubmit}>
@@ -22,7 +22,8 @@ function Login() {
                 <div className="login__form-group">
                     <label className="login__label">Email address</label>
                     <input type="email" className="login__form-control" placeholder="Enter email" value={login.email}
-                           onChange={event => setLogin({...login, email: event.target.value })}/>
+                           onChange={event => {setLogin({...login, email: event.target.value })
+                               console.log(login)}}/>
                 </div>
 
                 <div className="login__form-group">
