@@ -7,11 +7,15 @@ import Settings from "@components/cards_create_test/Settings/Settings";
 import AddCandidates from "../../shared/components/cards_create_test/AddCandidates/AddCandidates"
 import AddQuestions from "../../shared/components/cards_create_test/AddQuestions/AddQuestions"
 import Header from "@layout/header/header";
+import AddTestQuestions from "../addTestQuestions/AddTestQuestions";
 function CreateTest() {
     const {TabPane}=Tabs
     const { Content } = Layout;
     const [login, setLogin] = useState({email: "", password: ""})
-    let { idTest } = useParams();
+    const [showQuestionList,setShowQuestionList] = useState(false)
+    const handleAddClick = () => {
+        setShowQuestionList(!showQuestionList)
+    }
     return (
 
             <Layout style={{height:"100%"}} >
@@ -23,7 +27,7 @@ function CreateTest() {
                     <AddCandidates/>
                 </TabPane>
                 <TabPane tab="Tab Title 2" key="2">
-                    <AddQuestions/>
+                    {showQuestionList ? <AddTestQuestions/> : <AddQuestions handleAddClick={handleAddClick}/> }
                 </TabPane>
                 <TabPane tab="Tab Title 3" key="3">
                     <Settings/>

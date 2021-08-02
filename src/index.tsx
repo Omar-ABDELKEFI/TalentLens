@@ -1,11 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Routes from './configs/routes'
-
-import Login from "./screens/login/Login";
-import CreateTest from "./screens/createTest/CreateTest";
-import AddCandidates from "@components/cards_create_test/AddCandidates/AddCandidates";
+import Header from '@layout/header/header';
+import Question from './screens/question/Question';
+import Routes from './configs/routes';
 
 ReactDOM.render(<Routes />, document.getElementById('root'));
 

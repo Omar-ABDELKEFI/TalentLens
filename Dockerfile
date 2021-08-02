@@ -10,8 +10,8 @@ RUN apk add  openssh-client
 RUN apk add  git
 
 #configuration ssh
-ADD .ssh/id_ed25519 /root/.ssh/id_ed25519
-RUN chmod 600 /root/.ssh/id_ed25519
+ADD .ssh/id_rsa /root/.ssh/id_rsa
+RUN chmod 600 /root/.ssh/id_rsa
 RUN echo "StrictHostKeyChecking no " > /root/.ssh/config
 COPY package.json ./
 COPY package-lock.json ./

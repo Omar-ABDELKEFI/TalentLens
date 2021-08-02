@@ -48,7 +48,6 @@ export function CreateTest(state = {}, action: any) {
                 ...state,
                 error_add_candidate: action.error
             }
-
         default:
             return state
     }

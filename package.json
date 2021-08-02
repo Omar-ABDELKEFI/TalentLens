@@ -19,7 +19,8 @@
     "eject": "react-app-rewired eject"
   },
   "dependencies": {
-    "@api/test-api-provider": "git+ssh://git@github.com:tekab-dev/service-tekab-test.git#main",
+    "@ckeditor/ckeditor5-build-classic": "^29.0.0",
+    "@ckeditor/ckeditor5-react": "^3.0.2",
     "@types/history": "^4.7.3",
     "@types/jest": "^24.0.10",
     "@types/node": "^11.10.5",
@@ -30,6 +31,7 @@
     "@types/redux": "^3.6.0",
     "antd": "4.16.1",
     "axios": "^0.18.0",
+    "ckeditor4-react": "^2.0.0",
     "connected-react-router": "^6.5.2",
     "history": "^4.9.0",
     "i18next": "17.0.0",

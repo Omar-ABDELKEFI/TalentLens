@@ -1,0 +1,61 @@
+@import '../../styles/settings';
+@import '../../styles/tools';
+
+
+@module: question;
+
+.@{module} {
+
+  &__main-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 80%;
+  }
+
+  &__title {
+    color: rgb(33, 37, 41);
+    font-family: "DM Sans", "Open Sans", "Segoe UI", sans-serif;
+    font-size: 32px;
+    margin: 25px 0;
+    width: 100%;
+
+  }
+
+  &__choices {
+    display: flex;
+    margin-bottom: 15px;
+  }
+
+  &__choices-checkbox {
+    background-color: #eeeeee;
+    padding: 0 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgb(217, 217, 217);
+    border-right: none;
+  }
+  &__choices-icon{
+    background-color: #eeeeee;
+    padding: 0 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgb(217, 217, 217);
+    border-left: none;
+  }
+  &__choices-icon:hover {
+   cursor: pointer;
+  }
+  &__add-skill {
+    display: flex;
+  }
+
+}
