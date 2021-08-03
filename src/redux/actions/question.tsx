@@ -1,5 +1,5 @@
 import service from '../../service/test-api';
-
+// question action types
 export const questionsConstants = {
   CREATE_QUESTION_REQUEST: 'CREATE_QUESTION_REQUEST',
   CREATE_QUESTION_SUCCESS: 'CREATE_QUESTION_SUCCESS',
@@ -17,7 +17,7 @@ export const questionsConstants = {
   REMOVE_TEST_QUESTION_SUCCESS: 'REMOVE_TEST_QUESTION_SUCCESS',
   REMOVE_TEST_QUESTION_FAILURE: 'REMOVE_TEST_QUESTION_FAILURE',
 };
-
+// action create question
 export function createQuestion(question: any) {
   return (dispatch: any) => {
     dispatch(request());
@@ -44,6 +44,7 @@ export function createQuestion(question: any) {
     return { type: questionsConstants.CREATE_QUESTION_FAILURE, error: error };
   }
 }
+//action get  questions
 export function getQuestions() {
   return (dispatch: any) => {
     dispatch(request());
@@ -67,7 +68,7 @@ export function getQuestions() {
     return { type: questionsConstants.FETCH_QUESTIONS_FAILURE, error: error };
   }
 }
-
+//action add questions to test
 export function addTestQuestions(question_id : number, test_id : string) {
   return (dispatch: any) => {
     dispatch(request());
@@ -95,6 +96,7 @@ export function addTestQuestions(question_id : number, test_id : string) {
     return {type: questionsConstants.CREATE_TEST_QUESTION_FAILURE, error}
   }
 }
+// action remove question from test
 export function removeTestQuestions(id : string, questionId : any ) {
   return (dispatch: any) => {
     dispatch(request());

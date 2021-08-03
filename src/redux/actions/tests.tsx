@@ -2,7 +2,8 @@ import {Dispatch} from 'redux';
 import React from "react";
 import service from "../../service/test-api";
 import {history} from "@redux/store";
-
+import {ModelsCandidate, ModelsTest} from "../../myApi";
+// action test types
 export const testConstants = {
     CREATE_TEST_REQUEST: 'CREATE_TEST_REQUEST',
     CREATE_TEST_SUCCESS: 'CREATE_TEST_SUCCESS',
@@ -26,98 +27,100 @@ export const testConstants = {
 
 }
 
-
+//action create test
 export function createTest() {
     return (dispatch: any) => {
-        dispatch(request());
+        dispatch(request(true));
 
         service.myTests.myTestsCreate({}) // id create automaticly
             .then(
                 (res: any) => {
-                    dispatch(success());
+                    dispatch(success(false));
                     console.log(res, "res")
                     history.push(`/my-tests/${res.data.test.ID}`)
 
                 },
-                (error: any) => {
-                    dispatch(failure(error.toString()));
+                (res: any) => {
+                    dispatch(failure(res.error.error.toString(),false));
                 }
             );
     };
 
-    function request() {
-        return {type: testConstants.CREATE_TEST_REQUEST}
+    function request(loading:boolean) {
+        return {type: testConstants.CREATE_TEST_REQUEST,loading}
     }
 
-    function success() {
-        return {type: testConstants.CREATE_TEST_SUCCESS}
+    function success(loading:boolean) {
+        return {type: testConstants.CREATE_TEST_SUCCESS,loading}
     }
 
-    function failure(error: any) {
-        return {type: testConstants.CREATE_TEST_FAILURE, error}
+    function failure(error: string,loading:boolean) {
+        return {type: testConstants.CREATE_TEST_FAILURE, error,loading}
     }
 }
 
-export function updateTest(testId: any, question: any) {
+//action update test
+export function updateTest(testId: number, question: ModelsTest) {
     return (dispatch: any) => {
-        dispatch(request(question.name));
+        dispatch(request(true));
 
         service.myTests.updateTest(testId, question)
             .then(
                 (res: any) => {
-                    dispatch(success(question));
+                    dispatch(success(question,true));
                     console.log(res, "res")
 
 
                 },
-                (error: any) => {
-                    dispatch(failure(error.toString()));
+                (res: any) => {
+                    dispatch(failure(res.error.error.toString(),false));
                 }
             );
     };
 
-    function request(name: any) {
-        return {type: testConstants.CREATE_TEST_REQUEST, question: name};
+    function request(loading: boolean) {
+        return {type: testConstants.CREATE_TEST_REQUEST, loading};
     }
 
-    function success(question: any) {
-        return {type: testConstants.CREATE_TEST_SUCCESS, question: question}
+    function success(question: ModelsTest,loading: boolean) {
+        return {type: testConstants.CREATE_TEST_SUCCESS, question: question,loading}
     }
 
-    function failure(error: any) {
-        return {type: testConstants.CREATE_TEST_FAILURE, error}
+    function failure(error: string,loading: boolean) {
+        return {type: testConstants.CREATE_TEST_FAILURE, error,loading}
     }
 }
 
-export function create_candidate(candidate:any) {
+//action create candidate
+export function create_candidate(candidate:ModelsCandidate) {
     return (dispatch: any) => {
-        dispatch(request(candidate));
+        dispatch(request(true));
 
         service.candidate.candidateCreate(candidate)
             .then(
-                (res: any) => {
-                    dispatch(success(candidate));
-                    console.log(res, "res")
+                () => {
+                    dispatch(success(candidate,false));
+
 
 
                 },
                 (res: any) => {
-                    dispatch(failure(res.error.toString()));
-                    console.log(res.error.toString())
+                    dispatch(failure(res.error.error.toString(),true));
+
                 }
             );
     };
 
-    function request(candidate: any) {
-        return {type: testConstants.CREATE_CANDIDATE_REQUEST, candidate: candidate};
+    function request(loading: boolean) {
+        return {type: testConstants.CREATE_CANDIDATE_REQUEST, loading};
     }
 
-    function success(candidate: any) {
-        return {type: testConstants.CREATE_CANDIDATE_SUCCESS, candidate: candidate}
+    function success(candidate: ModelsCandidate,loading: boolean) {
+        return {type: testConstants.CREATE_CANDIDATE_SUCCESS, candidate: candidate,loading}
     }
 
-    function failure(error: any) {
-        return {type: testConstants.CREATE_CANDIDATE_FAILURE, error}
+    function failure(error: string,loading: boolean) {
+        return {type: testConstants.CREATE_CANDIDATE_FAILURE, error,loading}
     }
 }
 /*export function addTestQuestions(question_id : number, test_id : string) {

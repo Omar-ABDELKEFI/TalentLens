@@ -1,39 +1,96 @@
-import React, {useState} from 'react';
-import service from '../../service/test-api';
+import React, {useState, useEffect} from 'react';
 import './Login.less';
-import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import {actionLogin}  from '../../redux/actions/index';
-import {log} from "util";
+import {useDispatch, useSelector} from 'react-redux';
+import {actionLogin} from '../../redux/actions/index';
+import errorsTypes from '@utils/errorsTypes.json'
+import {constTypes} from '@utils/constTypesError'
+import {Form, Input, Button, Alert, notification} from "antd";
+import {IErrortypes} from "@utils/types";
+import {NotificationApi} from "antd/lib/notification/index"
+import {ArgsProps} from "antd/lib/notification";
+import {ConfigProps} from "antd/lib/notification";
+import {ModelsLoginInput} from "../../myApi"
 function Login() {
-    const [login, setLogin] = useState({email: "", password: ""})
-    const loggingIn = useSelector((state:any) => state.authentication.loggingIn);
+
+    const [login, setLogin] = useState<ModelsLoginInput>({email: "", password: ""})
+    const error = useSelector((state: any) => state.authentication.error);
     const dispatch = useDispatch();
     const handleSubmit = (e: React.SyntheticEvent) => {
-        e.preventDefault()
-        const {from}={from:{pathname:"/"}}
-         dispatch(actionLogin.login(login,from))
+        dispatch(actionLogin.login(login))
+
     }
+    // show notification only when update error
+    useEffect(() => {
+            if (error && error !== errorsTypes.invalid_login && constTypes.hasOwnProperty(error)) {
+                openNotificationWithIcon("error", constTypes[error as keyof IErrortypes])
+            }
+        }
+        , [error])
+    const openNotificationWithIcon = (type: string, description: string) => {
+        notification[type as keyof NotificationApi]({
+            message: 'error',
+            description: description,
+        } as ArgsProps & string & ConfigProps);
+    };
+
     return (
-        <div className="login" onSubmit={handleSubmit}>
-            <form className="login__containerForm">
+        <div className="login">
+            <Form className="login__containerForm"
+                  labelCol={{
+                      span: 10,
+                  }}
+                  colon={false}
+                  labelAlign="left"
+                  onFinish={handleSubmit}
+            >
                 <h1 className="login__titre">Sign In</h1>
+                {error === errorsTypes.invalid_login && <div style={{width: "33%", marginBottom: 5}}><Alert
+                    message="Error Text"
+                    description="incorrect username or password"
+                    type="error"
+                    closable
+                    showIcon
 
-                <div className="login__form-group">
-                    <label className="login__label">Email address</label>
-                    <input type="email" className="login__form-control" placeholder="Enter email" value={login.email}
-                           onChange={event => {setLogin({...login, email: event.target.value })
-                               console.log(login)}}/>
-                </div>
+                /></div>
+                }
+                <Form.Item className="login__form-group"
+                           rules={[
+                               {
+                                   type: 'email',
+                                   message: 'The input is not valid E-mail!',
+                               },
+                               {
+                                   required: true,
+                                   message: 'Please input your E-mail!',
+                               },
+                           ]}
+                           name="email"
+                           hasFeedback
+                           label={<label className="login__label">Email address</label>}>
+                    <Input type="email" size={"large"} placeholder="Email" name="email" value={login.email}
+                           onChange={(event:any) => {
+                               setLogin({...login, email: event.target.value})
+                           }}/>
+                </Form.Item>
 
-                <div className="login__form-group">
-                    <label className="login__label">Password</label>
-                    <input type="password" className="login__form-control" placeholder="Enter password" value={login.password}
-                           onChange={event => setLogin({...login, password: event.target.value})}/>
-                </div>
+                <Form.Item className="login__form-group" name="password"
+                           rules={[
+                               {
+                                   required: true,
+                                   message: 'Please input your password!',
+                               },
+                           ]}
+                           hasFeedback
+                           label={<label className="login__label">Password</label>}>
+                    <Input.Password size={"large"} placeholder="Enter password" value={login.password}
+                                    onChange={(event:any) => setLogin({...login, password: event.target.value})}/>
+                </Form.Item>
 
-                <input type="submit" className="login__button" value="Sign In"/>
-            </form>
+
+                <Button type="primary" style={{marginTop: 10}} size={"large"} htmlType="submit">
+                    Submit
+                </Button>
+            </Form>
         </div>
     );
 }

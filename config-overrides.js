@@ -1,3 +1,5 @@
+
+
 const path = require('path');
 const {addWebpackAlias, override, fixBabelImports, addLessLoader} = require('customize-cra');
 
@@ -10,6 +12,9 @@ function overrides(config, env) {
 
 module.exports = override(
     overrides,
+    // overrideDevServer({
+    //     historyApiFallback: true
+    // }),
     addWebpackAlias({
         '@assets': path.join(__dirname, 'src/assets'),
         '@constants': path.join(__dirname, 'src/constants'),
@@ -44,5 +49,9 @@ module.exports = override(
             '@border-color-base': '#d9d9d9',
             '@box-shadow-base': '0 2px 8px rgba(0, 0, 0, .15)',
         },
-    }),
+    }
+
+    ),
+
+
 );

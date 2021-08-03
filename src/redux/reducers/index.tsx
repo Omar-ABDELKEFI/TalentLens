@@ -5,6 +5,7 @@ import {authentication} from './login';
 import {CreateTest} from './tests'
 import { skills } from './skill';
 import { questions } from '@redux/reducers/question';
+// combine all reducer
 export default (history: History) =>
   combineReducers<any>({
     router: connectRouter(history),

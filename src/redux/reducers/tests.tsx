@@ -1,7 +1,7 @@
 import {testConstants} from '../actions/tests';
 
-
-export function CreateTest(state = {}, action: any) {
+//create reduce test
+export function test(state = {}, action: any) {
     switch (action.type) {
         case testConstants.CREATE_TEST_SUCCESS:
             return {

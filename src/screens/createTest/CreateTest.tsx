@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import service from '../../service/test-api'
-import {useParams} from 'react-router-dom'
+
 import './CreateTest.less'
 import { Tabs,Layout, } from 'antd'
 import Settings from "@components/cards_create_test/Settings/Settings";
@@ -13,6 +12,8 @@ function CreateTest() {
     const { Content } = Layout;
     const [login, setLogin] = useState({email: "", password: ""})
     const [showQuestionList,setShowQuestionList] = useState(false)
+
+
     const handleAddClick = () => {
         setShowQuestionList(!showQuestionList)
     }

@@ -1,8 +1,10 @@
 import { questionsConstants } from '@redux/actions/question';
 import {testConstants} from "@redux/actions/tests";
+// initialize state for question reduce
 const initialState = {
   questions : []
 }
+// create question reducer
 export function questions(state = initialState, action: any) {
   switch (action.type) {
     case questionsConstants.CREATE_QUESTION_REQUEST:
@@ -14,7 +16,6 @@ export function questions(state = initialState, action: any) {
       return {
         ...state,
         loading: false,
-        success: true
       };
     case questionsConstants.CREATE_QUESTION_FAILURE:
       return {

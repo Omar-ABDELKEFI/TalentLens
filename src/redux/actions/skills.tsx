@@ -1,5 +1,5 @@
 import service from '../../service/test-api';
-
+// action skill types
 export const skillsConstants = {
   FETCH_SKILLS_REQUEST: 'FETCH_SKILLS_REQUEST',
   FETCH_SKILLS_SUCCESS: 'FETCH_SKILLS_SUCCESS',
@@ -10,7 +10,7 @@ export const skillsConstants = {
   CREATE_SKILLS_FAILURE: 'CREATE_SKILLS_FAILURE'
 
 };
-
+// action get  skills
 export function getSkills() {
   return (dispatch: any) => {
     dispatch(request());
