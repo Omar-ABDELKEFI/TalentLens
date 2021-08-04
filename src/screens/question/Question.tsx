@@ -6,10 +6,11 @@ import {CKEditor} from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 import {useDispatch, useSelector} from 'react-redux';
-import Choice from '@shared/components/question/Choice/choice';
+import Choice from '@components/question/Choice/Choice';
 import {getSkills} from '@redux/actions/skills';
 import {createQuestion} from '@redux/actions/question';
 import {Redirect} from "react-router-dom";
+import Header from '@layout/header/header';
 
 interface choice {
     choice_text: string;
@@ -137,7 +138,7 @@ const Question = () => {
   const handleNewSkill = (e: any) => {
     setQuestion({ ...question, skill_name: e.target.value });
   };
-  const handleAddCustomSkill = () => {
+  const handleAddSkillClick = () => {
     setCustomSkill(!customSkill);
     setQuestion({ ...question, skill_name: '' });
   };
@@ -145,6 +146,8 @@ const Question = () => {
     const token = localStorage.getItem("token")
     return (
         <>{!token ? <Redirect to="/403"/> :
+                <>
+                <Header/>
                 <div className="question__main-container">
                     <div className="question__container">
                         <h1 className="question__title">New Multiple Correct Answers Question</h1>
@@ -274,7 +277,7 @@ const Question = () => {
                                             onChange={handleNewSkill}
                                         />
                                     )}
-                                    <Button type="primary" onClick={() => setCustomSkill(!customSkill)}>
+                                    <Button type="primary" onClick={handleAddSkillClick}>
                                         {customSkill ? 'Discard custom skill' : 'Add new skkill'}
                                     </Button>
                                 </div>
@@ -302,7 +305,7 @@ const Question = () => {
                             </Form.Item>
                         </Form>
                     </div>
-                </div>}</>
+                </div> </>}</>
 
         )
         ;

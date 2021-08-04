@@ -1,4 +1,6 @@
 import service from '@service/test-api';
+import {history} from "@redux/store";
+
 // question action types
 export const questionsConstants = {
   CREATE_QUESTION_REQUEST: 'CREATE_QUESTION_REQUEST',
@@ -24,7 +26,8 @@ export function createQuestion(question: any) {
     service.questions.editCreate(question).then(
       (question: any) => {
         dispatch(success());
-        console.log('question ,', question.data.data);
+        console.log('Question created successfully');
+        history.goBack();
       },
       (error: any) => {
         dispatch(failure(error));
