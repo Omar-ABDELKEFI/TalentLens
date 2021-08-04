@@ -17,7 +17,6 @@ const ListCard: React.FC<any> = ({question}) => {
             return test_question.test_id === Number(idTest)
         })
         setAdded(isAdded)
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
     const removeHtml = (htlmText :string) => {
         const temp = htlmText.replace(/<[^>]+>/g, '');
