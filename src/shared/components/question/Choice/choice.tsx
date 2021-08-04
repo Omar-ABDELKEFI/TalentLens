@@ -1,7 +1,7 @@
 import React from 'react';
 import {Checkbox, Input} from 'antd';
 import {CloseOutlined} from '@ant-design/icons';
-import {ModelsChoices} from '../../../../myApi';
+
 
 interface choice {
     choice_text: string;

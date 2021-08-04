@@ -1,4 +1,4 @@
-import service from '../../service/test-api';
+import service from '@service/test-api';
 // action skill types
 export const skillsConstants = {
   FETCH_SKILLS_REQUEST: 'FETCH_SKILLS_REQUEST',

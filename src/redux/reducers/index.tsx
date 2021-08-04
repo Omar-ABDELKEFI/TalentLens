@@ -1,16 +1,17 @@
 import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router';
 import { History } from 'history';
-import {authentication} from './login';
-import {CreateTest} from './tests'
+import {login} from './login';
+import {test} from './tests'
 import { skills } from './skill';
 import { questions } from '@redux/reducers/question';
 // combine all reducer
-export default (history: History) =>
+const createRootReducer = (history: History) =>
   combineReducers<any>({
     router: connectRouter(history),
-      authentication,
-      CreateTest,
+      login,
+    test,
       skills,
       questions
   });
+export default createRootReducer;

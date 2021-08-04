@@ -1,4 +1,4 @@
-import { userConstants } from '../actions/login';
+import { userConstants } from '@redux/actions/login';
 
 // create login reducer
 export function login(state={loggingIn:false}, action:any) {

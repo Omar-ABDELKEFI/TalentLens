@@ -1,4 +1,4 @@
-import service from '../../service/test-api';
+import service from '@service/test-api';
 // question action types
 export const questionsConstants = {
   CREATE_QUESTION_REQUEST: 'CREATE_QUESTION_REQUEST',

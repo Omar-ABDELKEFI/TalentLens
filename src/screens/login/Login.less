@@ -18,9 +18,10 @@
     font-weight: 500;
     line-height: 1.1;
   }
-  &__form-control{
-  box-shadow: none;
-    font-size: 1em ;
+
+  &__form-control {
+    box-shadow: none;
+    font-size: 1em;
     display: block;
     width: 100%;
     height: 35px;
@@ -31,8 +32,9 @@
     background-image: none;
     border: 1px solid #ccc;
     border-radius: 3px;
-    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
   }
+
   &__form-group {
     display: flex;
     margin-bottom: 13px;
@@ -41,10 +43,12 @@
     max-width: 33%;
     flex: 0 0 33%;
   }
+
   &__label {
     font-weight: 400;
     margin-bottom: 5px;
   }
+
   &__card {
     max-width: 310px;
   }
@@ -52,12 +56,14 @@
   &dsf {
     max-width: 310px;
   }
-  &__button{
-    &:hover{
+
+  &__button {
+    &:hover {
       cursor: pointer;
       background: @primary-dark-color;
     }
-background: @primary-color;
+
+    background: @primary-color;
     margin-top: 1.4rem;
     padding-top: 12px;
     padding-bottom: 12px;
@@ -70,6 +76,7 @@ background: @primary-color;
     flex: 0 0 16%;
 
   }
+
   &__containerForm {
     width: 970px;
     .flex(@direction: column,@align: center)

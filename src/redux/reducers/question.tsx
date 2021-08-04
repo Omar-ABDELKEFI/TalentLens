@@ -1,5 +1,5 @@
 import { questionsConstants } from '@redux/actions/question';
-import {testConstants} from "@redux/actions/tests";
+
 // initialize state for question reduce
 const initialState = {
   questions : []

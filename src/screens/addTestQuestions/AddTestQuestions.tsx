@@ -4,7 +4,6 @@ import {getQuestions} from "@redux/actions/question";
 import ListCard from "@components/question/ListCard/ListCard";
 import './AddTestQuestions.less'
 import {Button } from 'antd'
-import {useParams} from "react-router";
 import {Link} from "react-router-dom";
 const AddTestQuestions: React.FC<any> = () => {
     const questions = useSelector((state: any) => state.questions.questions);

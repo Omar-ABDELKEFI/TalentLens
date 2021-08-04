@@ -2,6 +2,12 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+      "@configs/*": ["src/configs/*"],
+      "@schemes/*": ["src/schemes/*"],
+      "@service/*": ["src/service/*"],
+      "@screens/*": ["src/screens/*"],
+      "@shared/*": ["src/shared/*"],
+      "@styles/*": ["src/styles/*"],
       "@assets/*": ["src/assets/*"],
       "@constants/*": ["src/constants/*"],
       "@components/*": ["src/shared/components/*"],

@@ -10,10 +10,15 @@ import {NotificationApi} from "antd/lib/notification/index"
 import {ArgsProps} from "antd/lib/notification";
 import {ConfigProps} from "antd/lib/notification";
 import {ModelsLoginInput} from "../../myApi"
-function Login() {
+
+
+const Login = () => {
 
     const [login, setLogin] = useState<ModelsLoginInput>({email: "", password: ""})
-    const error = useSelector((state: any) => state.authentication.error);
+    const error = useSelector((state: any) => state.login.error);
+    const loginin = useSelector((state: any) => state.login.loggingIn);
+    console.log(loginin, "logininloginin")
+
     const dispatch = useDispatch();
     const handleSubmit = (e: React.SyntheticEvent) => {
         dispatch(actionLogin.login(login))
@@ -34,64 +39,65 @@ function Login() {
     };
 
     return (
-        <div className="login">
-            <Form className="login__containerForm"
-                  labelCol={{
-                      span: 10,
-                  }}
-                  colon={false}
-                  labelAlign="left"
-                  onFinish={handleSubmit}
-            >
-                <h1 className="login__titre">Sign In</h1>
-                {error === errorsTypes.invalid_login && <div style={{width: "33%", marginBottom: 5}}><Alert
-                    message="Error Text"
-                    description="incorrect username or password"
-                    type="error"
-                    closable
-                    showIcon
+            <div className="login">
 
-                /></div>
-                }
-                <Form.Item className="login__form-group"
-                           rules={[
-                               {
-                                   type: 'email',
-                                   message: 'The input is not valid E-mail!',
-                               },
-                               {
-                                   required: true,
-                                   message: 'Please input your E-mail!',
-                               },
-                           ]}
-                           name="email"
-                           hasFeedback
-                           label={<label className="login__label">Email address</label>}>
-                    <Input type="email" size={"large"} placeholder="Email" name="email" value={login.email}
-                           onChange={(event:any) => {
-                               setLogin({...login, email: event.target.value})
-                           }}/>
-                </Form.Item>
+                <Form className="login__containerForm"
+                      labelCol={{
+                          span: 10,
+                      }}
+                      colon={false}
+                      labelAlign="left"
+                      onFinish={handleSubmit}
+                >
+                    <h1 className="login__titre">Sign In</h1>
+                    {error === errorsTypes.invalid_login && <div style={{width: "33%", marginBottom: 5}}><Alert
+                        message="Error Text"
+                        description="incorrect username or password"
+                        type="error"
+                        closable
+                        showIcon
 
-                <Form.Item className="login__form-group" name="password"
-                           rules={[
-                               {
-                                   required: true,
-                                   message: 'Please input your password!',
-                               },
-                           ]}
-                           hasFeedback
-                           label={<label className="login__label">Password</label>}>
-                    <Input.Password size={"large"} placeholder="Enter password" value={login.password}
-                                    onChange={(event:any) => setLogin({...login, password: event.target.value})}/>
-                </Form.Item>
+                    /></div>
+                    }
+                    <Form.Item className="login__form-group"
+                               rules={[
+                                   {
+                                       type: 'email',
+                                       message: 'The input is not valid E-mail!',
+                                   },
+                                   {
+                                       required: true,
+                                       message: 'Please input your E-mail!',
+                                   },
+                               ]}
+                               name="email"
+                               hasFeedback
+                               label={<label className="login__label">Email address</label>}>
+                        <Input type="email" size={"large"} placeholder="Email" name="email" value={login.email}
+                               onChange={(event: any) => {
+                                   setLogin({...login, email: event.target.value})
+                               }}/>
+                    </Form.Item>
+
+                    <Form.Item className="login__form-group" name="password"
+                               rules={[
+                                   {
+                                       required: true,
+                                       message: 'Please input your password!',
+                                   },
+                               ]}
+                               hasFeedback
+                               label={<label className="login__label">Password</label>}>
+                        <Input.Password size={"large"} placeholder="Enter password" value={login.password}
+                                        onChange={(event: any) => setLogin({...login, password: event.target.value})}/>
+                    </Form.Item>
 
 
-                <Button type="primary" style={{marginTop: 10}} size={"large"} htmlType="submit">
-                    Submit
-                </Button>
-            </Form>
-        </div>
+                    <Button type="primary" style={{marginTop: 10}} size={"large"} htmlType="submit">
+                        Submit
+                    </Button>
+                </Form>
+            </div>
     );
 }
 

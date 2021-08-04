@@ -1,6 +1,5 @@
-import {Dispatch} from 'redux';
 import React from "react";
-import service from "../../service/test-api";
+import service from "@service/test-api";
 import {history} from "@redux/store";
 import {ModelsCandidate, ModelsTest} from "../../myApi";
 // action test types

@@ -1,20 +1,21 @@
 import React, {ChangeEvent, useState} from 'react';
-import {Row, Col, Slider, InputNumber, Button, Input,Modal} from 'antd'
-import { useDispatch, useSelector } from 'react-redux';
+import {Row, Col, Slider, InputNumber, Button, Input, Modal} from 'antd'
+import {useDispatch} from 'react-redux';
 import {actionTest} from "@redux/actions";
 import {useParams} from "react-router-dom";
+
 function AddCandidates() {
     const [PassingScore, setPassingScore] = useState(1);
     const [valuesCandidate, setValuesCandidate] = useState<any>([])
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const dispatch=useDispatch()
-    let { idTest } = useParams();
+    const dispatch = useDispatch()
+    let {idTest} = useParams();
     const onChangePassingScore = (value: any) => {
         console.log("passing score", PassingScore)
         setPassingScore(value)
     }
-    const onHandelChangeInput=(e:ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>)=>{
-        setValuesCandidate([{[String(e.target.name)]:e.target.value,"test":[{id:Number(idTest)}]}])
+    const onHandelChangeInput = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
+        setValuesCandidate([{[String(e.target.name)]: e.target.value, "test": [{id: Number(idTest)}]}])
     }
     const showModal = () => {
         setIsModalVisible(true);
@@ -67,7 +68,8 @@ function AddCandidates() {
 
                 <Col>
                     <div>
-                        <Button type="primary" style={{background: "#28a745", borderColor: "#28a745"}} onClick={showModal}>add candidate</Button>
+                        <Button type="primary" style={{background: "#28a745", borderColor: "#28a745"}}
+                                onClick={showModal}>add candidate</Button>
                     </div>
                     <Modal title="add candidate" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
                         <span>Email candidate</span><Input name="email" onChange={onHandelChangeInput}/>
@@ -75,14 +77,15 @@ function AddCandidates() {
                 </Col>
             </Row>
 
-            <Row justify="center" style={{margin:20}}>
+            <Row justify="center" style={{margin: 20}}>
                 <Col span={8}>
                     <Row justify="center">
                         <div>Invite Candidates to Your Test</div>
                     </Row>
 
                     <Row justify="center">
-                        <div style={{textAlign:"center"}}>nvite candidates to take your test and you'll see a breakdown of their performance across
+                        <div style={{textAlign: "center"}}>nvite candidates to take your test and you'll see a breakdown
+                            of their performance across
                             skills, time
                             management and their attempts during the test
                         </div>

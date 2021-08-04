@@ -1,4 +1,4 @@
-import {testConstants} from '../actions/tests';
+import {testConstants} from '@redux/actions/tests';
 
 //create reduce test
 export function test(state = {}, action: any) {

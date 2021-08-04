@@ -16,7 +16,12 @@ module.exports = override(
     //     historyApiFallback: true
     // }),
     addWebpackAlias({
-        '@assets': path.join(__dirname, 'src/assets'),
+        '@configs': path.join(__dirname, 'src/configs'),
+        '@schemes': path.join(__dirname, 'src/schemes'),
+        '@service': path.join(__dirname, 'src/service'),
+        '@screens': path.join(__dirname, 'src/screens'),
+        '@shared': path.join(__dirname, 'src/shared'),
+        '@styles': path.join(__dirname, 'src/styles'),
         '@constants': path.join(__dirname, 'src/constants'),
         '@components': path.join(__dirname, 'src/shared/components'),
         '@icons': path.join(__dirname, 'src/shared/icons'),

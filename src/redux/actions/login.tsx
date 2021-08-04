@@ -1,7 +1,8 @@
 import React from "react";
-import service from "../../service/test-api";
+import service from "@service/test-api";
 import {history} from "@redux/store";
 import {ModelsLoginInput} from "../../myApi";
+
 //login action types
 export const userConstants = {
     LOGIN_REQUEST: 'USERS_LOGIN_REQUEST',
@@ -10,16 +11,16 @@ export const userConstants = {
 };
 
 //action login
-export function login(login: ModelsLoginInput) {
+export function login(user: ModelsLoginInput) {
     return (dispatch: any) => {
         dispatch(request(true));
 
-        service.login.loginCreate(login)
+        service.login.loginCreate(user)
             .then(
                 (res: any) => {
-                    dispatch(success(login,false));
+                    dispatch(success(user,false));
                     history.push("/my-tests")
-
+                    localStorage.setItem('token',String(res.data.token))
                 },
                 (res: any) => {
                     dispatch(failure(res.error.error.toString(),false));
