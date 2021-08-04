@@ -47,7 +47,7 @@ export function questions(state = initialState, action: any) {
       }
     case questionsConstants.CREATE_TEST_QUESTION_SUCCESS:
       const newTestQuestion = state.questions.map((question:any)=>
-        question.id === action.test_question.question_id ?
+        question.ID === action.test_question.question_id ?
             {
                 ...question , test_questions:[...question.test_questions,action.test_question]
             }:
@@ -73,7 +73,7 @@ export function questions(state = initialState, action: any) {
       const newQuestion = state.questions.map((question:any)=> {
 
             return(
-                question.id === action.questionId ?
+                question.ID === action.questionId ?
 
                 {
                   ...question,

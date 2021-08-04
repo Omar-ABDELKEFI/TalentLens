@@ -10,9 +10,8 @@ const AddTestQuestions: React.FC<any> = () => {
     const errors = useSelector((state: any) => state.questions.error)
     const dispatch = useDispatch();
     useEffect(() => {
-        console.log("addd rerendereed")
+        console.log("get all question")
         dispatch(getQuestions());
-        console.log(questions)
 
     }, []);
     return  errors ? (
@@ -24,7 +23,7 @@ const AddTestQuestions: React.FC<any> = () => {
 
                     return (
                         // return question in card
-                            <ListCard question={question} key={question.id} />
+                            <ListCard question={question} key={question.ID} />
                         );
                     }
                 )}

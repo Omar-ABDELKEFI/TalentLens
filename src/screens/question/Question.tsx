@@ -31,115 +31,117 @@ interface question {
 }
 
 const Question = () => {
-
-    const marks = {
-        1: '1',
-        2: '2',
-        3: '3',
-        5: '5',
-        7: '7',
-        10: '10',
-        15: '15',
-        20: '20',
-        30: '30',
-        40: '40',
-        60: '60'
-    };
-    const [question, setQuestion] = useState<question>({
-        name: '',
-        choices: [
-            {choice_text: '', is_answer: false, id: Math.random()},
-            {choice_text: '', is_answer: false, id: Math.random()},
-            {choice_text: '', is_answer: false, id: Math.random()},
-            {choice_text: '', is_answer: false, id: Math.random()}
-        ],
-        difficulty: '',
-        max_points: 0,
-        expected_time: 0,
-        question_text: ''
+  const marks = {
+    1: '1',
+    2: '2',
+    3: '3',
+    5: '5',
+    7: '7',
+    10: '10',
+    15: '15',
+    20: '20',
+    30: '30',
+    40: '40',
+    60: '60'
+  };
+  const [question, setQuestion] = useState<question>({
+    name: '',
+    choices: [
+      { choice_text: '', is_answer: false, id: Math.random() },
+      { choice_text: '', is_answer: false, id: Math.random() },
+      { choice_text: '', is_answer: false, id: Math.random() },
+      { choice_text: '', is_answer: false, id: Math.random() }
+    ],
+    difficulty: '',
+    max_points: 0,
+    expected_time: 0,
+    question_text: '',
+    skill_name: ''
+  });
+  const skills = useSelector((state: any) => state.skills.skills);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getSkills());
+  }, []);
+  const [customSkill, setCustomSkill] = useState<boolean>(false);
+  const handleAddButton = () => {
+    setQuestion({
+      ...question,
+      choices: [...question.choices, { choice_text: '', is_answer: false, id: Math.random() }]
     });
-    const skills = useSelector((state: any) => state.skills.skills);
-    const [newSkill, setNewSkill] = useState("")
-    console.log(newSkill) //never used
-    const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(getSkills());
-
+    console.log(question);
+  };
+  const handleDelete = (id?: number) => {
+    const updatedChoices = question.choices!.filter(choice => choice.id !== id);
+    setQuestion({ ...question, choices: updatedChoices });
+  };
+  const handleChoiceChange = (e: any, id?: number) => {
+    const value = e.target.value;
+    setQuestion({
+      ...question,
+      choices: question.choices!.map(choice =>
+        choice.id === id
+          ? {
+            ...choice,
+            choice_text: value
+          }
+          : choice
+      )
     });
-    const [customSkill, setCustomSkill] = useState<boolean>(false);
-    const handleAddButton = () => {
-        setQuestion({
-            ...question,
-            choices: [...question.choices, {choice_text: '', is_answer: false, id: Math.random()}]
-        });
-        console.log(question);
-    };
-    const handleDelete = (id?: number) => {
-        const updatedChoices = question.choices!.filter(choice => choice.id !== id);
-        setQuestion({...question, choices: updatedChoices});
-    };
-    const handleChoiceChange = (e: any, id?: number) => {
-        const value = e.target.value;
-        setQuestion({
-            ...question,
-            choices: question.choices!.map(choice =>
-                choice.id === id
-                    ? {
-                        ...choice,
-                        choice_text: value
-                    }
-                    : choice
-            )
-        });
-        console.log(question);
-    };
-    const handleChange = (e: any) => {
-        setQuestion({...question, [e.target.name]: e.target.value});
-        console.log(question);
-    };
-    const handleSelectDifficulty = (value: any) => {
-        setQuestion({...question, difficulty: value});
-        console.log(question);
-    };
-    const handleSelectPoints = (value: any) => {
-        setQuestion({...question, max_points: parseInt(value)});
-        console.log(question);
-    };
-    const handleSelectSkill = (value: any) => {
-        setQuestion({...question, skill_id: value});
-        console.log(question);
-    };
-    const handleSelectExpectedTime = (value: any) => {
-        setQuestion({...question, expected_time: value});
-        console.log(question);
-    };
-    const handleCheckChange = (id?: number) => {
-        setQuestion({
-            ...question,
-            choices: question.choices!.map(choice =>
-                choice.id === id
-                    ? {
-                        ...choice,
-                        is_answer: !choice.is_answer
-                    }
-                    : choice
-            )
-        });
-    };
-    const handleSubmit = (values: any) => {
-        let choices = question.choices!.slice();
-        choices.forEach(choice => delete choice.id);
-        setQuestion({...question, choices: choices});
-        dispatch(createQuestion(question));
-    };
-    const handleEditorChange = (event: any, editor: any) => {
-        console.log(question, "question")
-        setQuestion({...question, question_text: editor.getData().toString()});
-        console.log(question);
-    };
-    const handleNewSkill = (e: any) => {
-        setNewSkill(e.target.value)
-    }
+    console.log(question);
+  };
+  const handleChange = (e: any) => {
+    setQuestion({ ...question, [e.target.name]: e.target.value });
+    console.log(question);
+  };
+  const handleSelectDifficulty = (value: any) => {
+    setQuestion({ ...question, difficulty: value });
+    console.log(question);
+  };
+  const handleSelectPoints = (value: any) => {
+    setQuestion({ ...question, max_points: parseInt(value) });
+    console.log(question);
+  };
+  const handleSelectSkill = (value: any) => {
+    setQuestion({ ...question, skill_id: value });
+    console.log(question);
+  };
+  const handleSelectExpectedTime = (value: any) => {
+    setQuestion({ ...question, expected_time: value });
+    console.log(question);
+  };
+  const handleCheckChange = (id?: number) => {
+    setQuestion({
+      ...question,
+      choices: question.choices!.map(choice =>
+        choice.id === id
+          ? {
+            ...choice,
+            is_answer: !choice.is_answer
+          }
+          : choice
+      )
+    });
+  };
+  const handleSubmit = (values: any) => {
+    let choices = question.choices!.slice();
+    choices.forEach(choice => delete choice.id);
+    setQuestion({ ...question, choices: choices });
+    dispatch(createQuestion(question));
+  };
+  const handleEditorChange = (event: any,editor:any) => {
+    console.log(question,"question")
+    setQuestion({...question, question_text:editor.getData().toString()});
+    console.log(question);
+  };
+  const handleNewSkill = (e: any) => {
+    setQuestion({ ...question, skill_name: e.target.value });
+  };
+  const handleAddCustomSkill = () => {
+    setCustomSkill(!customSkill);
+    setQuestion({ ...question, skill_name: '' });
+  };
+
     const token = localStorage.getItem("token")
     return (
         <>{!token ? <Redirect to="/403"/> :
