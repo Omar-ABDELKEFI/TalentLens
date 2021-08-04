@@ -13,7 +13,7 @@ tekab-test-api uses a number of open source projects to work properly:
 - [redux] - Predictable State Container for JS Apps
 - [antd] - one of best React UI library
 - [redux-thunk] - Redux Thunk middleware allows you to write action creators that return a function instead of an action
-- [typescripte] - TypeScript is an open-source language which builds on JavaScript, one of the world’s most used tools, by adding static type definitions.
+- [TypeScript] - TypeScript is an open-source language which builds on JavaScript, one of the world’s most used tools, by adding static type definitions.
 - [phpMyAdmin] - intended to handle the administration of MySQL
 - [docker] - is an open platform for developing, shipping, and running applications
 
