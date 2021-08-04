@@ -125,9 +125,6 @@ const Question = () => {
     });
   };
   const handleSubmit = (values: any) => {
-    const choices = question.choices!.slice();
-    choices.forEach(choice => delete choice.id);
-    setQuestion({ ...question, choices });
     dispatch(createQuestion(question));
   };
   const handleEditorChange = (event: any,editor:any) => {

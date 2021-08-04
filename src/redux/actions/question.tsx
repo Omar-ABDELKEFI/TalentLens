@@ -23,6 +23,7 @@ export const questionsConstants = {
 export function createQuestion(question: any) {
   return (dispatch: any) => {
     dispatch(request());
+    question.choices.forEach((choice:any) => delete choice.id);
     service.questions.editCreate(question).then(
       (question: any) => {
         dispatch(success());
