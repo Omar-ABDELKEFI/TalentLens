@@ -12,7 +12,6 @@ const ListCard: React.FC<any> = ({question}) => {
     const loading = useSelector((state: any) => state.questions.loading);
 
     useEffect(() => {
-        console.log(idTest, "dqsd")
         const isAdded = question.test_questions?.some((test_question: any) => {
             return test_question.test_id === Number(idTest)
         })
@@ -30,7 +29,6 @@ const ListCard: React.FC<any> = ({question}) => {
     const handleRemoveClick = () => {
         const testQuestion = question.test_questions.filter((test_question: any) => test_question.test_id === Number(idTest))
         setAdded((prevState => !prevState))
-        console.log("testQuestion ", testQuestion)
         dispatch(removeTestQuestions(testQuestion[0].ID, question.ID))
     }
     return (

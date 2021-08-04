@@ -12,14 +12,14 @@ import {createQuestion} from '@redux/actions/question';
 import {Redirect} from "react-router-dom";
 import Header from '@layout/header/header';
 
-interface choice {
+interface Ichoice {
     choice_text: string;
     is_answer: boolean;
     id?: number;
 }
 
-interface question {
-    choices?: choice[];
+interface Iquestion {
+    choices?: Ichoice[];
     difficulty: string;
     expected_time: number;
     file_read_me?: string;
@@ -45,7 +45,7 @@ const Question = () => {
     40: '40',
     60: '60'
   };
-  const [question, setQuestion] = useState<question>({
+  const [question, setQuestion] = useState<Iquestion>({
     name: '',
     choices: [
       { choice_text: '', is_answer: false, id: Math.random() },
@@ -100,7 +100,7 @@ const Question = () => {
     console.log(question);
   };
   const handleSelectPoints = (value: any) => {
-    setQuestion({ ...question, max_points: parseInt(value) });
+    setQuestion({ ...question, max_points: parseInt(value,10) });
     console.log(question);
   };
   const handleSelectSkill = (value: any) => {
@@ -125,9 +125,9 @@ const Question = () => {
     });
   };
   const handleSubmit = (values: any) => {
-    let choices = question.choices!.slice();
+    const choices = question.choices!.slice();
     choices.forEach(choice => delete choice.id);
-    setQuestion({ ...question, choices: choices });
+    setQuestion({ ...question, choices });
     dispatch(createQuestion(question));
   };
   const handleEditorChange = (event: any,editor:any) => {
@@ -211,7 +211,7 @@ const Question = () => {
                                 <Select onChange={handleSelectDifficulty}>
                                     <Select.Option value="-">-</Select.Option>
                                     <Select.Option value="hard">Hard</Select.Option>
-                                    <Select.Option value="easy">easy</Select.Option>
+                                    <Select.Option value="easy">Easy</Select.Option>
                                 </Select>
                             </Form.Item>
                             <Form.Item

@@ -3,7 +3,7 @@ import {Checkbox, Input} from 'antd';
 import {CloseOutlined} from '@ant-design/icons';
 
 
-interface choice {
+interface Ichoice {
     choice_text: string;
     is_answer: boolean;
     id?: number;
@@ -12,7 +12,7 @@ interface choice {
 interface ChoiceProps {
     onDelete: (id?: number) => void;
     onTextChange: (e: any, id?: number) => void;
-    choice: choice;
+    choice: Ichoice;
     onCheckChange: (id?: number) => void;
 }
 
