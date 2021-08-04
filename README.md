@@ -6,7 +6,7 @@ this is an application web of interview assessment tests for interviewing out of
 clone https://github.com/tekab-dev/tekab-test.git
 ## Usage with docker
 - first step: docker-compose build 
-- secand step :docker-compse up 
+- second step :docker-compose up 
 ## tech
 tekab-test-api uses a number of open source projects to work properly:
 - [react] -  JavaScript library for building user interfaces
@@ -14,7 +14,7 @@ tekab-test-api uses a number of open source projects to work properly:
 - [antd] - one of best React UI library
 - [redux-thunk] - Redux Thunk middleware allows you to write action creators that return a function instead of an action
 - [typescripte] - TypeScript is an open-source language which builds on JavaScript, one of the world’s most used tools, by adding static type definitions.
-- [phpadmin] - intended to handle the administration of MySQL
+- [phpMyAdmin] - intended to handle the administration of MySQL
 - [docker] - is an open platform for developing, shipping, and running applications
 
 ## Credits
