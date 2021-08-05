@@ -1,0 +1,33 @@
+@module: test-card;
+
+.@{module} {
+  &__container {
+    border: 1px solid #dee2e6;
+    border-top: none;
+    padding: 15px;
+  }
+
+  &__container:nth-child(2n) {
+    background-color: #f8f9fa;
+  }
+
+  &__container:nth-child(2) {
+    border-top: 1px solid #dee2e6;
+  }
+
+
+  &__test-name {
+    color: #006FAD;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  &__card-element {
+    color: #006FAD;
+  }
+
+  &__icon {
+    color: #006FAD;
+    margin-right: 5px;
+  }
+}

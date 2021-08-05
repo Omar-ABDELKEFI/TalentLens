@@ -69,7 +69,7 @@ const ListCard: React.FC<any> = ({question}) => {
                     <div className={'list-card__icon'}>
                         <InsertRowBelowOutlined/>
                     </div>
-                    <span>type</span>
+                    <span>mcq</span>
                 </div>
             </div>
         </div>

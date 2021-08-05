@@ -54,8 +54,8 @@ const Question = () => {
       { choice_text: '', is_answer: false, id: Math.random() }
     ],
     difficulty: '',
-    max_points: 0,
-    expected_time: 0,
+    max_points: 3,
+    expected_time: 10,
     question_text: '',
     skill_name: ''
   });
