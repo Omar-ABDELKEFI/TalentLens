@@ -91,7 +91,7 @@ export function updateTest(testId: number, question: ModelsTest) {
 }
 
 //action create candidate
-export function create_candidate(candidate:ModelsCandidate) {
+export function create_candidate(candidate:any) {
     return (dispatch: any) => {
         dispatch(request(true));
 
@@ -122,62 +122,4 @@ export function create_candidate(candidate:ModelsCandidate) {
         return {type: testConstants.CREATE_CANDIDATE_FAILURE, error,loading}
     }
 }
-/*export function addTestQuestions(question_id : number, test_id : string) {
-    return (dispatch: any) => {
-        dispatch(request());
-        service.myTests.idQuestionsCreate(test_id, {question_id:question_id})
-            .then(
-                (res: any) => {
-                    dispatch(success(res.data.data))
-                },
-                (res: any) => {
-                    dispatch(failure(res.error.toString()));
-                    console.log(res.error.toString())
-                }
-            );
-    };
-
-    function request() {
-        return {type: testConstants.CREATE_TEST_QUESTION_REQUEST};
-    }
-
-    function success(test_question:any) {
-        return {type: testConstants.CREATE_TEST_QUESTION_SUCCESS,test_question:test_question}
-    }
-
-    function failure(error: any) {
-        return {type: testConstants.CREATE_TEST_QUESTION_FAILURE, error}
-    }
-}
-export function removeTestQuestions(id : string) {
-    return (dispatch: any) => {
-        dispatch(request());
-        service.myTests.questionsIdDelete(id)
-            .then(
-                (res: any) => {
-                    dispatch(success())
-                    console.log(res, "dataa")
-                },
-                (res: any) => {
-                    dispatch(failure(res.error.toString()));
-                    console.log(res.error.toString())
-                }
-            );
-    };
-
-    function request() {
-        return {type: testConstants.REMOVE_TEST_QUESTION_REQUEST};
-    }
-
-    function success() {
-        return {type: testConstants.REMOVE_TEST_QUESTION_SUCCESS}
-    }
-
-    function failure(error: any) {
-        return {type: testConstants.REMOVE_TEST_QUESTION_FAILURE, error}
-    }
-}*/
-
-
-
 

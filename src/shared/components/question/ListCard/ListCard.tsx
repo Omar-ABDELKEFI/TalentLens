@@ -18,7 +18,9 @@ const ListCard: React.FC<any> = ({question}) => {
         setAdded(isAdded)
     },[])
     const removeHtml = (htlmText :string) => {
-        const temp = htlmText.replace(/<[^>]+>/g, '');
+        let temp = htlmText.replace(/<[^>]+>/g, '');
+        temp = temp.replace("&nbsp;"," ");
+
         return temp;
 
     }

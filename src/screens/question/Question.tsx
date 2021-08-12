@@ -57,7 +57,8 @@ const Question = () => {
     max_points: 3,
     expected_time: 10,
     question_text: '',
-    skill_name: ''
+    skill_name: '',
+    type:'mca'
   });
   const skills = useSelector((state: any) => state.skills.skills);
   const dispatch = useDispatch();

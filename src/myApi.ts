@@ -16,7 +16,43 @@ export interface GormDeletedAt {
   valid?: boolean;
 }
 
+export interface ModelsAnswer {
+  answer_choices?: ModelsAnswerChoices[];
+  answer_file?: string;
+  answer_text?: string;
+  candidateID?: number;
+  createdAt?: string;
+  deletedAt?: GormDeletedAt;
+  id?: number;
+  point?: number;
+  question_id: number;
+  testID?: number;
+  updatedAt?: string;
+}
+
+export interface ModelsAnswerChoices {
+  answer_id?: number;
+  choices_id: number;
+  createdAt?: string;
+  deletedAt?: GormDeletedAt;
+  id?: number;
+  updatedAt?: string;
+}
+
 export interface ModelsCandidate {
+  email?: string;
+  id?: number;
+  name?: string;
+  test?: ModelsTest[];
+}
+
+export interface ModelsCandidateRequest {
+  email?: string;
+  name?: string;
+  test?: ModelsTestResponse[];
+}
+
+export interface ModelsCandidateResponse {
   email?: string;
   id?: number;
   name?: string;
@@ -50,7 +86,16 @@ export interface ModelsLoginInput {
   password: string;
 }
 
+export interface ModelsMyTests {
+  expected_time?: number;
+  number_Question?: number;
+  number_candidate?: number;
+  test_id?: number;
+  test_name?: string;
+}
+
 export interface ModelsQuestion {
+  answer?: ModelsAnswer[];
   choices?: ModelsChoices[];
   difficulty?: string;
   expected_time?: number;
@@ -66,11 +111,8 @@ export interface ModelsQuestion {
 }
 
 export interface ModelsSkill {
-  createdAt?: string;
-  deletedAt?: GormDeletedAt;
   id?: number;
   name?: string;
-  updatedAt?: string;
 }
 
 export interface ModelsTest {
@@ -87,8 +129,8 @@ export interface ModelsTest {
 }
 
 export interface ModelsTestCandidate {
+  answer?: ModelsAnswer[];
   candidate_id: number;
-  id?: number;
   score?: number;
   test_id: number;
   test_status?: string;
@@ -98,6 +140,27 @@ export interface ModelsTestQuestion {
   id?: number;
   question_id: number;
   test_id?: number;
+}
+
+export interface ModelsTestRequest {
+  archived?: boolean;
+  description?: string;
+  name?: string;
+  notify_emails?: string;
+  passing_score?: number;
+  show_score?: boolean;
+  timing_policy?: string;
+}
+
+export interface ModelsTestResponse {
+  archived?: boolean;
+  description?: string;
+  id?: number;
+  name?: string;
+  notify_emails?: string;
+  passing_score?: number;
+  show_score?: boolean;
+  timing_policy?: string;
 }
 
 export type QueryParamsType = Record<string | number, any>;
@@ -306,6 +369,25 @@ export class HttpClient<SecurityDataType = unknown> {
  * this is an application web of interview assessment tests for interviewing out of the box .
  */
 export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
+  answers = {
+    /**
+     * @description create new Answer by json
+     *
+     * @tags Answer
+     * @name AnswersCreate
+     * @summary add new Answer
+     * @request POST:/answers
+     */
+    answersCreate: (Answer: ModelsAnswer, params: RequestParams = {}) =>
+      this.request<ModelsAnswer, any>({
+        path: `/answers`,
+        method: "POST",
+        body: Answer,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+  };
   candidate = {
     /**
      * @description create new Candidate by json
@@ -315,8 +397,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @summary add new  Candidate
      * @request POST:/candidate
      */
-    candidateCreate: (candidate: ModelsCandidate, params: RequestParams = {}) =>
-      this.request<ModelsCandidate, any>({
+    candidateCreate: (candidate: ModelsCandidateRequest[], params: RequestParams = {}) =>
+      this.request<ModelsCandidateResponse, any>({
         path: `/candidate`,
         method: "POST",
         body: candidate,
@@ -353,8 +435,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @summary add new Test
      * @request POST:/my-tests
      */
-    myTestsCreate: (Test: ModelsTest, params: RequestParams = {}) =>
-      this.request<ModelsTest, any>({
+    myTestsCreate: (Test: ModelsTestRequest, params: RequestParams = {}) =>
+      this.request<ModelsTestResponse, any>({
         path: `/my-tests`,
         method: "POST",
         body: Test,
@@ -364,19 +446,17 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       }),
 
     /**
-     * @description add a question to test by json
+     * @description get my-tests
      *
-     * @tags question_test
-     * @name IdQuestionsCreate
-     * @summary add a question to test
-     * @request POST:/my-tests/:id/questions
+     * @tags test
+     * @name GetMyTests
+     * @summary update Test
+     * @request GET:/my-tests/GetMyTests
      */
-    idQuestionsCreate: (id: string, test_question: ModelsTestQuestion, params: RequestParams = {}) =>
-      this.request<ModelsTestQuestion, any>({
-        path: `/my-tests/${id}/questions`,
-        method: "POST",
-        body: test_question,
-        type: ContentType.Json,
+    getMyTests: (params: RequestParams = {}) =>
+      this.request<ModelsMyTests, any>({
+        path: `/my-tests/GetMyTests`,
+        method: "GET",
         format: "json",
         ...params,
       }),
@@ -385,13 +465,13 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @description create test_candidate by json and path
      *
      * @tags test_candidate
-     * @name CandidatesIdCreate
+     * @name CandidatesTestIdCreate
      * @summary add new  test_candidate
-     * @request POST:/my-tests/candidates/:id
+     * @request POST:/my-tests/candidates/:test_id
      */
-    candidatesIdCreate: (testId: number, id: string, test_candidate: ModelsTestCandidate, params: RequestParams = {}) =>
+    candidatesTestIdCreate: (testId: number, test_candidate: ModelsTestCandidate, params: RequestParams = {}) =>
       this.request<ModelsTestCandidate, any>({
-        path: `/my-tests/candidates/${id}`,
+        path: `/my-tests/candidates/${testId}`,
         method: "POST",
         body: test_candidate,
         type: ContentType.Json,
@@ -403,14 +483,32 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @description delete a question from test by json
      *
      * @tags question_test
-     * @name QuestionsIdDelete
+     * @name QuestionsDelete
      * @summary delete a question from test
-     * @request DELETE:/my-tests/questions/:id
+     * @request DELETE:/my-tests/questions/{id}
      */
-    questionsIdDelete: (id: string, params: RequestParams = {}) =>
+    questionsDelete: (id: string, params: RequestParams = {}) =>
       this.request<string, any>({
         path: `/my-tests/questions/${id}`,
         method: "DELETE",
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * @description add a question to test by json
+     *
+     * @tags question_test
+     * @name QuestionsCreate
+     * @summary add a question to test
+     * @request POST:/my-tests/{id}/questions
+     */
+    questionsCreate: (id: string, test_question: ModelsTestQuestion, params: RequestParams = {}) =>
+      this.request<ModelsTestQuestion, any>({
+        path: `/my-tests/${id}/questions`,
+        method: "POST",
+        body: test_question,
         type: ContentType.Json,
         format: "json",
         ...params,
@@ -424,8 +522,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @summary update Test
      * @request POST:/my-tests/{test_id}
      */
-    updateTest: (testId: number, Test: ModelsTest, params: RequestParams = {}) =>
-      this.request<ModelsTest, any>({
+    updateTest: (testId: number, Test: ModelsTestRequest, params: RequestParams = {}) =>
+      this.request<ModelsTestResponse, any>({
         path: `/my-tests/${testId}`,
         method: "POST",
         body: Test,
@@ -466,6 +564,27 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/questions/edit`,
         method: "POST",
         body: question,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+  };
+  quiz = {
+    /**
+     * @description get questions of a test
+     *
+     * @tags test
+     * @name QuizList
+     * @summary get tests candidates
+     * @request GET:/quiz
+     * @secure
+     */
+    quizList: (query: { testID: number }, params: RequestParams = {}) =>
+      this.request<ModelsQuestion[], any>({
+        path: `/quiz`,
+        method: "GET",
+        query: query,
+        secure: true,
         type: ContentType.Json,
         format: "json",
         ...params,
@@ -539,10 +658,30 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     testsList: (query?: { type?: number }, params: RequestParams = {}) =>
-      this.request<ModelsTest[], any>({
+      this.request<ModelsTestResponse[], any>({
         path: `/tests`,
         method: "GET",
         query: query,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+  };
+  testscandidates = {
+    /**
+     * @description get tests by skill
+     *
+     * @tags test
+     * @name TestscandidatesList
+     * @summary get tests candidates
+     * @request GET:/testscandidates
+     * @secure
+     */
+    testscandidatesList: (params: RequestParams = {}) =>
+      this.request<ModelsTestResponse[], any>({
+        path: `/testscandidates`,
+        method: "GET",
         secure: true,
         type: ContentType.Json,
         format: "json",

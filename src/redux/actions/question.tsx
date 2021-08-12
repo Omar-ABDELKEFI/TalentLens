@@ -76,7 +76,7 @@ export function getQuestions() {
 export function addTestQuestions(question_id : number, test_id : string) {
   return (dispatch: any) => {
     dispatch(request());
-    service.myTests.idQuestionsCreate(test_id, {question_id:question_id})
+    service.myTests.questionsCreate(test_id, {question_id:question_id})
         .then(
             (res: any) => {
               dispatch(success(res.data.data))
@@ -104,7 +104,7 @@ export function addTestQuestions(question_id : number, test_id : string) {
 export function removeTestQuestions(id : string, questionId : any ) {
   return (dispatch: any) => {
     dispatch(request());
-    service.myTests.questionsIdDelete(id)
+    service.myTests.questionsDelete(id)
         .then(
             (res: any) => {
               dispatch(success(id , questionId))
