@@ -9,7 +9,7 @@ function AddCandidates() {
     const [valuesCandidate, setValuesCandidate] = useState<any>([])
     const [isModalVisible, setIsModalVisible] = useState(false);
     const dispatch = useDispatch()
-    let {idTest} = useParams();
+    const {idTest} = useParams();
     const onChangePassingScore = (value: any) => {
         console.log("passing score", PassingScore)
         setPassingScore(value)

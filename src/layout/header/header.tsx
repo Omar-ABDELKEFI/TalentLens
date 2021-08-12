@@ -3,11 +3,14 @@ import './header.less'
 import {  Menu, Dropdown, Button, message, Space, Tooltip  } from "antd";
 import { DownOutlined } from '@ant-design/icons';
 import AccountMenu from "@components/menu/AccountMenu";
+import {Link} from "react-router-dom";
 const Header = () => {
     return (
         <div className="header__container">
             <div className="header__element  header__first-element">
-                <span>My Tests</span>
+                <Link to="/my-tests" className="header__menu">
+                    <span style={{color:"white"}}>My Tests</span>
+                </Link>
                 <span>My Candidates</span>
             </div>
             <div className="header__element header__second-element">

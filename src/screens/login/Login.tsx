@@ -5,7 +5,7 @@ import {actionLogin} from '../../redux/actions/index';
 import errorsTypes from '@utils/errorsTypes.json'
 import {constTypes} from '@utils/constTypesError'
 import {Form, Input, Button, Alert, notification} from "antd";
-import {IErrortypes} from "@utils/types";
+import {IErrortypes} from "@schemes/errorTypes";
 import {NotificationApi} from "antd/lib/notification/index"
 import {ArgsProps} from "antd/lib/notification";
 import {ConfigProps} from "antd/lib/notification";
@@ -34,7 +34,7 @@ const Login = () => {
     const openNotificationWithIcon = (type: string, description: string) => {
         notification[type as keyof NotificationApi]({
             message: 'error',
-            description: description,
+            description,
         } as ArgsProps & string & ConfigProps);
     };
 
@@ -54,8 +54,8 @@ const Login = () => {
                         message="Error Text"
                         description="incorrect username or password"
                         type="error"
-                        closable
-                        showIcon
+                        closable={true}
+                        showIcon={true}
 
                     /></div>
                     }
@@ -71,7 +71,7 @@ const Login = () => {
                                    },
                                ]}
                                name="email"
-                               hasFeedback
+                               hasFeedback={true}
                                label={<label className="login__label">Email address</label>}>
                         <Input type="email" size={"large"} placeholder="Email" name="email" value={login.email}
                                onChange={(event: any) => {
@@ -86,7 +86,7 @@ const Login = () => {
                                        message: 'Please input your password!',
                                    },
                                ]}
-                               hasFeedback
+                               hasFeedback={true}
                                label={<label className="login__label">Password</label>}>
                         <Input.Password size={"large"} placeholder="Enter password" value={login.password}
                                         onChange={(event: any) => setLogin({...login, password: event.target.value})}/>

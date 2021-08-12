@@ -1,7 +1,7 @@
 import React from "react";
 import service from "@service/test-api";
 import {history} from "@redux/store";
-import {ModelsCandidate, ModelsTest} from "../../myApi";
+import { ModelsCandidate, ModelsCandidateRequest, ModelsTest } from '../../myApi';
 // action test types
 export const testConstants = {
     CREATE_TEST_REQUEST: 'CREATE_TEST_REQUEST',
@@ -23,10 +23,14 @@ export const testConstants = {
     ADD_QUESTION_REQUEST: 'ADD_QUESTION_REQUEST',
     ADD_QUESTION_SUCCESS: 'ADD_QUESTION_SUCCESS',
     ADD_QUESTION_FAILURE: 'ADD_QUESTION_FAILURE',
+    //
+    GET_MYTESTS_REQUEST: 'GET_MYTESTS_REQUEST',
+    GET_MYTESTS_SUCCESS: 'GET_MYTESTS_SUCCESS',
+    GET_MYTESTS_FAILURE: 'GET_MYTESTS_FAILURE',
 
 }
 
-//action create test
+// action create test
 export function createTest() {
     return (dispatch: any) => {
         dispatch(request(true));
@@ -46,19 +50,19 @@ export function createTest() {
     };
 
     function request(loading:boolean) {
-        return {type: testConstants.CREATE_TEST_REQUEST,loading}
+        return {loading,type: testConstants.CREATE_TEST_REQUEST}
     }
 
     function success(loading:boolean) {
-        return {type: testConstants.CREATE_TEST_SUCCESS,loading}
+        return {loading,type: testConstants.CREATE_TEST_SUCCESS}
     }
 
     function failure(error: string,loading:boolean) {
-        return {type: testConstants.CREATE_TEST_FAILURE, error,loading}
+        return {error,loading,type: testConstants.CREATE_TEST_FAILURE}
     }
 }
 
-//action update test
+// action update test
 export function updateTest(testId: number, question: ModelsTest) {
     return (dispatch: any) => {
         dispatch(request(true));
@@ -78,20 +82,20 @@ export function updateTest(testId: number, question: ModelsTest) {
     };
 
     function request(loading: boolean) {
-        return {type: testConstants.CREATE_TEST_REQUEST, loading};
+        return {loading,type: testConstants.CREATE_TEST_REQUEST};
     }
 
     function success(question: ModelsTest,loading: boolean) {
-        return {type: testConstants.CREATE_TEST_SUCCESS, question: question,loading}
+        return {question,loading,type: testConstants.CREATE_TEST_SUCCESS}
     }
 
     function failure(error: string,loading: boolean) {
-        return {type: testConstants.CREATE_TEST_FAILURE, error,loading}
+        return {error,loading,type: testConstants.CREATE_TEST_FAILURE}
     }
 }
 
-//action create candidate
-export function create_candidate(candidate:any) {
+// action create candidate
+export function create_candidate(candidate:ModelsCandidateRequest[]) {
     return (dispatch: any) => {
         dispatch(request(true));
 
@@ -111,15 +115,47 @@ export function create_candidate(candidate:any) {
     };
 
     function request(loading: boolean) {
-        return {type: testConstants.CREATE_CANDIDATE_REQUEST, loading};
+        return {loading,type: testConstants.CREATE_CANDIDATE_REQUEST};
     }
 
-    function success(candidate: ModelsCandidate,loading: boolean) {
-        return {type: testConstants.CREATE_CANDIDATE_SUCCESS, candidate: candidate,loading}
+    function success(candidate: ModelsCandidateRequest[],loading: boolean) {
+        return {candidate,loading,type: testConstants.CREATE_CANDIDATE_SUCCESS}
     }
 
     function failure(error: string,loading: boolean) {
-        return {type: testConstants.CREATE_CANDIDATE_FAILURE, error,loading}
+        return {error,loading,type: testConstants.CREATE_CANDIDATE_FAILURE}
     }
 }
 
+export function getMyTests() {
+    return (dispatch: any) => {
+        dispatch(request(true));
+        service.myTests.getMyTests()
+          .then(
+            (res:any) => {
+                console.log(res);
+                dispatch(success(res.data.test,false));
+
+
+
+            },
+            (res: any) => {
+                console.log(res);
+                dispatch(failure(res.error.error.toString,false));
+
+            }
+          );
+    };
+
+    function request(loading: boolean) {
+        return {loading,type: testConstants.GET_MYTESTS_REQUEST};
+    }
+
+    function success(myTests: any,loading: boolean) {
+        return {myTests,loading,type: testConstants.GET_MYTESTS_SUCCESS}
+    }
+
+    function failure(error: string,loading: boolean) {
+        return {error,loading,type: testConstants.GET_MYTESTS_FAILURE}
+    }
+}

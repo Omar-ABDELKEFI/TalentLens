@@ -5,17 +5,16 @@ import { Provider } from 'react-redux';
 import store, { history } from '@redux/store';
 
 
-console.log(store.getState().loggingIn, 'ffff');
+console.log(store.getState().loggingIn, "ffff")
 
 const Home = React.lazy(() => import('@screens/login/Login'));
 const CreateTest = React.lazy(() => import('@screens/createTest/CreateTest'));
-const DisplayCandidates = React.lazy(() => import('@screens/displayCandidates/DisplayCandidates'));
 const Question = React.lazy(() => import('@screens/question/Question'));
 const notAutorized = React.lazy(() => import('@screens/errorResult/notAuthorized'));
 const PageNotExist = React.lazy(() => import('@screens/errorResult/PageNotExist'));
 const DisplayTests = React.lazy(() => import('@screens/displayTests/DisplayTests'));
 const DisplayQuiz = React.lazy(() => import('@screens/quiz/Quiz'));
-
+const StartTest = React.lazy(() => import('@screens/startTest/StartTest'))
 
 // @ts-ignore
 
@@ -24,7 +23,8 @@ const DisplayQuiz = React.lazy(() => import('@screens/quiz/Quiz'));
 const public_paths = [
   { exact: true, path: '/', component: Home },
   { exact: true, path: '/my-tests/:idTest', component: CreateTest },
-  { exact: true, path: '/my-tests', component: DisplayTests },
+  { exact: true, path: '/exam/:idTestCandidate', component: StartTest},
+    {exact: true, path: '/my-tests', component: DisplayTests },
   { exact: true, path: '/question', component: Question },
   { exact: true, path: '/quiz/', component: DisplayQuiz } ,
   { exact: true, path: '/403', component: notAutorized },

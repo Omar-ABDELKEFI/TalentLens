@@ -1,14 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './DisplayTests.less';
 import { Button } from 'antd';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { actionTest } from '@redux/actions/index';
 import { Redirect } from 'react-router-dom';
 import TestCard from '@components/test_card/TestCard';
 import Header from '@layout/header/header';
 
+
+
 function DisplayTests() {
+
   const dispatch = useDispatch();
+
+  useEffect(()=>{
+    dispatch(actionTest.getMyTests())
+  },[dispatch])
+  const isLoading = useSelector((state: any) => state.test.loading);
+  const myTests = useSelector((state: any) => state.test.myTests);
+  console.log(isLoading,"isLoadingisLoading");
+  console.log(myTests,"bbbb");
+
   const handelClickCreteTest = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     dispatch(actionTest.createTest());
   };
@@ -24,9 +36,9 @@ function DisplayTests() {
               <Button size={'large'} style={{ backgroundColor: '#28A745', color: '#fff', border:"none"}} type="primary"
                       onClick={handelClickCreteTest}>Create Tests</Button>
             </div>
-            {TESTS.map((test) => {
+            {!isLoading && myTests.map((test:any) => {
               return(
-                <TestCard key={test}  />
+                <TestCard key={test.test_id}  test={test} />
               );
             })}
 

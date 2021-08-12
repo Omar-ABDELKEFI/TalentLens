@@ -6,7 +6,7 @@ import {addTestQuestions, removeTestQuestions} from "@redux/actions/question";
 import {useParams} from "react-router";
 
 const ListCard: React.FC<any> = ({question}) => {
-    let {idTest} = useParams();
+    const {idTest} = useParams();
     const dispatch = useDispatch();
     const [added, setAdded] = useState<boolean>()
     const loading = useSelector((state: any) => state.questions.loading);

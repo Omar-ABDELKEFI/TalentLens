@@ -1,7 +1,7 @@
 import {testConstants} from '@redux/actions/tests';
 
-//create reduce test
-export function test(state = {}, action: any) {
+// create reduce test
+export function test(state = {loading:true}, action: any) {
     switch (action.type) {
         case testConstants.CREATE_TEST_SUCCESS:
             return {
@@ -48,6 +48,24 @@ export function test(state = {}, action: any) {
                 ...state,
                 error_add_candidate: action.error
             }
+        case testConstants.GET_MYTESTS_REQUEST:
+        return {
+          ...state,
+            loading:action.loading,
+        }
+        case testConstants.GET_MYTESTS_SUCCESS:
+            return {
+                ...state,
+                loading:action.loading,
+                myTests:action.myTests
+            }
+        case testConstants.GET_MYTESTS_FAILURE:
+            return {
+                ...state,
+                loading: action.loading,
+                error:action.error,
+            }
+
         default:
             return state
     }

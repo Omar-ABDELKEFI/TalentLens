@@ -1,6 +1,6 @@
 import { skillsConstants } from '@redux/actions/skills';
 
-//create reduce skiils
+// create reduce skiils
 export function skills(state = {}, action: any) {
   switch (action.type) {
     case skillsConstants.FETCH_SKILLS_REQUEST:

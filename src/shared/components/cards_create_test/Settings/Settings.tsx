@@ -11,7 +11,7 @@ function Settings() {
     const [valueSetting, setValueSetting] = useState({timing_policy: "Medium", show_score: true, name: "Custom test"})
     const {TextArea} = Input
     const dispatch = useDispatch()
-    let {idTest} = useParams();
+    const {idTest} = useParams();
     console.log(valueSetting)
     const onHandelChangeCheck = (e: CheckboxChangeEvent) => {
         setValueSetting({...valueSetting, [String(e.target.name)]: e.target.checked})

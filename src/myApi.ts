@@ -20,13 +20,12 @@ export interface ModelsAnswer {
   answer_choices?: ModelsAnswerChoices[];
   answer_file?: string;
   answer_text?: string;
-  candidateID?: number;
   createdAt?: string;
   deletedAt?: GormDeletedAt;
   id?: number;
   point?: number;
   question_id: number;
-  testID?: number;
+  test_candidate_id: number;
   updatedAt?: string;
 }
 
@@ -106,13 +105,29 @@ export interface ModelsQuestion {
   question_text?: string;
   skill?: ModelsSkill;
   skill_id?: number;
+  test?: ModelsTest[];
   test_questions?: ModelsTestQuestion[];
   type?: string;
 }
 
 export interface ModelsSkill {
+  createdAt?: string;
+  deletedAt?: GormDeletedAt;
   id?: number;
   name?: string;
+  updatedAt?: string;
+}
+
+export interface ModelsStartTest {
+  email?: string;
+  name?: string;
+  questions?: ModelsStartTestQuestions[];
+}
+
+export interface ModelsStartTestQuestions {
+  expected_time?: number;
+  name?: string;
+  type?: string;
 }
 
 export interface ModelsTest {
@@ -123,8 +138,8 @@ export interface ModelsTest {
   name?: string;
   notify_emails?: string;
   passing_score?: number;
+  question?: ModelsQuestion[];
   show_score?: boolean;
-  test_questions?: ModelsTestQuestion[];
   timing_policy?: string;
 }
 
@@ -134,6 +149,7 @@ export interface ModelsTestCandidate {
   score?: number;
   test_id: number;
   test_status?: string;
+  time_limit?: number;
 }
 
 export interface ModelsTestQuestion {
@@ -446,22 +462,6 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       }),
 
     /**
-     * @description get my-tests
-     *
-     * @tags test
-     * @name GetMyTests
-     * @summary update Test
-     * @request GET:/my-tests/GetMyTests
-     */
-    getMyTests: (params: RequestParams = {}) =>
-      this.request<ModelsMyTests, any>({
-        path: `/my-tests/GetMyTests`,
-        method: "GET",
-        format: "json",
-        ...params,
-      }),
-
-    /**
      * @description create test_candidate by json and path
      *
      * @tags test_candidate
@@ -475,6 +475,22 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         method: "POST",
         body: test_candidate,
         type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * @description get my-tests
+     *
+     * @tags test
+     * @name GetMyTests
+     * @summary update Test
+     * @request GET:/my-tests/getTest
+     */
+    getMyTests: (params: RequestParams = {}) =>
+      this.request<ModelsMyTests, any>({
+        path: `/my-tests/getTest`,
+        method: "GET",
         format: "json",
         ...params,
       }),
@@ -643,6 +659,25 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         method: "GET",
         secure: true,
         type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+  };
+  startTest = {
+    /**
+     * @description get test information
+     *
+     * @tags test_candidate
+     * @name StartTest
+     * @summary get test information
+     * @request GET:/startTest/{idTestCandidate}
+     * @secure
+     */
+    startTest: (idTestCandidate: string, params: RequestParams = {}) =>
+      this.request<ModelsStartTest[], any>({
+        path: `/startTest/${idTestCandidate}`,
+        method: "GET",
+        secure: true,
         format: "json",
         ...params,
       }),

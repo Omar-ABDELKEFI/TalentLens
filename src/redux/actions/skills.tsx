@@ -29,11 +29,11 @@ export function getSkills() {
   }
 
   function success(skills: any) {
-    return { type: skillsConstants.FETCH_SKILLS_SUCCESS, skills: skills };
+    return {  type: skillsConstants.FETCH_SKILLS_SUCCESS };
   }
 
   function failure(error: any) {
-    return { type: skillsConstants.FETCH_SKILLS_FAILURE, error: error };
+    return { error,type: skillsConstants.FETCH_SKILLS_FAILURE };
   }
 }
 /*
