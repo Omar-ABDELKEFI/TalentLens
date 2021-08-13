@@ -3,32 +3,25 @@ import {Row, Col, Slider, InputNumber, Button, Input, Modal} from 'antd'
 import {useDispatch} from 'react-redux';
 import {actionTest} from "@redux/actions";
 import {useParams} from "react-router-dom";
-
+import ModelAddCandidates from '@components/cards_create_test/ModelAddCandidate/ModelAddCandidate';
 function AddCandidates() {
     const [PassingScore, setPassingScore] = useState(1);
-    const [valuesCandidate, setValuesCandidate] = useState<any>([])
+
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const dispatch = useDispatch()
-    const {idTest} = useParams();
+
+
     const onChangePassingScore = (value: any) => {
         console.log("passing score", PassingScore)
         setPassingScore(value)
     }
-    const onHandelChangeInput = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
-        setValuesCandidate([{[String(e.target.name)]: e.target.value, "test": [{id: Number(idTest)}]}])
-    }
+
     const showModal = () => {
         setIsModalVisible(true);
     };
 
-    const handleOk = () => {
-        dispatch(actionTest.create_candidate(valuesCandidate))
-        setIsModalVisible(false);
-    };
 
-    const handleCancel = () => {
-        setIsModalVisible(false);
-    };
+
+
     return (
         <>
             <Row justify="space-between">
@@ -71,9 +64,7 @@ function AddCandidates() {
                         <Button type="primary" style={{background: "#28a745", borderColor: "#28a745"}}
                                 onClick={showModal}>add candidate</Button>
                     </div>
-                    <Modal title="add candidate" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-                        <span>Email candidate</span><Input name="email" onChange={onHandelChangeInput}/>
-                    </Modal>
+                    <ModelAddCandidates isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible} />
                 </Col>
             </Row>
 
