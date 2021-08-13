@@ -27,7 +27,7 @@ const public_paths = [
     {exact: true, path: '/my-tests', component: DisplayTests },
   { exact: true, path: '/question', component: Question },
   { exact: true, path: '/quiz/:idTestCandidate', component: DisplayQuiz } ,
-  { exact: true, path: '/quiz/finish',component:DisplayResult },
+  { exact: true, path: '/finish',component:DisplayResult },
   { exact: true, path: '/403', component: notAutorized },
   { exact: false, path: '/*', component: PageNotExist }
 ];

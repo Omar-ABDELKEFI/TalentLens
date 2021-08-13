@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import './StartTest.less';
-import {Button} from 'antd'
 import { candidateActions } from '../../redux/actions/index';
 import { useDispatch, useSelector } from 'react-redux';
 import TestQuestionsTable from '@components/test-question-table/testQuestionsTable';
 import Header from '@layout/header/header';
 import { useParams } from 'react-router';
 import { Redirect } from 'react-router-dom';
-
+import {Button} from 'antd';
+import {history} from '@redux/store';
 
 const StartTest = () => {
 
@@ -44,7 +44,7 @@ const StartTest = () => {
             <TestQuestionsTable data={data}/>
             <div style={{marginBottom:5}}><b>EMAIL:</b></div>
             <p>{testInfo.email}</p>
-            <Button type="primary"  style={{ width: "20"}} block size="large">Start Test</Button>
+            <Button type="primary"  style={{ width: "20"}} block size="large" onClick={()=>{history.push(`/quiz/${idTestCandidate}`)}}>Start Test</Button>
           </div>
         </div>
       </>)}</>);

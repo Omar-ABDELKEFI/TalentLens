@@ -44,7 +44,7 @@ export function createResult(idTestCandidate : any) {
       (res: any)=>{
         dispatch(success(res.data.data));
         console.log(res,"resultttttt");
-        history.push("/quiz/finish")
+        history.push("/finish")
       },
       (error:any)=>{
         dispatch(failure(error));

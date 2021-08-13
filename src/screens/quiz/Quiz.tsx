@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import Mca from '@components/Quiz/Mca/Mca';
-import { Button, Col, Divider, Form, Row } from 'antd';
-import { history } from '@redux/store';
+import { Button, Col, Divider, Form, Row, Statistic } from 'antd';
 import './Quiz.less';
 import service from '@service/test-api';
 import { createResult, getQuiz } from '@redux/actions/quiz';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useParams } from 'react-router';
+import { useParams } from 'react-router';
 
+const { Countdown } = Statistic;
 const Quiz = () => {
   const quiz = useSelector((state: any) => state.quiz.quiz);
   const dispatch = useDispatch();
-  const {idTestCandidate} = useParams()
+  const { idTestCandidate } = useParams();
 
 
   useEffect(() => {
@@ -22,14 +22,14 @@ const Quiz = () => {
 
   const [answer, setAnswer] = useState<any>();
   const [currentQuestion, setCurrentQuestion] = useState<number>(0);
-  const handleSubmit = (values: any) => {
+  const handleSubmit = () => {
     console.log(quiz);
     const apiAnswer = {
       ...answer,
-      question_id: quiz.questions[currentQuestion].ID,
+      question_id: quiz.questions[currentQuestion].ID
     };
     console.log(apiAnswer);
-    service.answers.answersCreate(idTestCandidate,apiAnswer).then(
+    service.answers.answersCreate(idTestCandidate, apiAnswer).then(
       (res: any) => {
         console.log(res, 'dataa');
       },
@@ -41,7 +41,7 @@ const Quiz = () => {
     if (questionNumber !== quiz.questions.length) {
       setCurrentQuestion((prev) => prev + 1);
     } else {
-      dispatch(createResult(idTestCandidate))
+      dispatch(createResult(idTestCandidate));
     }
   };
   const handleCheckChange = (values: any) => {
@@ -53,30 +53,39 @@ const Quiz = () => {
   return (
     <>
       {currentQuestion === quiz.questions.length ? <></> :
-        <div className={"quiz__container"}>
-          <Row justify={"space-between"}>
-            <Col><span className={"quiz__current-question"}>Question {currentQuestion+1} of {quiz.questions.length}</span></Col>
-            <Col><span className={"quiz__test-name"}>{quiz.name}</span></Col>
-            <Col><span className={"quiz__report"}>Report a problem ?</span></Col>
+        <div className={'quiz__container'}>
+          <Row justify={'space-between'}>
+            <Col><span
+              className={'quiz__current-question'}>Question {currentQuestion + 1} of {quiz.questions.length}</span></Col>
+            <Col><span className={'quiz__test-name'}>{quiz.name}</span></Col>
+            <Col><span className={'quiz__report'}>Report a problem ?</span></Col>
           </Row>
           <Divider className="quiz__divider"/>
           <Row>
-            <Col style={{paddingLeft:"15px"}}>
-              <Form
-                onFinish={handleSubmit}
-              >
+            <Col style={{ paddingLeft: '15px' }}>
+              <Form>
 
                 <Mca question={quiz.questions[currentQuestion]} onCheckChange={handleCheckChange}
                 />
-                <Form.Item>
-                  <Button
-                    size={'large'}
-                    htmlType={'submit'}
-                    type={"primary"}
-                  >
-                    Submit & next
-                  </Button>
 
+                <Form.Item>
+                  <Form.Item style={{ display: 'inline-block' }}>
+                    <Button
+                      size={'large'}
+                      type={'primary'}
+                      onClick={handleSubmit}
+                    >
+                      Submit & next
+                    </Button>
+                  </Form.Item>
+                  <Form.Item style={{ display: 'inline-block', marginLeft: '10px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                      <div>Question time remaining :</div>
+                      <Countdown valueStyle={{ fontSize: '18px', fontWeight: 600 }}
+                                 value={quiz.questions[currentQuestion].expected_time * 60 * 1000 + Date.now()}
+                                 onFinish={handleSubmit}/>
+                    </div>
+                  </Form.Item>
                 </Form.Item>
               </Form>
             </Col>
