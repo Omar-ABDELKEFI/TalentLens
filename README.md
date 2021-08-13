@@ -2,11 +2,14 @@
 
 ## Description
 this is an application web of interview assessment tests for interviewing out of the box .
+
 ## Installation
 clone https://github.com/tekab-dev/tekab-test-react.git
+
 ## Usage with docker
 - first step: docker-compose build 
 - second step :docker-compose up 
+
 ## tech
 tekab-test-react uses a number of open source projects to work properly:
 - [react] -  JavaScript library for building user interfaces
@@ -18,4 +21,6 @@ tekab-test-react uses a number of open source projects to work properly:
 
 ## Credits
 tekab.dev
+
+
 
