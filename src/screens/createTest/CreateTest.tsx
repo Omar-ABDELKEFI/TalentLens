@@ -21,13 +21,13 @@ function CreateTest() {
         <Content style={{ padding: '0 50px', marginTop: 64 }}>
           <div className="card-container">
             <Tabs type="card">
-              <TabPane tab="Tab Title 1" key="1">
-                <AddCandidates/>
-              </TabPane>
-              <TabPane tab="Tab Title 2" key="2">
+              <TabPane tab="Questions" key="1">
                 {showQuestionList ? <AddTestQuestions/> : <AddQuestions handleAddClick={handleAddClick}/>}
               </TabPane>
-              <TabPane tab="Tab Title 3" key="3">
+              <TabPane tab="Candidates" key="2">
+                <AddCandidates/>
+              </TabPane>
+              <TabPane tab="Settings" key="3">
                 <Settings/>
               </TabPane>
             </Tabs>
