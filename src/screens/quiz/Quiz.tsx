@@ -4,21 +4,18 @@ import { Button, Col, Divider, Form, Row } from 'antd';
 import { history } from '@redux/store';
 import './Quiz.less';
 import service from '@service/test-api';
-import { getQuiz } from '@redux/actions/quiz';
+import { createResult, getQuiz } from '@redux/actions/quiz';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router';
+import { useLocation, useParams } from 'react-router';
 
 const Quiz = () => {
   const quiz = useSelector((state: any) => state.quiz.quiz);
   const dispatch = useDispatch();
-  const search = useLocation().search;
-  const testId = new URLSearchParams(search).get('testId');
-  const candidateId = new URLSearchParams(search).get('candidateId');
-  console.log(testId);
+  const {idTestCandidate} = useParams()
 
 
   useEffect(() => {
-    dispatch(getQuiz(Number(testId)));
+    dispatch(getQuiz(idTestCandidate));
     console.log(quiz);
 
   }, []);
@@ -30,11 +27,9 @@ const Quiz = () => {
     const apiAnswer = {
       ...answer,
       question_id: quiz.questions[currentQuestion].ID,
-      candidate_id: Number(candidateId),
-      test_id: Number(testId)
     };
     console.log(apiAnswer);
-    service.answers.answersCreate(apiAnswer).then(
+    service.answers.answersCreate(idTestCandidate,apiAnswer).then(
       (res: any) => {
         console.log(res, 'dataa');
       },
@@ -46,7 +41,7 @@ const Quiz = () => {
     if (questionNumber !== quiz.questions.length) {
       setCurrentQuestion((prev) => prev + 1);
     } else {
-      history.push('/my-tests');
+      dispatch(createResult(idTestCandidate))
     }
   };
   const handleCheckChange = (values: any) => {
@@ -76,8 +71,8 @@ const Quiz = () => {
                 <Form.Item>
                   <Button
                     size={'large'}
-                    style={{ backgroundColor: '#28A745', color: '#fff' }}
                     htmlType={'submit'}
+                    type={"primary"}
                   >
                     Submit & next
                   </Button>

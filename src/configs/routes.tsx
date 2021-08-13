@@ -17,7 +17,7 @@ const DisplayQuiz = React.lazy(() => import('@screens/quiz/Quiz'));
 const StartTest = React.lazy(() => import('@screens/startTest/StartTest'))
 
 // @ts-ignore
-
+const DisplayResult = React.lazy(()=>import('@screens/finishQuiz/FinishQuiz'));
 
 // console.log(history.location.pathname,"history")
 const public_paths = [
@@ -26,7 +26,8 @@ const public_paths = [
   { exact: true, path: '/exam/:idTestCandidate', component: StartTest},
     {exact: true, path: '/my-tests', component: DisplayTests },
   { exact: true, path: '/question', component: Question },
-  { exact: true, path: '/quiz/', component: DisplayQuiz } ,
+  { exact: true, path: '/quiz/:idTestCandidate', component: DisplayQuiz } ,
+  { exact: true, path: '/quiz/finish',component:DisplayResult },
   { exact: true, path: '/403', component: notAutorized },
   { exact: false, path: '/*', component: PageNotExist }
 ];
