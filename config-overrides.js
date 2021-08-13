@@ -17,6 +17,7 @@ module.exports = override(
     // }),
     addWebpackAlias({
         '@configs': path.join(__dirname, 'src/configs'),
+        '@assets': path.join(__dirname, 'src/assets'),
         '@schemes': path.join(__dirname, 'src/schemes'),
         '@service': path.join(__dirname, 'src/service'),
         '@screens': path.join(__dirname, 'src/screens'),

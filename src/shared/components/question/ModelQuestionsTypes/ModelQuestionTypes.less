@@ -1,0 +1,61 @@
+
+@module: ModelQuestionTypes;
+
+.@{module} {
+
+  &__main-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  &__img-container {
+    height: 160px;
+    border: 1px solid #dee2e6!important;
+    vertical-align: middle
+  }
+
+  &__desc-container {
+    flex-grow: 1;
+    font-weight: 400;
+margin-top: 8px;
+    font-size: 1rem;
+    color: #212529;
+  }
+
+  &__button {
+    cursor: pointer;
+    font-weight: 500;
+    pointer-events: unset;
+    transition: background-color .3s,border-color .3s;
+    font-size: 1rem;
+    line-height: 1;
+    padding: .375rem .75rem
+  }
+
+  &__choices-checkbox {
+    background-color: #eeeeee;
+    padding: 0 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgb(217, 217, 217);
+    border-right: none;
+  }
+  &__choices-icon{
+    background-color: #eeeeee;
+    padding: 0 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgb(217, 217, 217);
+    border-left: none;
+  }
+  &__choices-icon:hover {
+    cursor: pointer;
+  }
+  &__add-skill {
+    display: flex;
+  }
+
+}

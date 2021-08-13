@@ -9,7 +9,7 @@ console.log(store.getState().loggingIn, "ffff")
 
 const Home = React.lazy(() => import('@screens/login/Login'));
 const CreateTest = React.lazy(() => import('@screens/createTest/CreateTest'));
-const Question = React.lazy(() => import('@screens/question/Question'));
+const Question = React.lazy(() => import('@components/questions_types/McaQuestions/McaQuestions'));
 const notAutorized = React.lazy(() => import('@screens/errorResult/notAuthorized'));
 const PageNotExist = React.lazy(() => import('@screens/errorResult/PageNotExist'));
 const DisplayTests = React.lazy(() => import('@screens/displayTests/DisplayTests'));
@@ -25,7 +25,7 @@ const public_paths = [
   { exact: true, path: '/my-tests/:idTest', component: CreateTest },
   { exact: true, path: '/exam/:idTestCandidate', component: StartTest},
     {exact: true, path: '/my-tests', component: DisplayTests },
-  { exact: true, path: '/question', component: Question },
+  { exact: true, path: '/questions/edit', component: Question },
   { exact: true, path: '/quiz/:idTestCandidate', component: DisplayQuiz } ,
   { exact: true, path: '/finish',component:DisplayResult },
   { exact: true, path: '/403', component: notAutorized },
