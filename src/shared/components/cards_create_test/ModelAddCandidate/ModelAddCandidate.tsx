@@ -17,7 +17,10 @@ function ModelAddCandidates({isModalVisible,setIsModalVisible}:any) {
     console.log("passing score", PassingScore)
     setPassingScore(value)
   }
-
+  function handleChange(value:any) {
+    console.log(`selected ${value}`);
+    dispatch(actionTest.setTimeLimit(value))
+  }
   console.log(emails,"emails");
   const handleOk = () => {
     if(emails.length>0){
@@ -72,7 +75,7 @@ function ModelAddCandidates({isModalVisible,setIsModalVisible}:any) {
               <Form.Item
                 label={<label
                   style={{fontSize: "16px", fontWeight: 500, color: "rgb(33,37,41)"}}>Time limit</label>}>
-                <Select defaultValue="5" style={{ width: 120 }} >
+                <Select defaultValue="5" style={{ width: 120 }} onChange={handleChange}>
                   <Option value="1">1 day</Option>
                   <Option value="3">3 days</Option>
                   <Option value="5">5 days</Option>

@@ -7,12 +7,12 @@ import {CheckboxChangeEvent} from 'antd/lib/checkbox/Checkbox'
 import {actionTest} from "@redux/actions";
 import {useParams} from 'react-router-dom'
 
-function Settings() {
-    const [valueSetting, setValueSetting] = useState({timing_policy: "Medium", show_score: true, name: "Custom test"})
+function Settings({passingScore}:any) {
+    const [valueSetting, setValueSetting] = useState<any>({timing_policy: "Medium", show_score: true, name: "Custom test"})
     const {TextArea} = Input
     const dispatch = useDispatch()
     const {idTest} = useParams();
-    console.log(valueSetting)
+
     const onHandelChangeCheck = (e: CheckboxChangeEvent) => {
         setValueSetting({...valueSetting, [String(e.target.name)]: e.target.checked})
     }
@@ -22,9 +22,9 @@ function Settings() {
     const onHandelChangeInput = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
         setValueSetting({...valueSetting, [String(e.target.name)]: e.target.value})
     }
-    const handleSubmit = (e: React.SyntheticEvent) => {
 
-        dispatch(actionTest.updateTest(idTest, valueSetting))
+    const handleSubmit = (e: React.SyntheticEvent) => {
+        dispatch(actionTest.updateTest(idTest, {...valueSetting,'passing_score':passingScore}))
     }
     return (
         <div>

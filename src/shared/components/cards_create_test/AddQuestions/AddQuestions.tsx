@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {Row, Button} from 'antd'
-
+import ModelQuestionsTypes from '@components/question/ModelQuestionsTypes/ModelQuestionsTypes'
 
 function AddQuestions({handleAddClick}: any) {
-
-
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
     return (
         <>
             <Row justify="space-between">

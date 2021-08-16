@@ -1,7 +1,9 @@
 import {testConstants} from '@redux/actions/tests';
+import { stat } from 'fs';
 
 // create reduce test
-export function test(state = {loading:true}, action: any) {
+export function test(state = {loading:true,test:{}}, action: any) {
+
     switch (action.type) {
         case testConstants.CREATE_TEST_SUCCESS:
             return {
@@ -20,17 +22,21 @@ export function test(state = {loading:true}, action: any) {
             };
         case testConstants.UPDATE_TEST_REQUEST:
             return {
+
                 ...state,
-                question: action.question
+                loading: action.loading
             }
         case testConstants.UPDATE_TEST_SUCCESS:
+            console.log(state,"statestate");
             return {
                 ...state,
-                question: action.question
+                loading: action.loading,
+                test: {...state.test,...action.test}
             }
         case testConstants.UPDATE_TEST_FAILURE:
             return {
                 ...state,
+                loading:action.loading,
                 error: action.error
             }
         case testConstants.UPDATE_CANDIDATE_REQUEST:
@@ -65,7 +71,11 @@ export function test(state = {loading:true}, action: any) {
                 loading: action.loading,
                 error:action.error,
             }
-
+        case testConstants.SET_TIME_LIMIT:
+            return {
+              ...state,
+                test:{'time_limit':action.payload}
+            }
         default:
             return state
     }

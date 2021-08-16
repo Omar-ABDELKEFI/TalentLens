@@ -5,7 +5,6 @@ import { Provider } from 'react-redux';
 import store, { history } from '@redux/store';
 
 
-console.log(store.getState().loggingIn, "ffff")
 
 const Home = React.lazy(() => import('@screens/login/Login'));
 const CreateTest = React.lazy(() => import('@screens/createTest/CreateTest'));

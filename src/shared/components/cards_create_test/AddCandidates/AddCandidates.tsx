@@ -4,16 +4,11 @@ import {useDispatch} from 'react-redux';
 import {actionTest} from "@redux/actions";
 import {useParams} from "react-router-dom";
 import ModelAddCandidates from '@components/cards_create_test/ModelAddCandidate/ModelAddCandidate';
-function AddCandidates() {
-    const [PassingScore, setPassingScore] = useState(1);
+function AddCandidates({passingScore,onChangePassingScore}:any) {
 
     const [isModalVisible, setIsModalVisible] = useState(false);
 
 
-    const onChangePassingScore = (value: any) => {
-        console.log("passing score", PassingScore)
-        setPassingScore(value)
-    }
 
     const showModal = () => {
         setIsModalVisible(true);
@@ -40,7 +35,7 @@ function AddCandidates() {
                                 min={0}
                                 max={100}
                                 onChange={onChangePassingScore}
-                                value={typeof PassingScore === 'number' ? PassingScore : 0}
+                                value={typeof passingScore === 'number' ? passingScore : 0}
 
                             />
                         </Col>
@@ -50,7 +45,7 @@ function AddCandidates() {
                                 max={100}
                                 formatter={value => `${value}%`}
                                 style={{width: "100%", marginLeft: 4}}
-                                value={PassingScore}
+                                value={passingScore}
                                 onChange={onChangePassingScore}
                             />
                         </Col>
@@ -75,7 +70,7 @@ function AddCandidates() {
                     </Row>
 
                     <Row justify="center">
-                        <div style={{textAlign: "center"}}>nvite candidates to take your test and you'll see a breakdown
+                        <div style={{textAlign: "center"}}>invite candidates to take your test and you'll see a breakdown
                             of their performance across
                             skills, time
                             management and their attempts during the test

@@ -8,12 +8,18 @@ import Header from '@layout/header/header';
 import AddTestQuestions from '../addTestQuestions/AddTestQuestions';
 
 function CreateTest() {
+  const [passingScore, setPassingScore] = useState(1);
   const { TabPane } = Tabs;
   const { Content } = Layout;
   const [showQuestionList, setShowQuestionList] = useState(false);
   const handleAddClick = () => {
     setShowQuestionList(!showQuestionList);
   };
+  const onChangePassingScore = (value: any) => {
+    console.log("passing score", passingScore)
+    setPassingScore(value)
+  }
+
   return (
     <>
       <Header/>
@@ -25,10 +31,10 @@ function CreateTest() {
                 {showQuestionList ? <AddTestQuestions/> : <AddQuestions handleAddClick={handleAddClick}/>}
               </TabPane>
               <TabPane tab="Candidates" key="2">
-                <AddCandidates/>
+                <AddCandidates passingScore={passingScore} onChangePassingScore={onChangePassingScore}/>
               </TabPane>
               <TabPane tab="Settings" key="3">
-                <Settings/>
+                <Settings passingScore={passingScore}/>
               </TabPane>
             </Tabs>
           </div>
