@@ -3,7 +3,7 @@ import Mca from '@components/Quiz/Mca/Mca';
 import { Button, Col, Divider, Form, Row, Statistic } from 'antd';
 import './Quiz.less';
 import service from '@service/test-api';
-import { createResult, getQuiz } from '@redux/actions/quiz';
+import { createResult, getQuiz, updateCurrentQuestion } from '@redux/actions/quiz';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 
@@ -12,37 +12,33 @@ const Quiz = () => {
   const quiz = useSelector((state: any) => state.quiz.quiz);
   const dispatch = useDispatch();
   const { idTestCandidate } = useParams();
-
+  const isLoading = useSelector((state: any) => state.quiz.loadingQuiz);
+  const currentQuestion = useSelector((state:any ) => state.quiz.testInfo.current_question)
 
   useEffect(() => {
     dispatch(getQuiz(idTestCandidate));
-    console.log(quiz);
 
   }, []);
 
   const [answer, setAnswer] = useState<any>();
-  const [currentQuestion, setCurrentQuestion] = useState<number>(0);
   const handleSubmit = () => {
-    console.log(quiz);
     const apiAnswer = {
       ...answer,
       question_id: quiz.questions[currentQuestion].ID
     };
-    console.log(apiAnswer);
     service.answers.answersCreate(idTestCandidate, apiAnswer).then(
       (res: any) => {
-        console.log(res, 'dataa');
-      },
+        const questionNumber = currentQuestion + 1;
+        if (questionNumber !== quiz.questions.length) {
+          dispatch(updateCurrentQuestion(idTestCandidate,{current_question:questionNumber}))
+        } else {
+          dispatch(createResult(idTestCandidate));
+        }      },
       (res: any) => {
         console.log(res.error);
       }
     );
-    const questionNumber = currentQuestion + 1;
-    if (questionNumber !== quiz.questions.length) {
-      setCurrentQuestion((prev) => prev + 1);
-    } else {
-      dispatch(createResult(idTestCandidate));
-    }
+
   };
   const handleCheckChange = (values: any) => {
     const checkedAnswers = values.map((choice: any) => {
@@ -52,7 +48,7 @@ const Quiz = () => {
   };
   return (
     <>
-      {currentQuestion === quiz.questions.length ? <></> :
+      {isLoading ? <></> :
         <div className={'quiz__container'}>
           <Row justify={'space-between'}>
             <Col><span

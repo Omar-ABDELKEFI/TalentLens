@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import './FinishQuiz.less';
 
 const FinishQuiz = () => {
-  const result = useSelector((state: any) => state.quiz.result);
+  const result = useSelector((state: any) => state.quiz.testInfo);
 
   return (
     <div className={'finish-quiz__container'}>

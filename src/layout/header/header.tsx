@@ -11,7 +11,9 @@ const Header = () => {
                 <Link to="/my-tests" className="header__menu">
                     <span style={{color:"white"}}>My Tests</span>
                 </Link>
-                <span>My Candidates</span>
+                <Link to="/candidates" className="header__menu">
+                    <span style={{color:"white"}}>My Candidates</span>
+                </Link>
             </div>
             <div className="header__element header__second-element">
                 <span>Tests</span>

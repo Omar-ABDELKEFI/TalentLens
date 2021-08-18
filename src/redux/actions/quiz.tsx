@@ -2,14 +2,59 @@ import service from '@service/test-api';
 import { history } from '@redux/store';
 
 export const quizConstants = {
+
+  START_QUIZ_REQUEST: 'START_QUIZ_REQUEST',
+  START_QUIZ_SUCCESS: 'START_QUIZ_SUCCESS',
+  START_QUIZ_FAILURE: 'START_QUIZ_FAILURE',
+
   FETCH_QUIZ_REQUEST: 'FETCH_QUIZ_REQUEST',
   FETCH_QUIZ_SUCCESS: 'FETCH_QUIZ_SUCCESS',
   FETCH_QUIZ_FAILURE: 'FETCH_QUIZ_FAILURE',
 
   CREATE_RESULT_REQUEST:'CREATE_RESULT_REQUEST',
   CREATE_RESULT_SUCCESS:'CREATE_RESULT_SUCCESS',
-  CREATE_RESULT_FAILURE:'CREATE_RESULT_FAILURE'
+  CREATE_RESULT_FAILURE:'CREATE_RESULT_FAILURE',
+
+  UPDATE_QUIZ_STATUS_REQUEST: 'UPDATE_QUIZ_STATUS_REQUEST',
+  UPDATE_QUIZ_STATUS_SUCCESS: 'UPDATE_QUIZ_STATUS_SUCCESS',
+  UPDATE_QUIZ_STATUS_FAILURE: 'UPDATE_QUIZ_STATUS_FAILURE',
+
+  UPDATE_CURRENT_QUESTION_REQUEST: 'UPDATE_CURRENT_QUESTION_REQUEST',
+  UPDATE_CURRENT_QUESTION_SUCCESS: 'UPDATE_CURRENT_QUESTION_SUCCESS',
+  UPDATE_CURRENT_QUESTION_FAILURE: 'UPDATE_CURRENT_QUESTION_FAILURE',
+
 };
+
+export function startQuiz(idTestCandidate:any) {
+  return  (dispatch: any) => {
+    dispatch(request(true));
+
+     service.startTest.startTest(idTestCandidate)
+      .then(
+        (res: any) => {
+          console.log(res.data.data);
+          dispatch(success(res.data.data,false));
+        },
+        (res: any) => {
+          dispatch(failure(res.error.error.toString(),false));
+        }
+      );
+  };
+
+  function request(loading: boolean) {
+    return {loading,type: quizConstants.START_QUIZ_REQUEST, }
+  }
+
+  function success(testInfo: any,loading:boolean) {
+    return {testInfo,loading,type: quizConstants.START_QUIZ_SUCCESS}
+  }
+
+  function failure(error: any,loading:boolean) {
+    return {error,loading,type: quizConstants.START_QUIZ_FAILURE}
+  }
+}
+
+
 export function getQuiz(idTestCandidate : any) {
   return (dispatch: any) => {
     dispatch(request());
@@ -38,12 +83,12 @@ export function getQuiz(idTestCandidate : any) {
   }
 }
 export function createResult(idTestCandidate : any) {
-  return (dispatch: any) => {
+  return  (dispatch: any) => {
     dispatch(request());
-    service.score.scoreCreate(idTestCandidate).then(
+     service.score.scoreCreate(idTestCandidate).then(
       (res: any)=>{
+        console.log(res.data.data);
         dispatch(success(res.data.data));
-        console.log(res,"resultttttt");
         history.push("/finish")
       },
       (error:any)=>{
@@ -63,6 +108,62 @@ export function createResult(idTestCandidate : any) {
 
   function failure(error: any) {
     return { type: quizConstants.FETCH_QUIZ_FAILURE, error: error };
+  }
+}
+
+export function updateTestStatus(idTestCandidate : any , testStatus : any) {
+  return  (dispatch: any) => {
+    dispatch(request());
+    service.quiz.statusUpdate(idTestCandidate,testStatus).then(
+      (res: any)=>{
+        console.log(res.data.data.test_status);
+        dispatch(success(res.data.data.test_status))
+      },
+      (error:any)=>{
+        dispatch(failure(error));
+      }
+    );
+
+  };
+
+  function request() {
+    return { type: quizConstants.UPDATE_QUIZ_STATUS_REQUEST };
+  }
+
+  function success(status: any) {
+    return { type: quizConstants.UPDATE_QUIZ_STATUS_SUCCESS, status: status };
+  }
+
+  function failure(error: any) {
+    return { type: quizConstants.UPDATE_QUIZ_STATUS_FAILURE, error: error };
+  }
+}
+
+export function updateCurrentQuestion(idTestCandidate : any , currentQuestion : any) {
+  return  (dispatch: any) => {
+    dispatch(request());
+    service.quiz.currentQuestionUpdate(idTestCandidate,currentQuestion).then(
+      (res: any)=>{
+        console.log(res.data.data.current_question);
+        dispatch(success(res.data.data.current_question))
+      },
+      (error:any)=>{
+        dispatch(failure(error));
+      }
+    );
+
+  };
+
+  function request() {
+    return { type: quizConstants.UPDATE_CURRENT_QUESTION_REQUEST };
+  }
+
+  function success(current_question: any) {
+    return { type: quizConstants.UPDATE_CURRENT_QUESTION_SUCCESS, current_question: current_question };
+  }
+
+  function failure(error: any) {
+    return { type: quizConstants.UPDATE_CURRENT_QUESTION_FAILURE, error: error };
   }
 }
 

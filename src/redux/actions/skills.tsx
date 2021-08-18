@@ -29,38 +29,11 @@ export function getSkills() {
   }
 
   function success(skills: any) {
-    return {  type: skillsConstants.FETCH_SKILLS_SUCCESS };
+    return {  type: skillsConstants.FETCH_SKILLS_SUCCESS , skills };
   }
 
   function failure(error: any) {
     return { error,type: skillsConstants.FETCH_SKILLS_FAILURE };
   }
 }
-/*
-export function createSkill(skill : string) {
-  return (dispatch: any) => {
-    dispatch(request());
-    service.skill.skillCreate({name:skill}).then(
-        (skills: any) => {
-          console.log(skills)
-        },
-        (error: any) => {
-          dispatch(failure(error));
-        }
-    );
-  };
-
-  function request() {
-    return { type: skillsConstants.CREATE_SKILLS_REQUEST };
-  }
-
-  function success(skills: any) {
-    return { type: skillsConstants.CREATE_SKILLS_SUCCESS, skills: skills };
-  }
-
-  function failure(error: any) {
-    return { type: skillsConstants.CREATE_SKILLS_FAILURE, error: error };
-  }
-}
-*/
 
