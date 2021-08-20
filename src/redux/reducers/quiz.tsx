@@ -70,7 +70,7 @@ export function quiz(state =initialState, action: any) {
       return {
         ...state,
         loadingTesInfo: false,
-        testInfo: {...state.testInfo,test_status:action.status}
+        testInfo: {...state.testInfo,test_status:action.payload.test_status,updated_at:action.payload.updated_at}
       };
     case quizConstants.UPDATE_QUIZ_STATUS_FAILURE:
       return {
@@ -87,9 +87,9 @@ export function quiz(state =initialState, action: any) {
       return {
         ...state,
         loadingTesInfo: false,
-        testInfo: {...state.testInfo,current_question:action.current_question}
+        testInfo: {...state.testInfo,current_question:action.payload.current_question, updated_at: action.payload.updated_at}
       };
-    case quizConstants.UPDATE_CURRENT_QUESTION_REQUEST:
+    case quizConstants.UPDATE_CURRENT_QUESTION_FAILURE:
       return {
         ...state,
         loadingTesInfo: false,

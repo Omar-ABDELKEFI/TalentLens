@@ -12,12 +12,10 @@ const Question = React.lazy(() => import('@screens/question/Question'));
 const notAutorized = React.lazy(() => import('@screens/errorResult/notAuthorized'));
 const PageNotExist = React.lazy(() => import('@screens/errorResult/PageNotExist'));
 const DisplayTests = React.lazy(() => import('@screens/displayTests/DisplayTests'));
-const DisplayQuiz = React.lazy(() => import('@screens/quiz/Quiz'));
 const StartTest = React.lazy(() => import('@screens/startTest/StartTest'))
 const DisplayCandidates = React.lazy(() => import('@screens/displayCandidates/DisplayCandidates'))
 
 // @ts-ignore
-const DisplayResult = React.lazy(()=>import('@screens/finishQuiz/FinishQuiz'));
 
 // console.log(history.location.pathname,"history")
 const public_paths = [

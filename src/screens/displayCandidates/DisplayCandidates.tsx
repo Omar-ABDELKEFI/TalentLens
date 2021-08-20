@@ -19,7 +19,7 @@ const DisplayCandidates = () => {
       title: 'Score',
       dataIndex: 'score',
       width: '5%',
-      render: (score: any, record: any) => <ScoreCol score={score} status={record.status}/>
+      render: (score: any, record: any) => <ScoreCol score={score} status={record.test_status}/>
     },
     {
       title: 'Candidate',

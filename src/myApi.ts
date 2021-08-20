@@ -117,11 +117,13 @@ export interface ModelsSkill {
 }
 
 export interface ModelsStartTest {
+  current_question?: number;
   email?: string;
   name?: string;
   questions?: ModelsStartTestQuestions[];
   score?: number;
   test_status?: string;
+  updated_at?: string;
 }
 
 export interface ModelsStartTestQuestions {
@@ -193,8 +195,18 @@ export interface ModelsUpdateCurrentQuestion {
   current_question?: number;
 }
 
+export interface ModelsUpdateCurrentQuestionOutput {
+  current_question?: number;
+  updated_at?: string;
+}
+
 export interface ModelsUpdateTestStatus {
   test_status?: string;
+}
+
+export interface ModelsUpdateTestStatusOutput {
+  test_status?: string;
+  updated_at?: string;
 }
 
 export type QueryParamsType = Record<string | number, any>;
@@ -607,18 +619,18 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * @description Update current question
      *
-     * @name CurrentQuestionUpdate
+     * @name CurrentQuestionPartialUpdate
      * @summary Update current question
-     * @request PUT:/quiz/currentQuestion/{idTestCandidate}
+     * @request PATCH:/quiz/currentQuestion/{idTestCandidate}
      */
-    currentQuestionUpdate: (
+    currentQuestionPartialUpdate: (
       idTestCandidate: string,
       currentQuestion: ModelsUpdateCurrentQuestion,
       params: RequestParams = {},
     ) =>
-      this.request<ModelsUpdateCurrentQuestion, any>({
+      this.request<ModelsUpdateCurrentQuestionOutput, any>({
         path: `/quiz/currentQuestion/${idTestCandidate}`,
-        method: "PUT",
+        method: "PATCH",
         body: currentQuestion,
         type: ContentType.Json,
         format: "json",
@@ -628,14 +640,14 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * @description Update test status
      *
-     * @name StatusUpdate
+     * @name StatusPartialUpdate
      * @summary Update test status
-     * @request PUT:/quiz/status/{idTestCandidate}
+     * @request PATCH:/quiz/status/{idTestCandidate}
      */
-    statusUpdate: (idTestCandidate: string, testStatus: ModelsUpdateTestStatus, params: RequestParams = {}) =>
-      this.request<ModelsUpdateTestStatus, any>({
+    statusPartialUpdate: (idTestCandidate: string, testStatus: ModelsUpdateTestStatus, params: RequestParams = {}) =>
+      this.request<ModelsUpdateTestStatusOutput, any>({
         path: `/quiz/status/${idTestCandidate}`,
-        method: "PUT",
+        method: "PATCH",
         body: testStatus,
         type: ContentType.Json,
         format: "json",

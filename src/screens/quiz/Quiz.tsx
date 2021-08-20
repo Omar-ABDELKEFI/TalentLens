@@ -13,8 +13,8 @@ const Quiz = () => {
   const dispatch = useDispatch();
   const { idTestCandidate } = useParams();
   const isLoading = useSelector((state: any) => state.quiz.loadingQuiz);
-  const currentQuestion = useSelector((state:any ) => state.quiz.testInfo.current_question)
-
+  const currentQuestion = useSelector((state: any) => state.quiz.testInfo.current_question);
+  const lastUpdate = useSelector((state: any) => state.quiz.testInfo.updated_at);
   useEffect(() => {
     dispatch(getQuiz(idTestCandidate));
 
@@ -30,10 +30,11 @@ const Quiz = () => {
       (res: any) => {
         const questionNumber = currentQuestion + 1;
         if (questionNumber !== quiz.questions.length) {
-          dispatch(updateCurrentQuestion(idTestCandidate,{current_question:questionNumber}))
+          dispatch(updateCurrentQuestion(idTestCandidate, { current_question: questionNumber }));
         } else {
           dispatch(createResult(idTestCandidate));
-        }      },
+        }
+      },
       (res: any) => {
         console.log(res.error);
       }
@@ -46,6 +47,10 @@ const Quiz = () => {
     });
     setAnswer({ ...answer, answer_choices: checkedAnswers });
   };
+  if (!isLoading && Date.now() > ((quiz.questions[currentQuestion].expected_time) * 60 * 1000 + Date.parse(lastUpdate) )) {
+    handleSubmit()
+  }
+
   return (
     <>
       {isLoading ? <></> :
@@ -78,7 +83,7 @@ const Quiz = () => {
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                       <div>Question time remaining :</div>
                       <Countdown valueStyle={{ fontSize: '18px', fontWeight: 600 }}
-                                 value={quiz.questions[currentQuestion].expected_time * 60 * 1000 + Date.now()}
+                                 value={(quiz.questions[currentQuestion].expected_time) * 60 * 1000 + Date.parse(lastUpdate)}
                                  onFinish={handleSubmit}/>
                     </div>
                   </Form.Item>
