@@ -1,7 +1,11 @@
 import { skillsConstants } from '@redux/actions/skills';
+import { IskillReducerState } from '../../types';
 
-// create reduce skiils
-export function skills(state = {}, action: any) {
+const initialState : IskillReducerState = {
+  loading : true ,
+  skills : []
+}
+export function skills(state = initialState, action: any) {
   switch (action.type) {
     case skillsConstants.FETCH_SKILLS_REQUEST:
       return {

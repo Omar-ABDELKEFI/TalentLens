@@ -1,35 +1,18 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import './Question.less';
-import {Form, Input, Button, Slider, Select} from 'antd';
+import { Form, Input, Button, Slider, Select } from 'antd';
 
-import {CKEditor} from '@ckeditor/ckeditor5-react';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Choice from '@components/question/Choice/Choice';
-import {getSkills} from '@redux/actions/skills';
-import {createQuestion} from '@redux/actions/question';
-import {Redirect} from "react-router-dom";
+import { getSkills } from '@redux/actions/skills';
+import { createQuestion } from '@redux/actions/question';
+import { Redirect } from 'react-router-dom';
 import Header from '@layout/header/header';
-
-interface Ichoice {
-    choice_text: string;
-    is_answer: boolean;
-    id?: number;
-}
-
-interface Iquestion {
-    choices?: Ichoice[];
-    difficulty: string;
-    expected_time: number;
-    file_read_me?: string;
-    max_points: number;
-    name: string;
-    question_text: string;
-    skill_id?: number;
-    type?: string;
-    skill_name?: string
-}
+import { Iquestion } from '../../types';
+import { ModelsSkillsResponse } from '../../myApi';
 
 const Question = () => {
   const marks = {
@@ -54,11 +37,11 @@ const Question = () => {
       { choice_text: '', is_answer: false, id: Math.random() }
     ],
     difficulty: '',
-    max_points: 3,
-    expected_time: 10,
+    max_points: 1,
+    expected_time: 1,
     question_text: '',
     skill_name: '',
-    type:'mca'
+    type: 'mca'
   });
   const skills = useSelector((state: any) => state.skills.skills);
   const dispatch = useDispatch();
@@ -96,19 +79,19 @@ const Question = () => {
     setQuestion({ ...question, [e.target.name]: e.target.value });
     console.log(question);
   };
-  const handleSelectDifficulty = (value: any) => {
+  const handleSelectDifficulty = (value: string) => {
     setQuestion({ ...question, difficulty: value });
     console.log(question);
   };
-  const handleSelectPoints = (value: any) => {
-    setQuestion({ ...question, max_points: parseInt(value,10) });
+  const handleSelectPoints = (value: string) => {
+    setQuestion({ ...question, max_points: parseInt(value, 10) });
     console.log(question);
   };
-  const handleSelectSkill = (value: any) => {
+  const handleSelectSkill = (value: number) => {
     setQuestion({ ...question, skill_id: value });
     console.log(question);
   };
-  const handleSelectExpectedTime = (value: any) => {
+  const handleSelectExpectedTime = (value: number) => {
     setQuestion({ ...question, expected_time: value });
     console.log(question);
   };
@@ -128,9 +111,9 @@ const Question = () => {
   const handleSubmit = (values: any) => {
     dispatch(createQuestion(question));
   };
-  const handleEditorChange = (event: any,editor:any) => {
-    console.log(question,"question")
-    setQuestion({...question, question_text:editor.getData().toString()});
+  const handleEditorChange = (event: any, editor: any) => {
+    console.log(question, 'question');
+    setQuestion({ ...question, question_text: editor.getData().toString() });
     console.log(question);
   };
   const handleNewSkill = (e: any) => {
@@ -141,171 +124,172 @@ const Question = () => {
     setQuestion({ ...question, skill_name: '' });
   };
 
-    const token = localStorage.getItem("token")
-    return (
-        <>{!token ? <Redirect to="/403"/> :
-                <>
-                <Header/>
-                <div className="question__main-container">
-                    <div className="question__container">
-                        <h1 className="question__title">New Multiple Correct Answers Question</h1>
-                        <Form
-                            labelCol={{
-                                span: 5
-                            }}
-                            colon={false}
-                            onFinish={handleSubmit}
-                        >
-                            <Form.Item
-                                label={
-                                    <label style={{fontSize: '16px', fontWeight: 500, color: 'rgb(33,37,41)'}}>
-                                        Name
-                                    </label>
-                                }
-                            >
-                                <Input placeholder="Name" name="name" onBlur={handleChange}/>
-                            </Form.Item>
-                            <Form.Item
-                                label={
-                                    <label style={{fontSize: '16px', fontWeight: 500, color: 'rgb(33,37,41)'}}>
-                                        Question Text
-                                    </label>
-                                }
-                            >
-                                <CKEditor editor={ClassicEditor}
-                                          onChange={(e: any, editor: any) => handleEditorChange(e, editor)}/>
-                            </Form.Item>
-                            <Form.Item
-                                label={
-                                    <label style={{fontSize: '16px', fontWeight: 500, color: 'rgb(33,37,41)'}}>
-                                        Choices
-                                    </label>
-                                }
-                            >
-                                <div>
-                                    {question.choices!.map((choice, index) => {
-                                        return (
-                                            <Choice
-                                                key={choice.id}
-                                                onDelete={handleDelete}
-                                                onTextChange={handleChoiceChange}
-                                                onCheckChange={handleCheckChange}
-                                                choice={choice}
-                                            />
-                                        );
-                                    })}
-                                    <Button type="primary" onClick={handleAddButton}>
-                                        Add new
-                                    </Button>
-                                </div>
-                            </Form.Item>
-                            <Form.Item
-                                label={
-                                    <label style={{fontSize: '16px', fontWeight: 500, color: 'rgb(33,37,41)'}}>
-                                        Difficulty
-                                    </label>
-                                }
-                            >
-                                <Select onChange={handleSelectDifficulty}>
-                                    <Select.Option value="-">-</Select.Option>
-                                    <Select.Option value="hard">Hard</Select.Option>
-                                    <Select.Option value="easy">Easy</Select.Option>
-                                </Select>
-                            </Form.Item>
-                            <Form.Item
-                                label={
-                                    <label style={{fontSize: '16px', fontWeight: 500, color: 'rgb(33,37,41)'}}>
-                                        Points
-                                    </label>
-                                }
-                            >
-                                <Select onChange={handleSelectPoints}>
-                                    <Select.Option value="1">1</Select.Option>
-                                    <Select.Option value="2">2</Select.Option>
-                                    <Select.Option value="3">3</Select.Option>
-                                    <Select.Option value="4">4</Select.Option>
-                                    <Select.Option value="5">5</Select.Option>
-                                    <Select.Option value="6">6</Select.Option>
-                                    <Select.Option value="7">7</Select.Option>
-                                    <Select.Option value="8">8</Select.Option>
-                                    <Select.Option value="9">9</Select.Option>
-                                    <Select.Option value="10">10</Select.Option>
-                                </Select>
-                            </Form.Item>
-                            <Form.Item
-                                label={
-                                    <label style={{fontSize: '16px', fontWeight: 500, color: 'rgb(33,37,41)'}}>
-                                        Expected Time
-                                    </label>
-                                }
-                            >
-                                <Slider
-                                    marks={marks}
-                                    value={question.expected_time}
-                                    included={false}
-                                    defaultValue={1}
-                                    step={null}
-                                    max={60}
-                                    onChange={handleSelectExpectedTime}
-                                />
-                            </Form.Item>
-                            <Form.Item
-                                label={
-                                    <label style={{fontSize: '16px', fontWeight: 500, color: 'rgb(33,37,41)'}}>
-                                        Skill
-                                    </label>
-                                }
-                            >
-                                <div className="question__add-skill">
-                                    {!customSkill ? (
-                                        <Select onChange={handleSelectSkill}>
-                                            {skills &&
-                                            skills.map((skill: any) => {
-                                                return (
-                                                    <Select.Option value={skill.ID} key={skill.ID}>
-                                                        {skill.name}
-                                                    </Select.Option>
-                                                );
-                                            })}
-                                        </Select>
-                                    ) : (
-                                        <Input
-                                            placeholder="Type your custom skill name"
-                                            name="skill"
-                                            onChange={handleNewSkill}
-                                        />
-                                    )}
-                                    <Button type="primary" onClick={handleAddSkillClick}>
-                                        {customSkill ? 'Discard custom skill' : 'Add new skkill'}
-                                    </Button>
-                                </div>
-                            </Form.Item>
-                            <Form.Item
-                                label={
-                                    <label style={{fontSize: '16px', fontWeight: 500, color: 'rgb(33,37,41)'}}>
-                                        Preview
-                                    </label>
-                                }
-                            >
-                                <Button type="primary">Preview as candidate</Button>
-                            </Form.Item>
-                            <Form.Item>
-                                <Button
-                                    size={'large'}
-                                    style={{backgroundColor: '#28A745', color: '#fff'}}
-                                    htmlType={'submit'}
-                                >
-                                    Save
-                                </Button>
-                                <Button size={'large'} style={{backgroundColor: '#28A745', color: '#fff'}}>
-                                    Close editor
-                                </Button>
-                            </Form.Item>
-                        </Form>
-                    </div>
-                </div> </>}</>
+  const token = localStorage.getItem('token');
+  return (
+    <>{!token ? <Redirect to="/403"/> :
+      <>
+        <Header/>
+        <div className="question__main-container">
+          <div className="question__container">
+            <h1 className="question__title">New Multiple Correct Answers Question</h1>
+            <Form
+              labelCol={{
+                span: 5
+              }}
+              colon={false}
+              onFinish={handleSubmit}
+            >
+              <Form.Item
+                label={
+                  <label style={{ fontSize: '16px', fontWeight: 500, color: 'rgb(33,37,41)' }}>
+                    Name
+                  </label>
+                }
+              >
+                <Input placeholder="Name" name="name" onBlur={handleChange}/>
+              </Form.Item>
+              <Form.Item
+                label={
+                  <label style={{ fontSize: '16px', fontWeight: 500, color: 'rgb(33,37,41)' }}>
+                    Question Text
+                  </label>
+                }
+              >
+                <CKEditor editor={ClassicEditor}
+                          onChange={(e: any, editor: any) => handleEditorChange(e, editor)}/>
+              </Form.Item>
+              <Form.Item
+                label={
+                  <label style={{ fontSize: '16px', fontWeight: 500, color: 'rgb(33,37,41)' }}>
+                    Choices
+                  </label>
+                }
+              >
+                <div>
+                  {question.choices!.map((choice, index) => {
+                    return (
+                      <Choice
+                        key={choice.id}
+                        onDelete={handleDelete}
+                        onTextChange={handleChoiceChange}
+                        onCheckChange={handleCheckChange}
+                        choice={choice}
+                      />
+                    );
+                  })}
+                  <Button type="primary" onClick={handleAddButton}>
+                    Add new
+                  </Button>
+                </div>
+              </Form.Item>
+              <Form.Item
+                label={
+                  <label style={{ fontSize: '16px', fontWeight: 500, color: 'rgb(33,37,41)' }}>
+                    Difficulty
+                  </label>
+                }
+              >
+                <Select onChange={handleSelectDifficulty}>
+                  <Select.Option value="-">-</Select.Option>
+                  <Select.Option value="hard">Hard</Select.Option>
+                  <Select.Option value="easy">Easy</Select.Option>
+                </Select>
+              </Form.Item>
+              <Form.Item
+                label={
+                  <label style={{ fontSize: '16px', fontWeight: 500, color: 'rgb(33,37,41)' }}>
+                    Points
+                  </label>
+                }
+              >
+                <Select onChange={handleSelectPoints} defaultValue={"1"}>
+                  <Select.Option value="1">1</Select.Option>
+                  <Select.Option value="2">2</Select.Option>
+                  <Select.Option value="3">3</Select.Option>
+                  <Select.Option value="4">4</Select.Option>
+                  <Select.Option value="5">5</Select.Option>
+                  <Select.Option value="6">6</Select.Option>
+                  <Select.Option value="7">7</Select.Option>
+                  <Select.Option value="8">8</Select.Option>
+                  <Select.Option value="9">9</Select.Option>
+                  <Select.Option value="10">10</Select.Option>
+                </Select>
+              </Form.Item>
+              <Form.Item
+                label={
+                  <label style={{ fontSize: '16px', fontWeight: 500, color: 'rgb(33,37,41)' }}>
+                    Expected Time
+                  </label>
+                }
+              >
+                <Slider
+                  marks={marks}
+                  value={question.expected_time}
+                  included={false}
+                  defaultValue={1}
+                  step={null}
+                  max={60}
+                  onChange={handleSelectExpectedTime}
+                />
+              </Form.Item>
+              <Form.Item
+                label={
+                  <label style={{ fontSize: '16px', fontWeight: 500, color: 'rgb(33,37,41)' }}>
+                    Skill
+                  </label>
+                }
+              >
+                <div className="question__add-skill">
+                  {!customSkill ? (
+                    <Select onChange={handleSelectSkill}>
+                      {skills &&
+                      skills.map((skill: ModelsSkillsResponse) => {
+                        return (
+                          <Select.Option value={skill.ID} key={skill.ID}>
+                            {skill.name}
+                          </Select.Option>
+                        );
+                      })}
+                    </Select>
+                  ) : (
+                    <Input
+                      placeholder="Type your custom skill name"
+                      name="skill"
+                      onChange={handleNewSkill}
+                    />
+                  )}
+                  <Button type="primary" onClick={handleAddSkillClick}>
+                    {customSkill ? 'Discard custom skill' : 'Add new skkill'}
+                  </Button>
+                </div>
+              </Form.Item>
+              <Form.Item
+                label={
+                  <label style={{ fontSize: '16px', fontWeight: 500, color: 'rgb(33,37,41)' }}>
+                    Preview
+                  </label>
+                }
+              >
+                <Button type="primary">Preview as candidate</Button>
+              </Form.Item>
+              <Form.Item>
+                <Button
+                  size={'large'}
+                  style={{ backgroundColor: '#28A745', color: '#fff' }}
+                  htmlType={'submit'}
+                >
+                  Save
+                </Button>
+                <Button size={'large'} style={{ backgroundColor: '#28A745', color: '#fff' }}>
+                  Close editor
+                </Button>
+              </Form.Item>
+            </Form>
+          </div>
+        </div>
+      </>}</>
 
-        )
-        ;
+  )
+    ;
 };
 export default Question;

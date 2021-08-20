@@ -1,5 +1,6 @@
 import service from '@service/test-api';
 import {history} from "@redux/store";
+import { Ichoice } from '../../types';
 
 // question action types
 export const questionsConstants = {
@@ -23,14 +24,16 @@ export const questionsConstants = {
 export function createQuestion(question: any) {
   return (dispatch: any) => {
     dispatch(request());
-    question.choices.forEach((choice:any) => delete choice.id);
-    service.questions.editCreate(question).then(
-      (question: any) => {
+    const apiQuestion = JSON.parse(JSON.stringify(question));
+    apiQuestion.choices.forEach((choice:Ichoice) => delete choice.id);
+    service.questions.editCreate(apiQuestion).then(
+      () => {
         dispatch(success());
         console.log('Question created successfully');
         history.goBack();
       },
       (error: any) => {
+
         dispatch(failure(error));
       }
     );
@@ -55,7 +58,6 @@ export function getQuestions() {
     service.questions.questionsList().then(
       (questions: any) => {
         dispatch(success(questions.data.data));
-        console.log('question ,', questions);
       },
       (error: any) => {
         dispatch(failure(error));

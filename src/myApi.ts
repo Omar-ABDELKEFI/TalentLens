@@ -116,13 +116,20 @@ export interface ModelsSkill {
   name?: string;
 }
 
+export interface ModelsSkillsResponse {
+  ID: number;
+  name: string;
+}
+
 export interface ModelsStartTest {
+  created_at?: string;
   current_question?: number;
   email?: string;
   name?: string;
   questions?: ModelsStartTestQuestions[];
   score?: number;
   test_status?: string;
+  time_limit?: number;
   updated_at?: string;
 }
 
@@ -152,7 +159,6 @@ export interface ModelsTestCandidate {
   score?: number;
   test_id: number;
   test_status?: string;
-  time_limit?: number;
 }
 
 export interface ModelsTestQuestion {
@@ -721,7 +727,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     skillsList: (params: RequestParams = {}) =>
-      this.request<ModelsSkill[], any>({
+      this.request<ModelsSkillsResponse[], any>({
         path: `/skills`,
         method: "GET",
         secure: true,

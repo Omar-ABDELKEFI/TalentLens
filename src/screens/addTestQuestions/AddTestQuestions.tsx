@@ -18,7 +18,7 @@ const AddTestQuestions: React.FC<any> = () => {
             <h1>{errors}</h1>
         ) : (
             <div >
-                <div className={"add-questions__add-btn-container"}><Link to={"/question"}><Button className="add-questions__create-button">Create Question</Button></Link></div>
+                <div className={"add-questions__add-btn-container"}><Link to={"/questions/edit"}><Button className="add-questions__create-button">Create Question</Button></Link></div>
                 {questions && questions.map((question: any) => {
 
                     return (

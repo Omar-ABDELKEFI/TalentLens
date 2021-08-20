@@ -1,4 +1,5 @@
 import service from '@service/test-api';
+import { ModelsSkillsResponse } from '../../myApi';
 // action skill types
 export const skillsConstants = {
   FETCH_SKILLS_REQUEST: 'FETCH_SKILLS_REQUEST',
@@ -16,6 +17,7 @@ export function getSkills() {
     dispatch(request());
     service.skills.skillsList().then(
       (skills: any) => {
+        console.log(skills);
         dispatch(success(skills.data.data));
       },
       (error: any) => {
@@ -28,7 +30,7 @@ export function getSkills() {
     return { type: skillsConstants.FETCH_SKILLS_REQUEST };
   }
 
-  function success(skills: any) {
+      function success(skills: ModelsSkillsResponse[]) {
     return {  type: skillsConstants.FETCH_SKILLS_SUCCESS , skills };
   }
 
