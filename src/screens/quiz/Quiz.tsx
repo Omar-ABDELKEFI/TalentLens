@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import Mca from '@components/Quiz/Mca/Mca';
-import { Button, Col, Divider, Form, Row, Statistic } from 'antd';
 import './Quiz.less';
 import service from '@service/test-api';
 import { createResult, getQuiz, updateCurrentQuestion } from '@redux/actions/quiz';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
+import McaQuestion from '@components/Quiz/McaQuestion/McaQuestion';
 
-const { Countdown } = Statistic;
 const Quiz = () => {
   const quiz = useSelector((state: any) => state.quiz.quiz);
   const dispatch = useDispatch();
   const { idTestCandidate } = useParams();
   const isLoading = useSelector((state: any) => state.quiz.loadingQuiz);
+  const loadingTest =useSelector((state: any) => state.quiz.loadingTesInfo);
   const currentQuestion = useSelector((state: any) => state.quiz.testInfo.current_question);
   const lastUpdate = useSelector((state: any) => state.quiz.testInfo.updated_at);
   useEffect(() => {
@@ -50,48 +50,21 @@ const Quiz = () => {
   if (!isLoading && Date.now() > ((quiz.questions[currentQuestion].expected_time) * 60 * 1000 + Date.parse(lastUpdate) )) {
     handleSubmit()
   }
-
   return (
     <>
       {isLoading ? <></> :
         <div className={'quiz__container'}>
-          <Row justify={'space-between'}>
-            <Col><span
-              className={'quiz__current-question'}>Question {currentQuestion + 1} of {quiz.questions.length}</span></Col>
-            <Col><span className={'quiz__test-name'}>{quiz.name}</span></Col>
-            <Col><span className={'quiz__report'}>Report a problem ?</span></Col>
-          </Row>
-          <Divider className="quiz__divider"/>
-          <Row>
-            <Col style={{ paddingLeft: '15px' }}>
-              <Form>
 
-                <Mca question={quiz.questions[currentQuestion]} onCheckChange={handleCheckChange}
-                />
+          <McaQuestion quizName={quiz.name} questionIndex={currentQuestion + 1}
+                       totalQuestion={quiz.questions.length} handleSubmit={handleSubmit}
+                       handleCheckChange={handleCheckChange}
+                       currentQuestion={quiz.questions[currentQuestion]}
+                       lastUpdate={Date.parse(lastUpdate)}
+                       disabled={(loadingTest || isLoading)}
+          />
 
-                <Form.Item>
-                  <Form.Item style={{ display: 'inline-block' }}>
-                    <Button
-                      size={'large'}
-                      type={'primary'}
-                      onClick={handleSubmit}
-                    >
-                      Submit & next
-                    </Button>
-                  </Form.Item>
-                  <Form.Item style={{ display: 'inline-block', marginLeft: '10px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                      <div>Question time remaining :</div>
-                      <Countdown valueStyle={{ fontSize: '18px', fontWeight: 600 }}
-                                 value={(quiz.questions[currentQuestion].expected_time) * 60 * 1000 + Date.parse(lastUpdate)}
-                                 onFinish={handleSubmit}/>
-                    </div>
-                  </Form.Item>
-                </Form.Item>
-              </Form>
-            </Col>
-          </Row>
         </div>
+
       }</>
   );
 };

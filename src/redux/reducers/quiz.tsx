@@ -47,18 +47,18 @@ export function quiz(state =initialState, action: any) {
     case quizConstants.CREATE_RESULT_REQUEST:
       return {
         ...state,
-        loading: true
+        loadingTesInfo: true
       };
     case quizConstants.CREATE_RESULT_SUCCESS:
       return {
         ...state,
-        loading: false,
+        loadingTesInfo: false,
         testInfo: {...state.testInfo , test_status:action.result.test_status , score: action.result.score}
       };
     case quizConstants.CREATE_RESULT_FAILURE:
       return {
         ...state,
-        loading: false,
+        loadingTesInfo: false,
         error: action.error
       };
     case quizConstants.UPDATE_QUIZ_STATUS_REQUEST:

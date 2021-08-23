@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Question.less';
-import { Form, Input, Button, Slider, Select } from 'antd';
+import { Form, Input, Button, Slider, Select, Modal } from 'antd';
 
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -13,6 +13,7 @@ import { Redirect } from 'react-router-dom';
 import Header from '@layout/header/header';
 import { Iquestion } from '../../types';
 import { ModelsSkillsResponse } from '../../myApi';
+import McaQuestion from '@components/Quiz/McaQuestion/McaQuestion';
 
 const Question = () => {
   const marks = {
@@ -43,6 +44,7 @@ const Question = () => {
     skill_name: '',
     type: 'mca'
   });
+  const [showModal, setShowModal] = useState<boolean | undefined>(false);
   const skills = useSelector((state: any) => state.skills.skills);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -123,7 +125,6 @@ const Question = () => {
     setCustomSkill(!customSkill);
     setQuestion({ ...question, skill_name: '' });
   };
-
   const token = localStorage.getItem('token');
   return (
     <>{!token ? <Redirect to="/403"/> :
@@ -202,7 +203,7 @@ const Question = () => {
                   </label>
                 }
               >
-                <Select onChange={handleSelectPoints} defaultValue={"1"}>
+                <Select onChange={handleSelectPoints} defaultValue={'1'}>
                   <Select.Option value="1">1</Select.Option>
                   <Select.Option value="2">2</Select.Option>
                   <Select.Option value="3">3</Select.Option>
@@ -270,7 +271,20 @@ const Question = () => {
                   </label>
                 }
               >
-                <Button type="primary">Preview as candidate</Button>
+                <Button type="primary" onClick={() => setShowModal((prevState => !prevState))}>Preview as
+                  candidate</Button>
+                <Modal title="Preview" visible={showModal} onOk={() => setShowModal((prevState => !prevState))}
+                       cancelButtonProps={{ style: { display: 'none' } }}
+                       onCancel={() => setShowModal((prevState => !prevState))}
+                       width={"100%"}
+                >
+                  <McaQuestion questionIndex={1}
+                               totalQuestion={1}
+                               currentQuestion={question}
+                               lastUpdate={Date.now()}
+                  />
+                </Modal>
+
               </Form.Item>
               <Form.Item>
                 <Button

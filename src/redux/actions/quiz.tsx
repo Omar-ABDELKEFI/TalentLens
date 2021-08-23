@@ -34,7 +34,7 @@ export function startQuiz(idTestCandidate: any) {
           dispatch(success(res.data.data, false));
         },
         (res: any) => {
-          dispatch(failure(res.error.error.toString(), false));
+          dispatch(failure(res, false));
         }
       );
   };
@@ -162,9 +162,5 @@ export function updateCurrentQuestion(idTestCandidate: any, currentQuestion: any
   function failure(error: any) {
     return { type: quizConstants.UPDATE_CURRENT_QUESTION_FAILURE, error: error };
   }
-}
-
-function answerSubmit() {
-  return {  }
 }
 

@@ -3,10 +3,12 @@ import { Col, Row } from 'antd';
 import "./TestCard.less"
 import { ClockCircleOutlined } from "@ant-design/icons"
 import { UnorderedListOutlined, UsergroupDeleteOutlined } from '@ant-design/icons/lib';
+import {history} from '@redux/store';
+
 const TestCard = ({test}:any) => {
   console.log(test,"testCard");
   return (
-    <div className={"test-card__container"}>
+    <div className={"test-card__container"} onClick={()=>{history.push(`/my-tests/${test.test_id}`)}}>
       <Row style={{ marginBottom: 10 }}>
         <Col span={12}><span className={"test-card__test-name"}>{test.test_name}</span></Col>
       </Row>

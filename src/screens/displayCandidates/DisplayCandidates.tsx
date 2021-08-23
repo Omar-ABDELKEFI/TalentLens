@@ -53,27 +53,27 @@ const DisplayCandidates = () => {
     );
   }, []);
   const token = localStorage.getItem('token');
-    const handleSelectChange = (value : any) => {
-      switch (value) {
-        case "email" :
-          const sortByEmail = dataSource.slice()
-          sortByEmail.sort((a:any, b : any) => (a.candidate_email > b.candidate_email && 1) || -1)
-          setDataSource(sortByEmail)
-          break;
-        case "name" :
-          const sortByName = dataSource.slice()
-          sortByName.sort((a:any, b : any) => (a.candidate_name > b.candidate_name && 1) || -1)
-          setDataSource(sortByName)
-          break;
-        case "score" :
-          const sortByScore = dataSource.slice()
-          sortByScore.sort((a:any, b : any) => (a.score < b.score && 1) || -1)
-          setDataSource(sortByScore)
-          break;
-        default :
-          setDataSource(data)
-      }
+  const handleSelectChange = (value: any) => {
+    switch (value) {
+      case 'email' :
+        const sortByEmail = dataSource.slice();
+        sortByEmail.sort((a: any, b: any) => (a.candidate_email > b.candidate_email && 1) || -1);
+        setDataSource(sortByEmail);
+        break;
+      case 'name' :
+        const sortByName = dataSource.slice();
+        sortByName.sort((a: any, b: any) => (a.candidate_name > b.candidate_name && 1) || -1);
+        setDataSource(sortByName);
+        break;
+      case 'score' :
+        const sortByScore = dataSource.slice();
+        sortByScore.sort((a: any, b: any) => (a.score < b.score && 1) || -1);
+        setDataSource(sortByScore);
+        break;
+      default :
+        setDataSource(data);
     }
+  };
   return (<>{!token ? <Redirect to="/403"/> :
       <>
         <Header/>
@@ -97,14 +97,16 @@ const DisplayCandidates = () => {
                   }
                 }}
               />
-              <Select onChange={handleSelectChange} defaultValue={"date"}>
+              <Select onChange={handleSelectChange} defaultValue={'date'}>
                 <Select.Option value={'date'}>Sort by Date</Select.Option>
                 <Select.Option value={'email'}>Sort by Email</Select.Option>
                 <Select.Option value={'name'}>Sort by Name</Select.Option>
                 <Select.Option value={'score'}>Sort by Score</Select.Option>
               </Select>
             </div>
-            <Table columns={columns} dataSource={dataSource} rowKey={record => record.test_candidate_id}/>
+            <Table columns={columns} dataSource={dataSource} rowKey={record => record.test_candidate_id} bordered
+                   rowClassName={(record, index) => index % 2 === 0 ? 'display-candidates__table-even-row' : ''}
+            />
           </div>
         </div>
       </>}</>
