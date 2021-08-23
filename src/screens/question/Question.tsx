@@ -276,7 +276,8 @@ const Question = () => {
                 <Modal title="Preview" visible={showModal} onOk={() => setShowModal((prevState => !prevState))}
                        cancelButtonProps={{ style: { display: 'none' } }}
                        onCancel={() => setShowModal((prevState => !prevState))}
-                       width={"100%"}
+                       width={'100%'}
+                       style={{ top: 5 }}
                 >
                   <McaQuestion questionIndex={1}
                                totalQuestion={1}
