@@ -59,8 +59,9 @@ export function getQuestions() {
       (questions: any) => {
         dispatch(success(questions.data.data));
       },
-      (error: any) => {
-        dispatch(failure(error));
+      (data: any) => {
+        console.log(data.error.errors,"errorerror");
+        dispatch(failure(data.error.errors));
       }
     );
   };

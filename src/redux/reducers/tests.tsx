@@ -37,7 +37,7 @@ export function test(state = initialState, action: any) {
             return {
                 ...state,
                 loading: action.loading,
-                test: {...state.test,...action.test}
+                test: action.test
             }
         case testConstants.UPDATE_TEST_FAILURE:
             return {
@@ -80,7 +80,7 @@ export function test(state = initialState, action: any) {
         case testConstants.SET_TIME_LIMIT:
             return {
               ...state,
-                test:{'time_limit':action.payload}
+                timeLimit:action.payload
             }
         case testConstants.GET_TEST_REQUEST:
             return {

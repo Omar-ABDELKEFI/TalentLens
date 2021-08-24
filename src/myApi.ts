@@ -149,6 +149,7 @@ export interface ModelsTest {
   passing_score?: number;
   questions?: ModelsQuestion[];
   show_score?: boolean;
+  time_limit?: number;
   timing_policy?: string;
 }
 

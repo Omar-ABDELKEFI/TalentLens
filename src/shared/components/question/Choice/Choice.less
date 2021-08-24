@@ -1,0 +1,40 @@
+.ck-editor__editable {
+  min-height: 150px;
+}
+@module: Choice;
+
+.@{module} {
+
+
+
+  &__choices {
+    display: flex;
+    margin-bottom: 15px;
+  }
+
+  &__choices-checkbox {
+    background-color: #eeeeee;
+    padding: 0 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgb(217, 217, 217);
+    border-right: none;
+  }
+  &__choices-icon{
+    background-color: #eeeeee;
+    padding: 0 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgb(217, 217, 217);
+    border-left: none;
+  }
+  &__choices-icon:hover {
+    cursor: pointer;
+  }
+  &__add-skill {
+    display: flex;
+  }
+
+}

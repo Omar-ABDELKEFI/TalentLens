@@ -12,7 +12,8 @@ function Settings({passingScore}:any) {
     const {TextArea} = Input
     const dispatch = useDispatch()
     const {idTest} = useParams();
-
+   const timeLimit=useSelector((state:any)=> state.test.timeLimit)
+    console.log(timeLimit);
     const onHandelChangeCheck = (e: CheckboxChangeEvent) => {
         setValueSetting({...valueSetting, [String(e.target.name)]: e.target.checked})
     }
@@ -24,7 +25,7 @@ function Settings({passingScore}:any) {
     }
 
     const handleSubmit = (e: React.SyntheticEvent) => {
-        dispatch(actionTest.updateTest(idTest, {...valueSetting,'passing_score':passingScore}))
+        dispatch(actionTest.updateTest(idTest, {...valueSetting,'passing_score':passingScore,'time_limit':timeLimit}))
     }
     return (
         <div>

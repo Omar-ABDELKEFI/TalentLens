@@ -1,7 +1,7 @@
 import React from 'react';
 import {Checkbox, Input} from 'antd';
 import {CloseOutlined} from '@ant-design/icons';
-
+import './Choice.less'
 
 interface Ichoice {
     choice_text: string;
@@ -18,12 +18,12 @@ interface ChoiceProps {
 
 const Choice: React.FC<ChoiceProps> = ({onDelete, choice, onTextChange, onCheckChange}) => {
     return (
-        <div className="question__choices">
-            <div className={'question__choices-checkbox'}>
+        <div className="Choice__choices">
+            <div className={'Choice__choices-checkbox'}>
                 <Checkbox onChange={() => onCheckChange(choice.id)}/>
             </div>
             <Input name="choice_text" onBlur={e => onTextChange(e, choice.id)}/>
-            <div className="question__choices-icon" onClick={() => onDelete(choice?.id)}>
+            <div className="Choice__choices-icon" onClick={() => onDelete(choice?.id)}>
                 <CloseOutlined style={{fontSize: '16px', color: '#08c'}}/>
             </div>
         </div>

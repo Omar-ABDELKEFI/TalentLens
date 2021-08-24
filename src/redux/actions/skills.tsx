@@ -21,6 +21,7 @@ export function getSkills() {
         dispatch(success(skills.data.data));
       },
       (error: any) => {
+
         dispatch(failure(error));
       }
     );
@@ -31,7 +32,7 @@ export function getSkills() {
   }
 
       function success(skills: ModelsSkillsResponse[]) {
-    return {  type: skillsConstants.FETCH_SKILLS_SUCCESS , skills };
+    return { skills, type: skillsConstants.FETCH_SKILLS_SUCCESS , skills };
   }
 
   function failure(error: any) {

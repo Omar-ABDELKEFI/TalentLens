@@ -75,12 +75,12 @@ function ModelAddCandidates({isModalVisible,setIsModalVisible}:any) {
               <Form.Item
                 label={<label
                   style={{fontSize: "16px", fontWeight: 500, color: "rgb(33,37,41)"}}>Time limit</label>}>
-                <Select defaultValue="5" style={{ width: 120 }} onChange={handleChange}>
-                  <Option value="1">1 day</Option>
-                  <Option value="3">3 days</Option>
-                  <Option value="5">5 days</Option>
-                  <Option value="7">7 days</Option>
-                  <Option value="14">14 days</Option>
+                <Select defaultValue={5} style={{ width: 120 }} onChange={handleChange}>
+                  <Option value={1}>1 day</Option>
+                  <Option value={3}>3 days</Option>
+                  <Option value={5}>5 days</Option>
+                  <Option value={7}>7 days</Option>
+                  <Option value={14}>14 days</Option>
                 </Select>
               </Form.Item>
             </Form>
