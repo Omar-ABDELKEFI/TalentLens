@@ -1,32 +1,43 @@
-import React, { useState } from 'react';
-import {Row, Button} from 'antd'
-import ModelQuestionsTypes from '@components/question/ModelQuestionsTypes/ModelQuestionsTypes'
+import React from 'react';
+import { Row, Button, Space } from 'antd';
+import { useSelector } from 'react-redux';
+import TestQuestions from '@components/test/TestQuestions/TestQuestions';
+import TestQuestionsSkeleton from '../../../../skeleton/TestQuestionsSkeleton/TestQuestionsSkeleton';
 
-function AddQuestions({handleAddClick}: any) {
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
-    return (
-        <>
-            <Row justify="space-between">
-                <div>Add questions to see the expected solving time.</div>
+function AddQuestions({ handleAddClick, questions }: any) {
+  const loading = useSelector((state: any) => (state.test.loading));
+  const sum = (questions :any) => {
+   return  questions.reduce((accum : any ,item : any) =>
+      accum + item.expected_time
+   ,0)
+
+  }
+  return (
+    <>
+      {
+        loading ? (<TestQuestionsSkeleton />) :
+          <>
+            <Row justify="space-between" style={{marginBottom:"10px"}}>
+              <div>{questions.length === 0 ? 'Add questions to see the expected solving time.' : `Expected solving time ${sum(questions)} min`}</div>
+              <div>
                 <div>
-                    <div>
-                        <Button type="primary" style={{background: "#28a745", borderColor: "#28a745"}}
-                                onClick={handleAddClick}>Add
-                            Questions</Button>
+                  <Button type="primary" style={{ background: '#28a745', borderColor: '#28a745' }}
+                          onClick={handleAddClick}>Add
+                    Questions</Button>
 
 
-                    </div>
                 </div>
+              </div>
             </Row>
-            <Row justify="center">
+            {questions.length === 0 ?
+              <Row justify="center">
                 <div>Add Question to your test</div>
-            </Row>
-
-        </>
-    );
+              </Row> : <TestQuestions questions={questions}/>
+            }
+          </>
+      }
+    </>
+  );
 }
 
 export default AddQuestions;

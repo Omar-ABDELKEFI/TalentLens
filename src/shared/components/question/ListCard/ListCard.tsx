@@ -4,6 +4,7 @@ import {DashboardOutlined, ClockCircleOutlined, InsertRowBelowOutlined} from '@a
 import {useDispatch, useSelector} from "react-redux";
 import {addTestQuestions, removeTestQuestions} from "@redux/actions/question";
 import {useParams} from "react-router";
+import { removeHtml } from '@utils/common';
 
 const ListCard: React.FC<any> = ({question}) => {
     const {idTest} = useParams();
@@ -17,13 +18,7 @@ const ListCard: React.FC<any> = ({question}) => {
         })
         setAdded(isAdded)
     },[])
-    const removeHtml = (htlmText :string) => {
-        let temp = htlmText.replace(/<[^>]+>/g, '');
-        temp = temp.replace("&nbsp;"," ");
 
-        return temp;
-
-    }
     const handleAddClick = (question_id: number) => {
         setAdded((prevState => !prevState))
         dispatch(addTestQuestions(question_id, idTest))

@@ -1,0 +1,40 @@
+@module:name-col ;
+.@{module} {
+  &__row {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin: 3px 0;
+    max-width: 100%;
+    overflow-wrap: break-word;
+  }
+
+  &__question-body {
+    align-items: center;
+    color: #0085c8;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    line-height: 42px;
+    margin-right: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  &__question-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__question-body > span {
+    font-weight: 700;
+  }
+  &__skill {
+    background-color: #dfebf3;
+    border-radius: 10px;
+    color: #0085c8;
+    margin-bottom: 5px;
+    padding: 3px;
+  }
+
+}

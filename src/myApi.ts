@@ -549,6 +549,22 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       }),
 
     /**
+     * @description get test by id
+     *
+     * @tags test
+     * @name GetTest
+     * @summary get test by id
+     * @request GET:/my-tests/{id}
+     */
+    getTest: (id: string, params: RequestParams = {}) =>
+      this.request<ModelsMyTests, any>({
+        path: `/my-tests/${id}`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
      * @description add a question to test by json
      *
      * @tags question_test

@@ -2,8 +2,18 @@
 
 @import '../../styles/settings';
 @import '../../styles/tools';
+@module:create-test;
+.@{module} {
+  &__main-container{
+    display: flex;
+    justify-content: center;
+    background-color: rgb(240, 242, 245);
 
-
+  }
+  &__container{
+    width: 70%;
+  }
+}
 .card-container {
   p {
     margin: 0;
