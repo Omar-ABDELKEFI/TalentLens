@@ -37,7 +37,7 @@ function DisplayTests() {
             {isLoading ? <>
                 <ListCardSkeleton/>
               </>
-              : myTests.map((test: any) => {
+              : myTests===null? <></>: myTests.map((test: any) => {
                 return (
                   <TestCard key={test.test_id} test={test}/>
                 );
