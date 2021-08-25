@@ -64,6 +64,10 @@ export interface ModelsChoices {
   is_answer: boolean;
 }
 
+export interface ModelsCloneTestInput {
+  expected_time?: number;
+}
+
 export interface ModelsCreateQuestionInput {
   choices?: ModelsChoices[];
   difficulty: string;
@@ -73,7 +77,7 @@ export interface ModelsCreateQuestionInput {
   name: string;
   question_text: string;
   skill_id?: number;
-  skill_name?: string;
+  skill_name: string;
   type?: string;
 }
 
@@ -102,8 +106,8 @@ export interface ModelsQuestion {
   file_read_me?: string;
   id?: number;
   max_points?: number;
-  name?: string;
-  question_text?: string;
+  name: string;
+  question_text: string;
   skill?: ModelsSkill;
   skill_id?: number;
   test?: ModelsTest[];
@@ -511,6 +515,24 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/my-tests/candidates/${testId}`,
         method: "POST",
         body: test_candidate,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * @description clone test
+     *
+     * @tags test
+     * @name CloneTest
+     * @summary clone a test
+     * @request POST:/my-tests/clone/{id}
+     */
+    cloneTest: (id: string, expectedTime: ModelsCloneTestInput, params: RequestParams = {}) =>
+      this.request<ModelsMyTests, any>({
+        path: `/my-tests/clone/${id}`,
+        method: "POST",
+        body: expectedTime,
         type: ContentType.Json,
         format: "json",
         ...params,

@@ -37,7 +37,7 @@ export function test(state = initialState, action: any) {
             return {
                 ...state,
                 loading: action.loading,
-                test: action.test
+                test: {...state.test,...action.test}
             }
         case testConstants.UPDATE_TEST_FAILURE:
             return {
@@ -99,6 +99,24 @@ export function test(state = initialState, action: any) {
                 loading: false,
                 error: action.error
             };
+        case testConstants.CLONE_TEST_REQUEST:
+            return {
+                ...state,
+                loading:true,
+            }
+        case testConstants.CLONE_TEST_SUCCESS:
+            console.log(action.test);
+            return {
+                ...state,
+                loading:false,
+                myTests: [action.test , ...state.myTests]
+            }
+        case testConstants.CLONE_TEST_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                error:action.error,
+            }
         default:
             return state
     }

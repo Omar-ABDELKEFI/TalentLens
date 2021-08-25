@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './McaQuestions.less';
-import { Form, Input, Button, Slider, Select, notification } from 'antd';
+import { Form, Input, Button, Slider, Select, notification, Modal } from 'antd';
 
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -16,6 +16,7 @@ import errorsTypes from '@utils/errorsTypes.json';
 import { constTypes, handleError } from '@utils/constTypesError';
 import { IErrortypes } from '@schemes/errorTypes';
 import { ArgsProps, ConfigProps, NotificationApi } from 'antd/lib/notification';
+import McaQuestion from '@components/Quiz/McaQuestion/McaQuestion';
 
 interface Ichoice {
   choice_text: string;
@@ -76,8 +77,8 @@ const Question = () => {
 
     ],
     difficulty: 'easy',
-    max_points: 6,
-    expected_time: 10,
+    max_points: 1,
+    expected_time: 1,
     question_text: '',
     skill_name: '',
     type: 'mca'
@@ -223,6 +224,8 @@ const Question = () => {
   };
 
   const token = localStorage.getItem('token');
+  const [showModal, setShowModal] = useState<boolean | undefined>(false);
+
   return (
     <>{!token ? <Redirect to="/403"/> :
       <>
@@ -402,7 +405,20 @@ const Question = () => {
                   </label>
                 }
               >
-                <Button type="primary">Preview as candidate</Button>
+                <Button type="primary" onClick={() => setShowModal((prevState => !prevState))}>Preview as
+                  candidate</Button>
+                <Modal title="Preview" visible={showModal} onOk={() => setShowModal((prevState => !prevState))}
+                       cancelButtonProps={{ style: { display: 'none' } }}
+                       onCancel={() => setShowModal((prevState => !prevState))}
+                       width={'100%'}
+                       style={{ top: 5 }}
+                >
+                  <McaQuestion questionIndex={1}
+                               totalQuestion={1}
+                               currentQuestion={question}
+                               lastUpdate={Date.now()}
+                  />
+                </Modal>
               </Form.Item>
               <Form.Item>
                 <Button

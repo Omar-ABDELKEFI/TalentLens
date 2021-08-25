@@ -32,7 +32,11 @@ export const testConstants = {
   //
   GET_TEST_REQUEST: 'GET_TEST_REQUEST',
   GET_TEST_SUCCESS: 'GET_TEST_SUCCESS',
-  GET_TEST_FAILURE: 'GET_TEST_FAILURE'
+  GET_TEST_FAILURE: 'GET_TEST_FAILURE',
+  //
+  CLONE_TEST_REQUEST: 'CLONE_TEST_REQUEST',
+  CLONE_TEST_SUCCESS: 'CLONE_TEST_SUCCESS',
+  CLONE_TEST_FAILURE: 'CLONE_TEST_FAILURE',
 
 
 };
@@ -193,5 +197,33 @@ export function getTest(testId : any) {
 
   function failure(error: string) {
     return { type: testConstants.GET_TEST_FAILURE , error };
+  }
+}
+export function cloneTest(testId : any , expectedTime : any) {
+  return (dispatch: any) => {
+    dispatch(request());
+
+    service.myTests.cloneTest(testId,{expected_time:expectedTime})
+      .then(
+        (res: any) => {
+          console.log(res.data.data);
+          dispatch(success(res.data.data));
+        },
+        (res: any) => {
+          dispatch(failure(res.error.error.toString()));
+        }
+      );
+  };
+
+  function request() {
+    return { type: testConstants.CLONE_TEST_REQUEST };
+  }
+
+  function success(test: boolean) {
+    return {type: testConstants.CLONE_TEST_SUCCESS , test};
+  }
+
+  function failure(error: string) {
+    return { type: testConstants.CLONE_TEST_FAILURE , error };
   }
 }
