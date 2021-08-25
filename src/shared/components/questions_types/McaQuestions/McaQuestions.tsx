@@ -88,6 +88,7 @@ const Question = () => {
     dispatch(getSkills());
   }, [dispatch]);
   const skills = useSelector((state: any) => state.skills.skills);
+
   console.log(skills,"skiils");
   const [customSkill, setCustomSkill] = useState<boolean>(false);
   const handleAddButton = () => {
@@ -131,7 +132,14 @@ const Question = () => {
     console.log(question);
   };
   const handleSelectSkill = (value: any) => {
-    setQuestion({ ...question, skill_id: value });
+
+    for(const skill of skills){
+      if(skill.ID===value){
+        const name=skill.name
+        setQuestion({ ...question, skill_id: value,skill_name:name });
+        break
+      }
+    }
     console.log(question);
   };
   const handleSelectExpectedTime = (value: any) => {
