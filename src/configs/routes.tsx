@@ -8,10 +8,11 @@ import store, { history } from '@redux/store';
 
 const Home = React.lazy(() => import('@screens/login/Login'));
 const CreateTest = React.lazy(() => import('@screens/createTest/CreateTest'));
-const Question = React.lazy(() => import('@screens/question/Question'));
+const Question = React.lazy(() => import('@components/questions_types/McaQuestions/McaQuestions'));
 const notAutorized = React.lazy(() => import('@screens/errorResult/notAuthorized'));
 const PageNotExist = React.lazy(() => import('@screens/errorResult/PageNotExist'));
 const DisplayTests = React.lazy(() => import('@screens/displayTests/DisplayTests'));
+const DisplayQuiz = React.lazy(() => import('@screens/quiz/Quiz'));
 const StartTest = React.lazy(() => import('@screens/startTest/StartTest'))
 const DisplayCandidates = React.lazy(() => import('@screens/displayCandidates/DisplayCandidates'))
 

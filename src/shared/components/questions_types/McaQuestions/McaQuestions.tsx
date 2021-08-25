@@ -185,8 +185,10 @@ const Question = () => {
     }
   };
   const error = useSelector((state: any) => state.questions.error);
+  console.log(error,"errorerrorerror");
   useEffect(() => {
       if (error) {
+        console.log(error,"error1");
         error.map((err:any)=>openNotificationWithIcon("error", handleError(err)))
       }
     }
@@ -375,7 +377,6 @@ const Question = () => {
                     },
                   ]}>
                     <Input
-
                       placeholder="Type your custom skill name"
                       name="skillInput"
                       onChange={handleNewSkill}

@@ -5,6 +5,8 @@ import { login } from './login';
 import { test } from './tests';
 import { skills } from './skill';
 import { questions } from '@redux/reducers/question';
+import { candidate } from '@redux/reducers/candidate';
+
 import { quiz } from '@redux/reducers/quiz';
 // combine all reducer
 const createRootReducer = (history: History) =>
@@ -14,6 +16,7 @@ const createRootReducer = (history: History) =>
     test,
     skills,
     questions,
+    candidate,
     quiz
   });
 export default createRootReducer;

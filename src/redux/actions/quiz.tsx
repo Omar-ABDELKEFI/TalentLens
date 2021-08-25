@@ -34,7 +34,7 @@ export function startQuiz(idTestCandidate: any) {
           dispatch(success(res.data.data, false));
         },
         (res: any) => {
-          dispatch(failure(res, false));
+          dispatch(failure(res.error, false));
         }
       );
   };

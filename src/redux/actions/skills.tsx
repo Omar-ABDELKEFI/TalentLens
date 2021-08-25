@@ -32,7 +32,7 @@ export function getSkills() {
   }
 
       function success(skills: ModelsSkillsResponse[]) {
-    return { skills, type: skillsConstants.FETCH_SKILLS_SUCCESS , skills };
+    return { skills, type: skillsConstants.FETCH_SKILLS_SUCCESS  };
   }
 
   function failure(error: any) {

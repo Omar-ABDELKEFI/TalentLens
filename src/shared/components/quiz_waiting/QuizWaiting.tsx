@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import TestQuestionsTable from '../test-question-table/testQuestionsTable';
 import { Button } from 'antd';
+import './QuizWaiting.less'
 import { useDispatch } from 'react-redux';
 import { updateTestStatus } from '@redux/actions/quiz';
 
@@ -15,12 +16,12 @@ const QuizWaiting = ({testInfo , idTestCandidate} : any) => {
   const dispatch = useDispatch();
 
   return (
-    <div className={'start-test__main-container'}>
-      <div className={'start-test__container'}>
-        <div className={'start-test__first-line'}>
-          <span className={'start-test__my-test'}>{testInfo.name}</span>
+    <div className={'quiz-waiting__main-container'}>
+      <div className={'quiz-waiting__container'}>
+        <div className={'quiz-waiting__first-line'}>
+          <span className={'quiz-waiting__my-test'}>{testInfo.name}</span>
         </div>
-        <div className={'start-test__secand-line'}>
+        <div className={'quiz-waiting__secand-line'}>
           <p><b>Deadline:</b> The test must be completed before Aug 14, 16:00 (CEST, 24-hour clock).</p>
           <p><b>Test duration:</b> This test normally takes 5min, but you have up to 7min 30sec (no breaks
             allowed).

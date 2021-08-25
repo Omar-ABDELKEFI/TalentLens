@@ -32,9 +32,9 @@ export function createQuestion(question: any) {
         console.log('Question created successfully');
         history.goBack();
       },
-      (error: any) => {
-
-        dispatch(failure(error));
+      (data: any) => {
+        console.log(data.error.errors,"errorerror");
+        dispatch(failure(data.error.errors));
       }
     );
   };
