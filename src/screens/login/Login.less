@@ -5,7 +5,7 @@
 @module: login;
 
 .@{module} {
-
+  overflow: hidden;
   display: grid;
   height: 100vh;
   justify-content: center;
@@ -79,7 +79,15 @@
 
   &__containerForm {
     width: 970px;
-    .flex(@direction: column,@align: center)
+    .flex(@direction: column,@align: center);
+
   }
 
+  @media @mobile {
+    &__containerForm {
+      width: 855px;
+      .flex(@direction: column,@align: center);
+
+    }
+  }
 }
