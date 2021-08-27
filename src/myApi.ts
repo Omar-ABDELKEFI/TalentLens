@@ -492,7 +492,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @summary add new Test
      * @request POST:/my-tests
      */
-    myTestsCreate: (Test: ModelsTestRequest, params: RequestParams = {}) =>
+    myTestsCreate: (Test: ModelsTest, params: RequestParams = {}) =>
       this.request<ModelsTestResponse, any>({
         path: `/my-tests`,
         method: "POST",

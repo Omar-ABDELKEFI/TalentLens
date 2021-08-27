@@ -1,22 +1,20 @@
 import React, {ChangeEvent, useState} from 'react';
 import { Row, Col, Slider, InputNumber, Button, Select, Modal, Form } from 'antd';
-import {useDispatch} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {actionTest} from "@redux/actions";
 import { ReactMultiEmail } from "react-multi-email";
 import "react-multi-email/style.css";
 import {useParams} from "react-router-dom";
 
 function ModelAddCandidates({isModalVisible,setIsModalVisible}:any) {
-  const [PassingScore, setPassingScore] = useState(1);
-  // const [valuesCandidate, setValuesCandidate] = useState<any>([])
   const [emails,setEmails]=useState<string[]>([])
   const {Option} =Select
   const dispatch = useDispatch()
   const {idTest} = useParams();
 
+  const time_limit = useSelector(((state:any) => state.test.test.time_limit))
   function handleChange(value:any) {
-    console.log(`selected ${value}`);
-    dispatch(actionTest.setTimeLimit(value))
+    dispatch(actionTest.updateTest(idTest, { time_limit:value }))
   }
   console.log(emails,"emails");
   const handleOk = () => {
@@ -72,7 +70,7 @@ function ModelAddCandidates({isModalVisible,setIsModalVisible}:any) {
               <Form.Item
                 label={<label
                   style={{fontSize: "16px", fontWeight: 500, color: "rgb(33,37,41)"}}>Time limit</label>}>
-                <Select defaultValue={5} style={{ width: 120 }} onChange={handleChange}>
+                <Select defaultValue={time_limit} style={{ width: 120 }} onChange={handleChange}>
                   <Option value={1}>1 day</Option>
                   <Option value={3}>3 days</Option>
                   <Option value={5}>5 days</Option>

@@ -1,39 +1,18 @@
 import React, { ChangeEvent, useState } from 'react';
 import './Settings.less';
 import { Input, Radio, Space, Checkbox, Form, Button } from 'antd';
-import { RadioChangeEvent } from 'antd/lib/radio/interface';
 import { useDispatch, useSelector } from 'react-redux';
-import { CheckboxChangeEvent } from 'antd/lib/checkbox/Checkbox';
 import { actionTest } from '@redux/actions';
 import { useParams } from 'react-router-dom';
-import { history } from '@redux/store';
 
-function Settings({ passingScore }: any) {
-  const [valueSetting, setValueSetting] = useState<any>({
-    timing_policy: 'Medium',
-    show_score: true,
-    name: 'Custom test'
-  });
+function Settings() {
   const { TextArea } = Input;
   const dispatch = useDispatch();
   const { idTest } = useParams();
-  const timeLimit = useSelector((state: any) => state.test.timeLimit);
-  const newCandidates = useSelector((state: any) => state.test.newCandidates);
-  console.log(timeLimit, 'timeLimit');
-  const onHandelChangeCheck = (e: CheckboxChangeEvent) => {
-    setValueSetting({ ...valueSetting, [String(e.target.name)]: e.target.checked });
-  };
-  const onHandelChangeRadio = (e: RadioChangeEvent) => {
-    setValueSetting({ ...valueSetting, [String(e.target.name)]: e.target.value });
-  };
-  const onHandelChangeInput = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
-    setValueSetting({ ...valueSetting, [String(e.target.name)]: e.target.value });
-  };
+  const test = useSelector((state: any) => state.test.test);
 
-  const handleSubmit = (e: React.SyntheticEvent) => {
-    dispatch(actionTest.updateTest(idTest, { ...valueSetting, 'passing_score': passingScore, 'time_limit': timeLimit }));
-    dispatch(actionTest.create_candidate(newCandidates));
-    history.push('/my-tests');
+  const handleSubmit = (e: any) => {
+    dispatch(actionTest.updateTest(idTest, e));
   };
   return (
     <div>
@@ -41,29 +20,35 @@ function Settings({ passingScore }: any) {
             labelCol={{
               span: 4
             }}
+            initialValues={test}
             colon={false}
             labelAlign="left"
       >
         <Form.Item
+          name="name"
           label={<label
             style={{ fontSize: '16px', fontWeight: 500, color: 'rgb(33,37,41)' }}>Name<span>*</span></label>}>
-          <Input placeholder="Name" name="name" onChange={onHandelChangeInput}/>
+          <Input placeholder="Name"/>
         </Form.Item>
         <Form.Item
+          name="description"
           label={<label
             style={{ fontSize: '16px', fontWeight: 500, color: 'rgb(33,37,41)' }}>Description</label>}>
-          <Input name="description" onChange={onHandelChangeInput}/>
+          <Input/>
         </Form.Item>
         <Form.Item
+          name="notify_emails"
           label={<label style={{ fontSize: '16px', fontWeight: 500, color: 'rgb(33,37,41)' }}
                         placeholder="Enter e-mail addresses of those you want to notify when a candidate finishes this test.">Notify
             to E-mails</label>}>
-          <TextArea onChange={onHandelChangeInput} rows={2} name="notify_emails"/>
+          <TextArea rows={2}/>
         </Form.Item>
-        <Form.Item label={<label
-          style={{ fontSize: '16px', fontWeight: 500, color: 'rgb(33,37,41)' }}>Timing Policy</label>}>
-          <Radio.Group onChange={onHandelChangeRadio} name="timing_policy"
-                       defaultValue={valueSetting.timing_policy}>
+        <Form.Item
+          name="timing_policy"
+          label={<label
+            style={{ fontSize: '16px', fontWeight: 500, color: 'rgb(33,37,41)' }}>Timing Policy</label>}>
+          <Radio.Group
+          >
             <Space direction="vertical">
               <Radio value={'Strict'}>Srict: enforce the expacted limit</Radio>
               <Radio value={'Medium'}>Add an extra 50% time buffer</Radio>
@@ -71,9 +56,12 @@ function Settings({ passingScore }: any) {
             </Space>
           </Radio.Group>
         </Form.Item>
-        <Form.Item label={<label
-          style={{ fontSize: '16px', fontWeight: 500, color: 'rgb(33,37,41)' }}>final Score</label>}>
-          <Checkbox onChange={onHandelChangeCheck} name="show_score" checked={valueSetting.show_score}>Show to
+        <Form.Item
+          valuePropName="checked"
+          name="show_score"
+          label={<label
+            style={{ fontSize: '16px', fontWeight: 500, color: 'rgb(33,37,41)' }}>final Score</label>}>
+          <Checkbox>Show to
             candidates</Checkbox>
         </Form.Item>
         <Button type="primary" htmlType="submit">

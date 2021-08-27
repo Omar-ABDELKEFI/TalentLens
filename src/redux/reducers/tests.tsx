@@ -1,5 +1,4 @@
 import {testConstants} from '@redux/actions/tests';
-import { stat } from 'fs';
 const initialState = {
     loading:true,
     test:{
@@ -33,7 +32,6 @@ export function test(state = initialState, action: any) {
                 loading: action.loading
             }
         case testConstants.UPDATE_TEST_SUCCESS:
-            console.log(state,"statestate");
             return {
                 ...state,
                 loading: action.loading,
@@ -105,7 +103,6 @@ export function test(state = initialState, action: any) {
                 loading:true,
             }
         case testConstants.CLONE_TEST_SUCCESS:
-            console.log(action.test);
             return {
                 ...state,
                 loading:false,

@@ -37,7 +37,15 @@ function DisplayTests() {
             {isLoading ? <>
                 <ListCardSkeleton/>
               </>
-              : myTests===null? <></>: myTests.map((test: any) => {
+              : myTests===null? <>
+                Start Testing Candidates
+                Choose one of our predefined tests for the skills you need or add individual questions one by one to a new empty test.
+
+                You can also create your own custom questions to build a test tailored to your needs.
+
+
+              </>: myTests.map((test: any) => {
+                console.log("my testtss ",test);
                 return (
                   <TestCard key={test.test_id} test={test}/>
                 );

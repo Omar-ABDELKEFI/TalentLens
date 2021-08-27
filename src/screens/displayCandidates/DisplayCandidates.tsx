@@ -7,7 +7,6 @@ import { Redirect } from 'react-router-dom';
 import ScoreCol from '@components/display_candidates/ScoreCol/ScoreCol';
 import CandidateCol from '@components/display_candidates/CandidateCol/CandidateCol';
 
-
 const DisplayCandidates = () => {
 
   const [dataSource, setDataSource] = useState<any>([]);

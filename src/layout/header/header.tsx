@@ -4,7 +4,6 @@ import { Menu, Layout } from 'antd';
 import { Link } from 'react-router-dom';
 import { history } from '@redux/store';
 import { UpOutlined, } from '@ant-design/icons';
-import { log } from 'util';
 import { DownOutlined } from '@ant-design/icons/lib';
 
 
@@ -30,7 +29,7 @@ const SubHeader = () => {
         </Link></Menu.Item>
         <Menu.Item className={"header__menu"} key="3"><span className="header__item">Tests</span></Menu.Item>
         <Menu.Item key="4"><span className="header__item">Questions</span></Menu.Item>
-        <SubMenu   key="sub1" className="header__menu"  title={<span className="header__item">Tests{isOpen?<UpOutlined className="header__up"/>:<DownOutlined className="header__up" />}</span>}
+        <SubMenu   key="sub1" className="header__menu"  title={<span className="header__item">Account{isOpen?<UpOutlined className="header__up"/>:<DownOutlined className="header__up" />}</span>}
                  popupClassName="header__background">
           <Menu.Item key="6">
             <span className="header__item">Settings</span>

@@ -4,15 +4,14 @@ import { Tabs, Layout, Row, Input, Form } from 'antd';
 import Settings from '@components/cards_create_test/Settings/Settings';
 import AddCandidates from '@shared/components/cards_create_test/AddCandidates/AddCandidates';
 import AddQuestions from '@shared/components/cards_create_test/AddQuestions/AddQuestions';
+import Header from '@layout/header/header';
 import AddTestQuestions from '../addTestQuestions/AddTestQuestions';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTest } from '@redux/actions/tests';
 import { useParams } from 'react-router';
-import { EditTwoTone, SaveTwoTone } from '@ant-design/icons/lib';
 import SubHeader from '@layout/header/header';
 
 function CreateTest() {
-  const [passingScore, setPassingScore] = useState(1);
   const { TabPane } = Tabs;
   const { Content } = Layout;
   const [showQuestionList, setShowQuestionList] = useState(false);
@@ -21,27 +20,16 @@ function CreateTest() {
   const handleAddClick = () => {
     setShowQuestionList(!showQuestionList);
   };
-  const onChangePassingScore = (value: any) => {
-    console.log('passing score', passingScore);
-    setPassingScore(value);
-  };
+
   useEffect(() => {
     dispatch(getTest(idTest));
   }, []);
-  const [nameEdit, setNameEdit] = useState(false);
   const test = useSelector((state: any) => (state.test.test));
-  const nameInput = useRef(null);
-  const handleSaveName = () => {
-    setNameEdit(false)
-  };
-  const handleEditName = () => {
-    setNameEdit(true)
-  };
-  useEffect(()=>{
-    // @ts-ignore
-    nameEdit && nameInput.current.focus()
-  },[nameEdit])
-
+  const handleTabChange = (key : string) => {
+    if(key ==="1"){
+      setShowQuestionList(false)
+    }
+  }
   return (
     <>
       <SubHeader/>
@@ -52,37 +40,18 @@ function CreateTest() {
             <Content style={{ marginTop: 25 }}>
               <div className="card-container">
                 <Row style={{ marginBottom: 15 }} align={'middle'}>
-                  {nameEdit ?
-                    <Form colon={false} layout={'inline'}>
-                      <Row align={'middle'}>
-                        <Form.Item>
-                          <Input defaultValue={test.name} size={'small'}
-                                 style={{ fontSize: 30, fontWeight: 500, color: '#212529' }} onBlur={()=>setNameEdit(false)}
-                                 ref={nameInput}
-                          />
-                        </Form.Item>
-                        <Form.Item>
-                          <SaveTwoTone onClick={handleSaveName} style={{ fontSize: 20 }}/>
-                        </Form.Item>
-                      </Row>
-                    </Form>
-                    :
-                    <>
-                      <span className={'create-test__test-name'} onClick={handleEditName}>{test.name}</span>
-                      <EditTwoTone style={{ marginLeft: 20, fontSize: 20 }} onClick={handleEditName}/>
-                    </>
-                  }
+                      <span className={'create-test__test-name'} >{test.name}</span>
                 </Row>
-                <Tabs type="card">
+                <Tabs type="card" onTabClick={handleTabChange}>
                   <TabPane tab="Questions" key="1">
                     {showQuestionList ? <AddTestQuestions/> :
                       <AddQuestions handleAddClick={handleAddClick} questions={test.questions}/>}
                   </TabPane>
                   <TabPane tab="Candidates" key="2">
-                    <AddCandidates passingScore={passingScore} onChangePassingScore={onChangePassingScore}/>
+                    <AddCandidates idTest={idTest} initialPassingScore={test.passing_score}/>
                   </TabPane>
                   <TabPane tab="Settings" key="3">
-                    <Settings passingScore={passingScore}/>
+                    <Settings />
                   </TabPane>
                 </Tabs>
               </div>

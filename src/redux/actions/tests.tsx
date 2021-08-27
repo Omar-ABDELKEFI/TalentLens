@@ -40,7 +40,6 @@ export const testConstants = {
   CLONE_TEST_SUCCESS: 'CLONE_TEST_SUCCESS',
   CLONE_TEST_FAILURE: 'CLONE_TEST_FAILURE',
 
-
 };
 
 // action create test
@@ -48,7 +47,7 @@ export function createTest() {
   return (dispatch: any) => {
     dispatch(request(true));
 
-    service.myTests.myTestsCreate({}) // id create automaticly
+    service.myTests.myTestsCreate({passing_score:50, name:"test demo", show_score:false, timing_policy:"Medium", time_limit:3 }) // id create automaticly
       .then(
         (res: any) => {
           dispatch(success(false));
@@ -215,7 +214,6 @@ export function cloneTest(testId : any , expectedTime : any) {
     service.myTests.cloneTest(testId,{expected_time:expectedTime})
       .then(
         (res: any) => {
-          console.log(res.data.data);
           dispatch(success(res.data.data));
         },
         (res: any) => {
