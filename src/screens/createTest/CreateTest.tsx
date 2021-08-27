@@ -4,12 +4,12 @@ import { Tabs, Layout, Row, Input, Form } from 'antd';
 import Settings from '@components/cards_create_test/Settings/Settings';
 import AddCandidates from '@shared/components/cards_create_test/AddCandidates/AddCandidates';
 import AddQuestions from '@shared/components/cards_create_test/AddQuestions/AddQuestions';
-import Header from '@layout/header/header';
 import AddTestQuestions from '../addTestQuestions/AddTestQuestions';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTest } from '@redux/actions/tests';
 import { useParams } from 'react-router';
 import { EditTwoTone, SaveTwoTone } from '@ant-design/icons/lib';
+import SubHeader from '@layout/header/header';
 
 function CreateTest() {
   const [passingScore, setPassingScore] = useState(1);
@@ -44,7 +44,7 @@ function CreateTest() {
 
   return (
     <>
-      <Header/>
+      <SubHeader/>
       <div className={'create-test__main-container'}>
 
         <div className={'create-test__container'}>

@@ -13,10 +13,7 @@ function ModelAddCandidates({isModalVisible,setIsModalVisible}:any) {
   const {Option} =Select
   const dispatch = useDispatch()
   const {idTest} = useParams();
-  const onChangePassingScore = (value: any) => {
-    console.log("passing score", PassingScore)
-    setPassingScore(value)
-  }
+
   function handleChange(value:any) {
     console.log(`selected ${value}`);
     dispatch(actionTest.setTimeLimit(value))
@@ -28,7 +25,7 @@ function ModelAddCandidates({isModalVisible,setIsModalVisible}:any) {
         return {"email":email,"test": [{id: Number(idTest)}]}
       }))
       console.log(valueCandidate,"valueCandidate");
-      dispatch(actionTest.create_candidate(valueCandidate))
+      dispatch(actionTest.setCandidates(valueCandidate))
     }
     setIsModalVisible(false);
   };

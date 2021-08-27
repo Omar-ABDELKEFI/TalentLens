@@ -30,6 +30,8 @@ export const testConstants = {
   //
   SET_TIME_LIMIT: 'SET_TIME_LIMIT',
   //
+  SET_CANDIDATE:'SET_CANDIDATE',
+  //
   GET_TEST_REQUEST: 'GET_TEST_REQUEST',
   GET_TEST_SUCCESS: 'GET_TEST_SUCCESS',
   GET_TEST_FAILURE: 'GET_TEST_FAILURE',
@@ -170,6 +172,13 @@ export function setTimeLimit(time: any) {
     payload: time
   };
 
+}
+export function setCandidates(candidates:any) {
+  console.log(candidates,"candidates");
+return{
+  type:testConstants.SET_CANDIDATE,
+  payload:candidates
+}
 }
 
 export function getTest(testId : any) {

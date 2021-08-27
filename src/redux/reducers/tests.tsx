@@ -117,6 +117,11 @@ export function test(state = initialState, action: any) {
                 loading: false,
                 error:action.error,
             }
+        case testConstants.SET_CANDIDATE:
+            return {
+              ...state,
+                newCandidates:action.payload
+            }
         default:
             return state
     }
