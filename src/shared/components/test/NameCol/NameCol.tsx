@@ -3,6 +3,8 @@ import { removeHtml } from '@utils/common';
 import './NameCol.less';
 import { Modal } from 'antd';
 import McaQuestion from '@components/Quiz/McaQuestion/McaQuestion';
+import Question from '@components/questions_types/McaQuestions/McaQuestions';
+import QuestionPreview from '@components/question/QuestionPreview/QuestionPreview';
 
 const NameCol = ({ question }: any) => {
   const [previewModal, setPreviewModal] = useState(false);
@@ -22,18 +24,7 @@ const NameCol = ({ question }: any) => {
           <span className={'name-col__skill'}>{question.Skill.name}</span>
         </div>
       </div>
-      <Modal title="Preview" visible={previewModal} onOk={() => setPreviewModal((prevState => !prevState))}
-             cancelButtonProps={{ style: { display: 'none' } }}
-             onCancel={() => setPreviewModal((prevState => !prevState))}
-             width={'100%'}
-             style={{ top: 5 }}
-      >
-        <McaQuestion questionIndex={1}
-                     totalQuestion={1}
-                     currentQuestion={question}
-                     lastUpdate={Date.now()}
-        />
-      </Modal>
+      <QuestionPreview previewModal={previewModal} setPreviewModal={setPreviewModal} question={question}/>
     </>
   );
 };

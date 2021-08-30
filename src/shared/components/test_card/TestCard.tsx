@@ -6,6 +6,7 @@ import { UnorderedListOutlined, UsergroupDeleteOutlined } from '@ant-design/icon
 import { history } from '@redux/store';
 import { useDispatch } from 'react-redux';
 import { cloneTest } from '@redux/actions/tests';
+import TextIcon from '@components/TextIcon/TextIcon';
 
 const TestCard = ({ test }: any) => {
   const dispatch = useDispatch()
@@ -45,18 +46,13 @@ const TestCard = ({ test }: any) => {
       </Row>
       <Row>
         <Col span={6}>
-          <UsergroupDeleteOutlined className={'test-card__icon'}/>
-          <span className={'test-card__card-element'}>{test.number_candidate} candidates</span>
+          <TextIcon icon={UsergroupDeleteOutlined} text={`${test.number_candidate} candidates`} style={{color:"#006FAD"}}/>
         </Col>
         <Col span={6}>
-          <UnorderedListOutlined className={'test-card__icon'}/>
-          <span className={'test-card__card-element'}>{test.number_Question} Questions</span>
+          <TextIcon icon={UnorderedListOutlined} text={`${test.number_Question} Questions`} style={{color:"#006FAD"}}/>
         </Col>
         <Col span={12}>
-
-          <ClockCircleOutlined className={'test-card__icon'}/>
-          <span
-            className={'test-card__card-element'}>{test.expected_time === null ? '-' : test.expected_time} mins</span>
+          <TextIcon icon={ClockCircleOutlined} text={test.expected_time === null ? '-' : `${test.expected_time} mins`} style={{color:"#006FAD"}}/>
         </Col>
       </Row>
     </div>

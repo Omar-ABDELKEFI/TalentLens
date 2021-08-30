@@ -6,6 +6,7 @@ import Header from '@layout/header/header';
 import { Redirect } from 'react-router-dom';
 import ScoreCol from '@components/display_candidates/ScoreCol/ScoreCol';
 import CandidateCol from '@components/display_candidates/CandidateCol/CandidateCol';
+import { history } from '@redux/store';
 
 const DisplayCandidates = () => {
 
@@ -31,7 +32,8 @@ const DisplayCandidates = () => {
       title: 'Test',
       dataIndex: 'test_name',
       width: '20%',
-      render: (test: any) => <span style={{ color: '#006fad' }}>{test}</span>
+      render: (test: any, record: any) => <span className={"display-candidates__test-name"}
+                                                onClick={() => history.push(`/my-tests/${record.test_candidate_id.slice(0, record.test_candidate_id.indexOf('-'))}`)}>{test}</span>
     },
     {
       title: 'Status',
