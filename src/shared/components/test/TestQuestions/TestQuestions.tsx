@@ -22,13 +22,13 @@ const TestQuestions = ({ questions }: any) => {
       title: 'Type',
       dataIndex: 'type',
       width: '12%',
-      render: (type: any) => <TextIcon icon={InsertRowBelowOutlined} text={type}/>
+      render: (type: any) => <TextIcon icon={InsertRowBelowOutlined} text={type} style={{color:"#6c757d"}}/>
     },
     {
       title: 'Difficulty',
       dataIndex: 'difficulty',
       width: '12%',
-      render: (difficulty: any) => <TextIcon icon={DashboardOutlined} text={difficulty}/>
+      render: (difficulty: any) => <TextIcon icon={DashboardOutlined} text={difficulty} style={{color:"#6c757d"}}/>
 
     },
     {

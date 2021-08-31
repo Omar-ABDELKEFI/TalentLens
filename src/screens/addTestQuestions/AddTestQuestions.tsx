@@ -9,6 +9,7 @@ import McaQuestion from '@components/Quiz/McaQuestion/McaQuestion';
 
 const AddTestQuestions: React.FC<any> = () => {
   const questions = useSelector((state: any) => state.questions.questions);
+  const test = useSelector((state:any) => state.test.test )
   const errors = useSelector((state: any) => state.questions.error);
   const dispatch = useDispatch();
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -26,8 +27,6 @@ const AddTestQuestions: React.FC<any> = () => {
   ) : (
     <div>
       <div className={'add-questions__add-btn-container'}>
-        {/*  <Link to={'/question'}><Button*/}
-        {/*className="add-questions__create-button">Create Question</Button></Link>*/}
         <Button onClick={showModal} className="add-questions__create-button">Create Question</Button>
         <ModelQuestionsTypes isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible}/>
       </div>
@@ -35,7 +34,7 @@ const AddTestQuestions: React.FC<any> = () => {
 
         return (
           // return question in card
-          <ListCard question={question} key={question.ID}/>
+          <ListCard question={question} test={test} key={question.ID}/>
         );
       }
       )}

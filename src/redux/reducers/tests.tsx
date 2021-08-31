@@ -119,6 +119,41 @@ export function test(state = initialState, action: any) {
               ...state,
                 newCandidates:action.payload
             }
+        case testConstants.CREATE_TEST_QUESTION_REQUEST:
+            return {
+                ...state,
+                loading : true
+            }
+        case testConstants.CREATE_TEST_QUESTION_SUCCESS:
+            return {
+                ...state,
+                test:{...state.test , questions: [...state.test.questions , action.question]},
+                loading: false,
+            }
+        case testConstants.CREATE_TEST_QUESTION_FAILURE:
+            return {
+                ...state,
+                error: action.error
+            }
+        case testConstants.REMOVE_TEST_QUESTION_REQUEST:
+            return {
+                ...state,
+                loading : true
+            }
+        case testConstants.REMOVE_TEST_QUESTION_SUCCESS:
+            const questions = state.test.questions.filter((question:any)=> question.ID !== action.question.ID)
+            return {
+                ...state,
+                test: {...state.test,questions: questions},
+                loading: false
+            }
+        case testConstants.REMOVE_TEST_QUESTION_FAILURE:
+            return {
+                ...state,
+                error: action.error
+            }
+
+
         default:
             return state
     }

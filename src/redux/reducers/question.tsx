@@ -40,61 +40,6 @@ export function questions(state = initialState, action: any) {
         loading: false,
         error: action.error
       };
-    case questionsConstants.CREATE_TEST_QUESTION_REQUEST:
-      return {
-        ...state,
-        loading : true
-      }
-    case questionsConstants.CREATE_TEST_QUESTION_SUCCESS:
-      const newTestQuestion = state.questions.map((question:any)=>
-        question.ID === action.test_question.question_id ?
-            {
-                ...question , test_questions:[...question.test_questions,action.test_question]
-            }:
-           question
-      )
-
-      return {
-        ...state,
-        loading: false,
-        questions: newTestQuestion
-      }
-    case questionsConstants.CREATE_TEST_QUESTION_FAILURE:
-      return {
-        ...state,
-        error: action.error
-      }
-    case questionsConstants.REMOVE_TEST_QUESTION_REQUEST:
-      return {
-        ...state,
-        loading : true
-      }
-    case questionsConstants.REMOVE_TEST_QUESTION_SUCCESS:
-      const newQuestion = state.questions.map((question:any)=> {
-
-            return(
-                question.ID === action.questionId ?
-
-                {
-                  ...question,
-                  test_questions: question.test_questions.filter((testQuestion: any) => testQuestion.ID !== action.test_question_id)
-                } :
-                {
-                    ...question
-                })
-          }
-      )
-      console.log("newQuestion",newQuestion)
-      return {
-        ...state,
-        questions: newQuestion,
-        loading: false
-      }
-    case questionsConstants.REMOVE_TEST_QUESTION_FAILURE:
-      return {
-        ...state,
-        error: action.error
-      }
     default:
       return state;
   }

@@ -27,7 +27,6 @@ const SubHeader = () => {
         <Menu.Item key="2"><Link to="/candidates">
           <span className="header__item">Candidates</span>
         </Link></Menu.Item>
-        <Menu.Item className={"header__menu"} key="3"><span className="header__item">Tests</span></Menu.Item>
         <Menu.Item key="4"><span className="header__item">Questions</span></Menu.Item>
         <SubMenu   key="sub1" className="header__menu"  title={<span className="header__item">Account{isOpen?<UpOutlined className="header__up"/>:<DownOutlined className="header__up" />}</span>}
                  popupClassName="header__background">

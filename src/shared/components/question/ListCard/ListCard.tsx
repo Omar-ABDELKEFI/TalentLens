@@ -2,35 +2,34 @@ import React, { useEffect, useState } from 'react';
 import './ListCard.less';
 import { DashboardOutlined, ClockCircleOutlined, InsertRowBelowOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTestQuestions, removeTestQuestions } from '@redux/actions/question';
 import { useParams } from 'react-router';
 import { removeHtml } from '@utils/common';
 import QuestionPreview from '@components/question/QuestionPreview/QuestionPreview';
 import TextIcon from '@components/TextIcon/TextIcon';
+import { addTestQuestions, removeTestQuestions } from '@redux/actions/tests';
 
-const ListCard: React.FC<any> = ({ question }) => {
+const ListCard: React.FC<any> = ({ question , test }) => {
   const { idTest } = useParams();
   const dispatch = useDispatch();
   const [added, setAdded] = useState<boolean>();
-  const loading = useSelector((state: any) => state.questions.loading);
+  const loading = useSelector((state: any) => state.test.loading);
 
   useEffect(() => {
-    const isAdded = question.test_questions?.some((test_question: any) => {
-      return test_question.test_id === Number(idTest);
+    const isAdded = test.questions?.some((testQuestion: any) => {
+      return question.ID === testQuestion.ID;
     });
     setAdded(isAdded);
   }, []);
 
-  const handleAddClick = (e: any, question_id: number) => {
+  const handleAddClick = (e: any, question:any) => {
     e.stopPropagation();
     setAdded((prevState => !prevState));
-    dispatch(addTestQuestions(question_id, idTest));
+    dispatch(addTestQuestions(question, idTest));
   };
-  const handleRemoveClick = (e: any) => {
+  const handleRemoveClick = (e: any , question:any) => {
     e.stopPropagation();
-    const testQuestion = question.test_questions.filter((test_question: any) => test_question.test_id === Number(idTest));
     setAdded((prevState => !prevState));
-    dispatch(removeTestQuestions(testQuestion[0].ID, question.ID));
+    dispatch(removeTestQuestions(idTest , question));
   };
   const [previewModal, setPreviewModal] = useState(false);
 
@@ -46,13 +45,13 @@ const ListCard: React.FC<any> = ({ question }) => {
           </div>
           {
             added ? (
-                <button disabled={loading} className={'list-card__button'}
-                        onClick={(e: any) => handleRemoveClick(e)}>Remove
+                <button disabled={loading} className={'list-card__button list-card__button-remove'}
+                        onClick={(e: any) => handleRemoveClick(e, question)}>Remove
                   Question</button>
               ) :
               (
-                <button disabled={loading} className={'list-card__button'}
-                        onClick={(e) => handleAddClick(e, question.ID)}>Add Question</button>
+                <button disabled={loading} className={'list-card__button list-card__button-add'}
+                        onClick={(e) => handleAddClick(e, question)}>Add Question</button>
               )
           }
         </div>
@@ -60,9 +59,9 @@ const ListCard: React.FC<any> = ({ question }) => {
           <span className={'list-card__skill'}>{question.Skill.name}</span>
         </div>
         <div className={'list-card__row-3'}>
-          <TextIcon icon={DashboardOutlined} text={question.difficulty} style={{ padding: '0 5px' }}/>
-          <TextIcon icon={ClockCircleOutlined} text={question.expected_time} style={{ padding: '0 5px' }}/>
-          <TextIcon icon={InsertRowBelowOutlined} text={question.type} style={{ padding: '0 5px' }}/>
+          <TextIcon icon={DashboardOutlined} text={question.difficulty} style={{ padding: '0 5px',color:"#6c757d" }}/>
+          <TextIcon icon={ClockCircleOutlined} text={question.expected_time} style={{ padding: '0 5px' , color:"#6c757d" }}/>
+          <TextIcon icon={InsertRowBelowOutlined} text={question.type} style={{ padding: '0 5px' , color:"#6c757d" }}/>
         </div>
       </div>
       <QuestionPreview previewModal={previewModal} setPreviewModal={setPreviewModal} question={question}/>

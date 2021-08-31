@@ -1,9 +1,6 @@
 import React from 'react';
-import { Col, Row } from 'antd';
 
-import { ClockCircleOutlined } from "@ant-design/icons"
-import { Table, Tag, Space } from 'antd';
-import { UnorderedListOutlined, UsergroupDeleteOutlined } from '@ant-design/icons/lib';
+import { Table } from 'antd';
 const TestQuestionsTable = ({data}:any) => {
   const columns = [
     {

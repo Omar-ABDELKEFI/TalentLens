@@ -172,6 +172,11 @@ export interface ModelsTestQuestion {
   test_id?: number;
 }
 
+export interface ModelsTestQuestionDelete {
+  question_id: number;
+  test_id: number;
+}
+
 export interface ModelsTestRequest {
   archived?: boolean;
   description?: string;
@@ -558,14 +563,15 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @description delete a question from test by json
      *
      * @tags question_test
-     * @name QuestionsDelete
+     * @name QuestionsDeleteDelete
      * @summary delete a question from test
-     * @request DELETE:/my-tests/questions/{id}
+     * @request DELETE:/my-tests/questions/delete
      */
-    questionsDelete: (id: string, params: RequestParams = {}) =>
+    questionsDeleteDelete: (test_question: ModelsTestQuestionDelete, params: RequestParams = {}) =>
       this.request<string, any>({
-        path: `/my-tests/questions/${id}`,
+        path: `/my-tests/questions/delete`,
         method: "DELETE",
+        body: test_question,
         type: ContentType.Json,
         format: "json",
         ...params,

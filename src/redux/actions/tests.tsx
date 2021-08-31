@@ -20,9 +20,13 @@ export const testConstants = {
   UPDATE_CANDIDATE_SUCCESS: 'UPDATE_CANDIDATE_SUCCESS',
   UPDATE_CANDIDATE_FAILURE: 'UPDATE_CANDIDATE_FAILURE',
   //
-  ADD_QUESTION_REQUEST: 'ADD_QUESTION_REQUEST',
-  ADD_QUESTION_SUCCESS: 'ADD_QUESTION_SUCCESS',
-  ADD_QUESTION_FAILURE: 'ADD_QUESTION_FAILURE',
+  CREATE_TEST_QUESTION_REQUEST: 'CREATE_TEST_QUESTION_REQUEST',
+  CREATE_TEST_QUESTION_SUCCESS: 'CREATE_TEST_QUESTION_SUCCESS',
+  CREATE_TEST_QUESTION_FAILURE: 'CREATE_TEST_QUESTION_FAILURE',
+  //
+  REMOVE_TEST_QUESTION_REQUEST: 'REMOVE_TEST_QUESTION_REQUEST',
+  REMOVE_TEST_QUESTION_SUCCESS: 'REMOVE_TEST_QUESTION_SUCCESS',
+  REMOVE_TEST_QUESTION_FAILURE: 'REMOVE_TEST_QUESTION_FAILURE',
   //
   GET_MYTESTS_REQUEST: 'GET_MYTESTS_REQUEST',
   GET_MYTESTS_SUCCESS: 'GET_MYTESTS_SUCCESS',
@@ -232,5 +236,60 @@ export function cloneTest(testId : any , expectedTime : any) {
 
   function failure(error: string) {
     return { type: testConstants.CLONE_TEST_FAILURE , error };
+  }
+}
+//action add questions to test
+export function addTestQuestions(question : any, test_id : string) {
+  return (dispatch: any) => {
+    dispatch(request());
+    service.myTests.questionsCreate(test_id, {question_id:question.ID})
+      .then(
+        (res: any) => {
+          dispatch(success(question))
+        },
+        (res: any) => {
+          dispatch(failure(res.error.toString()));
+        }
+      );
+  };
+
+  function request() {
+    return {type: testConstants.CREATE_TEST_QUESTION_REQUEST};
+  }
+
+  function success(question:any) {
+    return {type: testConstants.CREATE_TEST_QUESTION_SUCCESS,question:question}
+  }
+
+  function failure(error: any) {
+    return {type: testConstants.CREATE_TEST_QUESTION_FAILURE, error}
+  }
+}
+// action remove question from test
+export function removeTestQuestions(testId : string, question : any ) {
+  return (dispatch: any) => {
+    dispatch(request());
+    service.myTests.questionsDeleteDelete({test_id:Number(testId),question_id:question.ID})
+      .then(
+        (res: any) => {
+          dispatch(success(question))
+        },
+        (res: any) => {
+          dispatch(failure(res.error.toString()));
+          console.log(res.error.toString())
+        }
+      );
+  };
+
+  function request() {
+    return {type: testConstants.REMOVE_TEST_QUESTION_REQUEST};
+  }
+
+  function success(question:any ) {
+    return {type: testConstants.REMOVE_TEST_QUESTION_SUCCESS,question:question}
+  }
+
+  function failure(error: any) {
+    return {type: testConstants.REMOVE_TEST_QUESTION_FAILURE, error}
   }
 }
