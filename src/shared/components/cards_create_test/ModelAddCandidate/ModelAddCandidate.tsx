@@ -7,12 +7,15 @@ import "react-multi-email/style.css";
 import {useParams} from "react-router-dom";
 
 function ModelAddCandidates({isModalVisible,setIsModalVisible}:any) {
+
   const [emails,setEmails]=useState<string[]>([])
   const {Option} =Select
   const dispatch = useDispatch()
   const {idTest} = useParams();
-
+  const errorDuplicate = useSelector(((state: any) => state.test.error_add_candidate));
+  console.log(errorDuplicate,"errorDuplicate");
   const time_limit = useSelector(((state:any) => state.test.test.time_limit))
+
   function handleChange(value:any) {
     dispatch(actionTest.updateTest(idTest, { time_limit:value }))
   }
@@ -23,7 +26,10 @@ function ModelAddCandidates({isModalVisible,setIsModalVisible}:any) {
         return {"email":email,"test": [{id: Number(idTest)}]}
       }))
       console.log(valueCandidate,"valueCandidate");
-      dispatch(actionTest.setCandidates(valueCandidate))
+      dispatch(actionTest.create_candidate(valueCandidate))
+    }
+    else{
+      dispatch(actionTest.removeError([]))
     }
     setIsModalVisible(false);
   };

@@ -1,16 +1,22 @@
 import {Result, Button} from 'antd'
 import React from 'react';
 import {Link} from 'react-router-dom';
+import { history } from '@redux/store';
 
 function NotAuthorized() {
-
+function redirect() {
+localStorage.removeItem("token")
+    localStorage.removeItem('token');
+    history.push('/');
+    window.location.reload();
+}
     return (
         <>
             {<Result
             status="403"
             title="403"
             subTitle="Sorry, you are not authorized to access this page."
-            extra={<Link to="/"><Button type="primary">Back Home</Button></Link>}
+            extra={<Button type="primary" onClick={redirect}>Back Home</Button>}
         />}</>
 
     );

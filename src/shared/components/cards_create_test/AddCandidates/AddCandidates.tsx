@@ -1,14 +1,31 @@
-import React, { ChangeEvent, useState } from 'react';
-import { Row, Col, Slider, InputNumber, Button, Input, Modal } from 'antd';
+import React, { ChangeEvent, useEffect, useState } from 'react';
+import { Row, Col, Slider, InputNumber, Button, Input, Modal, notification } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionTest } from '@redux/actions';
 import { useParams } from 'react-router-dom';
 import ModelAddCandidates from '@components/cards_create_test/ModelAddCandidate/ModelAddCandidate';
+import { handleError } from '@utils/constTypesError';
+import { ArgsProps, ConfigProps, NotificationApi } from 'antd/lib/notification';
 
 function AddCandidates({ idTest, initialPassingScore }: any) {
   const dispatch = useDispatch();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const loading = useSelector(((state: any) => state.test.loading));
+  const errorDuplicate = useSelector(((state: any) => state.test.error_add_candidate));
+  console.log(errorDuplicate,"errorDuplicate");
+  useEffect(() => {
+      if (errorDuplicate&&errorDuplicate.length!==0) {
+        console.log(errorDuplicate,"error1");
+        errorDuplicate.map((email:any)=>openNotificationWithIcon("error", `the candidate with email ${email} already invited`))
+      }
+    }
+    , [errorDuplicate])
+  const openNotificationWithIcon = (type: string, description: string) => {
+    notification[type as keyof NotificationApi]({
+      message: 'error',
+      description,
+    } as ArgsProps & string & ConfigProps);
+  };
   const onAfterChange = (value: any) => {
 
     if (!isNaN(value)) {
@@ -30,6 +47,7 @@ function AddCandidates({ idTest, initialPassingScore }: any) {
   return (
     <>
       <Row justify="space-between">
+
         <Col>
           <div>No candidates invited</div>
         </Col>

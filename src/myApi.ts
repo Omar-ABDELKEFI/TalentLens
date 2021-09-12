@@ -276,7 +276,7 @@ export class HttpClient<SecurityDataType = unknown> {
   private abortControllers = new Map<CancelToken, AbortController>();
   private customFetch = (...fetchParams: Parameters<typeof fetch>) => fetch(...fetchParams);
 
-  private baseApiParams: RequestParams = {
+  baseApiParams: RequestParams = {
     credentials: "same-origin",
     headers: {},
     redirect: "follow",

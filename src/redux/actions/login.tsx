@@ -19,8 +19,9 @@ export function login(user: ModelsLoginInput) {
             .then(
                 (res: any) => {
                     dispatch(success(user,false));
-                    history.push("/my-tests")
                     localStorage.setItem('token',String(res.data.token))
+                    history.push("/my-tests")
+
                 },
                 (res: any) => {
                     console.log(res,"resresresr")

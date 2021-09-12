@@ -15,15 +15,17 @@ function DisplayTests() {
 
   useEffect(() => {
     dispatch(actionTest.getMyTests());
-  }, [dispatch]);
+  }, []);
   const isLoading = useSelector((state: any) => state.test.loading);
   const myTests = useSelector((state: any) => state.test.myTests);
+  const errorToken=useSelector((state: any) => state.test.error);
 
+  console.log(errorToken,"errorToken");
   const handelClickCreteTest = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     dispatch(actionTest.createTest());
   };
   const token = localStorage.getItem('token');
-  return (<>{!token ? <Redirect to="/403"/> :
+  return (<>{errorToken ? <></>:
       <>
         <Header/>
         <div className={'display-test__main-container'}>

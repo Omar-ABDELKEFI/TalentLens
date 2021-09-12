@@ -1,6 +1,8 @@
 import {testConstants} from '@redux/actions/tests';
+import { act } from 'react-dom/test-utils';
 const initialState = {
     loading:true,
+    thereError:true,
     test:{
         questions : [],
     },
@@ -51,7 +53,13 @@ export function test(state = initialState, action: any) {
         case testConstants.CREATE_CANDIDATE_SUCCESS:
             return {
                 ...state,
-                candidate: action.candidate
+                candidate: action.candidate,
+                error_add_candidate:action.error
+            }
+        case testConstants.REMOVE_ERROR:
+            return {
+              ...state,
+                error_add_candidate:action.payload
             }
         case testConstants.CREATE_CANDIDATE_FAILURE:
             return {
@@ -62,6 +70,7 @@ export function test(state = initialState, action: any) {
         return {
           ...state,
             loading:action.loading,
+
         }
         case testConstants.GET_MYTESTS_SUCCESS:
             return {

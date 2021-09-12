@@ -10,15 +10,15 @@ import {NotificationApi} from "antd/lib/notification/index"
 import {ArgsProps} from "antd/lib/notification";
 import {ConfigProps} from "antd/lib/notification";
 import {ModelsLoginInput} from "../../myApi"
-
+import service from '@service/test-api';
 
 const Login = () => {
-
+  console.log(localStorage.getItem('token'),"localStorage.getItem('token')localStorage.getItem('token')");
     const [login, setLogin] = useState<ModelsLoginInput>({email: "", password: ""})
     const error = useSelector((state: any) => state.login.error);
     const loginin = useSelector((state: any) => state.login.loggingIn);
     console.log(loginin, "logininloginin")
-
+  console.log(service,"serviceservice");
     const dispatch = useDispatch();
     const handleSubmit = (e: React.SyntheticEvent) => {
         dispatch(actionLogin.login(login))

@@ -36,6 +36,8 @@ export const testConstants = {
   //
   SET_CANDIDATE:'SET_CANDIDATE',
   //
+  REMOVE_ERROR:'REMOVE_ERROR',
+  //
   GET_TEST_REQUEST: 'GET_TEST_REQUEST',
   GET_TEST_SUCCESS: 'GET_TEST_SUCCESS',
   GET_TEST_FAILURE: 'GET_TEST_FAILURE',
@@ -116,12 +118,13 @@ export function create_candidate(candidate: ModelsCandidateRequest[]) {
     service.candidate.candidateCreate(candidate)
       .then(
         () => {
-          dispatch(success(candidate, false));
+          dispatch(success(candidate, false,[]));
 
 
         },
         (res: any) => {
-          dispatch(failure(res.error.error.toString(), true));
+          console.log(res,"resresresresres");
+          dispatch(failure(res.error.emailsDuplicate, true));
 
         }
       );
@@ -131,8 +134,8 @@ export function create_candidate(candidate: ModelsCandidateRequest[]) {
     return { loading, type: testConstants.CREATE_CANDIDATE_REQUEST };
   }
 
-  function success(candidate: ModelsCandidateRequest[], loading: boolean) {
-    return { candidate, loading, type: testConstants.CREATE_CANDIDATE_SUCCESS };
+  function success(candidate: ModelsCandidateRequest[], loading: boolean,error:any) {
+    return {error,candidate, loading, type: testConstants.CREATE_CANDIDATE_SUCCESS };
   }
 
   function failure(error: string, loading: boolean) {
@@ -140,20 +143,24 @@ export function create_candidate(candidate: ModelsCandidateRequest[]) {
   }
 }
 
-export function getMyTests() {
-  return (dispatch: any) => {
+export   function getMyTests() {
+  return async (dispatch: any) => {
     dispatch(request(true));
-    service.myTests.getMyTests()
-      .then(
-        (res: any) => {
-          console.log(res);
-          dispatch(success(res.data.test, false));
-        },
-        (res: any) => {
-          console.log(res);
-          dispatch(failure(res.error.error.toString, false));
-        }
-      );
+    service.baseApiParams.headers={'Authorization': 'Bearer ' +localStorage.getItem("token")}
+    console.log(service.baseApiParams.headers,"service.baseApiParams.headers");
+    try {
+
+      const res:any= await  service.myTests.getMyTests()
+      console.log(res);
+      dispatch(success(res.data.test, false));
+    } catch (e) {
+      if(e.error.error==="token invalid"){
+        history.push("/403")
+      }
+      console.log('gfgf');
+      dispatch(failure(e.error.error, false))
+
+    }
   };
 
   function request(loading: boolean) {
@@ -181,6 +188,12 @@ export function setCandidates(candidates:any) {
 return{
   type:testConstants.SET_CANDIDATE,
   payload:candidates
+}
+}
+export function removeError(error:any) {
+return{
+  type:testConstants.REMOVE_ERROR,
+      payload:error
 }
 }
 

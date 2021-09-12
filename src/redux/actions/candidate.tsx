@@ -40,3 +40,4 @@ export function startTest(idTestCandidate:any) {
     return {error,loading,type: candidateConstants.START_TEST_FAILURE}
   }
 }
+
