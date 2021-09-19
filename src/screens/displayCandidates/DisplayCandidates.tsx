@@ -7,13 +7,14 @@ import { Redirect } from 'react-router-dom';
 import ScoreCol from '@components/display_candidates/ScoreCol/ScoreCol';
 import CandidateCol from '@components/display_candidates/CandidateCol/CandidateCol';
 import { history } from '@redux/store';
+import { useSelector } from 'react-redux';
 
 const DisplayCandidates = () => {
 
   const [dataSource, setDataSource] = useState<any>([]);
   const [value, setValue] = useState('');
   const [data, setData] = useState([]);
-
+  const [errorToken,setErrorToken]=useState(undefined)
   const columns = [
     {
       title: 'Score',
@@ -48,8 +49,11 @@ const DisplayCandidates = () => {
         setData(res.data.data);
         setDataSource(res.data.data);
       },
-      (err) => {
-        console.log(err);
+      (e) => {
+        if(e.error.error==="token invalid"){
+          history.push("/403")
+        }
+        setErrorToken(e.error.error)
       }
     );
   }, []);
@@ -75,7 +79,7 @@ const DisplayCandidates = () => {
         setDataSource(data);
     }
   };
-  return (<>{!token ? <Redirect to="/403"/> :
+  return (<>{errorToken ? <></>:
       <>
         <Header/>
         <div className={'display-candidates__main-container'}>

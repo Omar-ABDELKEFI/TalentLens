@@ -157,7 +157,6 @@ export   function getMyTests() {
       if(e.error.error==="token invalid"){
         history.push("/403")
       }
-      console.log('gfgf');
       dispatch(failure(e.error.error, false))
 
     }
