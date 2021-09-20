@@ -11,6 +11,7 @@ function AddCandidates({ idTest, initialPassingScore }: any) {
   const dispatch = useDispatch();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const loading = useSelector(((state: any) => state.test.loading));
+  const questions = useSelector(((state: any) => state.test.test.questions));
   const errorDuplicate = useSelector(((state: any) => state.test.error_add_candidate));
   console.log(errorDuplicate,"errorDuplicate");
   useEffect(() => {
@@ -42,7 +43,6 @@ function AddCandidates({ idTest, initialPassingScore }: any) {
   const showModal = () => {
     setIsModalVisible(true);
   };
-
 
   return (
     <>
@@ -88,7 +88,7 @@ function AddCandidates({ idTest, initialPassingScore }: any) {
         <Col>
           <div>
             <Button type="primary" style={{ background: '#28a745', borderColor: '#28a745' }}
-                    onClick={showModal}>add candidate</Button>
+                    disabled={loading || questions.length === 0} onClick={showModal}>add candidate</Button>
           </div>
           <ModelAddCandidates isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible}
                               />

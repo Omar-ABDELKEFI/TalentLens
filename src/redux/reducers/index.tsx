@@ -6,8 +6,8 @@ import { test } from './tests';
 import { skills } from './skill';
 import { questions } from '@redux/reducers/question';
 import { candidate } from '@redux/reducers/candidate';
-
 import { quiz } from '@redux/reducers/quiz';
+import { currentScreen } from '@redux/reducers/currentScreen';
 // combine all reducer
 const createRootReducer = (history: History) =>
   combineReducers<any>({
@@ -17,7 +17,8 @@ const createRootReducer = (history: History) =>
     skills,
     questions,
     candidate,
-    quiz
+    quiz,
+    currentScreen
   });
 export default createRootReducer;
 
