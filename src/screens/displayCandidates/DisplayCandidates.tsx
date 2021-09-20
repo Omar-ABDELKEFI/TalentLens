@@ -44,6 +44,7 @@ const DisplayCandidates = () => {
 
   ];
   useEffect(() => {
+    service.baseApiParams.headers={'Authorization': 'Bearer ' +localStorage.getItem("token")}
     service.testscandidates.testscandidatesList().then(
       (res: any) => {
         setData(res.data.data);

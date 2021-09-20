@@ -19,7 +19,8 @@ export function skills(state = initialState, action: any) {
     case skillsConstants.FETCH_SKILLS_FAILURE:
       return {
         loading: false,
-        error: action.error
+        error: action.error,
+        tokenError:action.tokenError
       };
     default:
       return state;

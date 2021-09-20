@@ -1,5 +1,6 @@
 import service from '@service/test-api';
 import { ModelsSkillsResponse } from '../../myApi';
+import { history } from '@redux/store';
 // action skill types
 export const skillsConstants = {
   FETCH_SKILLS_REQUEST: 'FETCH_SKILLS_REQUEST',
@@ -15,14 +16,17 @@ export const skillsConstants = {
 export function getSkills() {
   return (dispatch: any) => {
     dispatch(request());
+    service.baseApiParams.headers={'Authorization': 'Bearer ' +localStorage.getItem("token")}
     service.skills.skillsList().then(
       (skills: any) => {
         console.log(skills);
         dispatch(success(skills.data.data));
       },
-      (error: any) => {
-
-        dispatch(failure(error));
+      (res: any) => {
+        if(res.error.error==="token invalid"){
+          history.push("/403")
+        }
+        dispatch(failure(res,res.error.error));
       }
     );
   };
@@ -35,8 +39,8 @@ export function getSkills() {
     return { skills, type: skillsConstants.FETCH_SKILLS_SUCCESS  };
   }
 
-  function failure(error: any) {
-    return { error,type: skillsConstants.FETCH_SKILLS_FAILURE };
+  function failure(error: any,tokenError:any) {
+    return { error,tokenError,type: skillsConstants.FETCH_SKILLS_FAILURE};
   }
 }
 

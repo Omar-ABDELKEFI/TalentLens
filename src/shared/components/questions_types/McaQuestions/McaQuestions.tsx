@@ -17,6 +17,7 @@ import { constTypes, handleError } from '@utils/constTypesError';
 import { IErrortypes } from '@schemes/errorTypes';
 import { ArgsProps, ConfigProps, NotificationApi } from 'antd/lib/notification';
 import McaQuestion from '@components/Quiz/McaQuestion/McaQuestion';
+import { log } from 'util';
 
 interface Ichoice {
   choice_text: string;
@@ -40,7 +41,10 @@ interface Iquestion {
 const Question = () => {
   const [questionTestIsValid, setQuestionTestIsValid] = useState<boolean>(true);
   const [choiceTestIsValid, setChoiceTestIsValid] = useState<boolean>(true);
+
   const [thereOneAnswer, setThereOneAnswer] = useState<boolean>(true);
+  const dataError = useSelector((state: any) => state.questions.dataError);
+  console.log(dataError&&dataError.error.error.Message,"daataError");
   const handleCkeElement = (question_text: any) => {
     const ckeElement = document.getElementsByClassName('ck-editor__main');
     console.log(question.question_text, 'question.question_text');
@@ -70,7 +74,7 @@ const Question = () => {
     60: '60'
   };
   const [question, setQuestion] = useState<Iquestion>({
-    name: 'Problem',
+    name: '',
     choices: [
       { choice_text: '', is_answer: false, id: Math.random() },
       { choice_text: '', is_answer: false, id: Math.random() }
@@ -83,11 +87,11 @@ const Question = () => {
     skill_name: '',
     type: 'mca'
   });
-
+  const tokenError=useSelector((state: any) => state.skills.tokenError);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getSkills());
-  }, [dispatch]);
+  }, [dataError]);
   const skills = useSelector((state: any) => state.skills.skills);
 
   console.log(skills,"skiils");
@@ -159,9 +163,21 @@ const Question = () => {
           : choice
       )
     });
+    for(const choice of question.choices){
+      if(choice.id===id&&!choice.is_answer){
+        setThereOneAnswer(true)
+        return true
+      }
+      if(choice.is_answer===true){
+        setThereOneAnswer(true)
+        return true
+      }
+    }
   };
   const handleForm =
     (e: any) => {
+
+      console.log(e,"fffffffffffffffff");
       handleCkeElement(question.question_text)
       for(const choice of question.choices){
         if(choice.choice_text===""){
@@ -194,10 +210,11 @@ const Question = () => {
     }
   };
   const error = useSelector((state: any) => state.questions.error);
-  console.log(error,"errorerrorerror");
+
+  console.log(dataError&&dataError.error.error.Message,"dataError");
   useEffect(() => {
       if (error) {
-        console.log(error,"error1");
+        console.log(error.errors,"error1");
         error.map((err:any)=>openNotificationWithIcon("error", handleError(err)))
       }
     }
@@ -227,7 +244,7 @@ const Question = () => {
   const [showModal, setShowModal] = useState<boolean | undefined>(false);
 
   return (
-    <>{!token ? <Redirect to="/403"/> :
+    <>{tokenError ? <></> :
       <>
         <Header/>
         <div className="McaQuestions__main-container">
@@ -250,16 +267,19 @@ const Question = () => {
                     Name
                   </label>
                 }
+
                 rules={[
                   {
                     required: true,
-                    message: 'name is required'
-                  }
+                    message:"name is required"
+                  },
                 ]}
-
               >
+
                 <Input defaultValue={question.name} placeholder="Name" name="name" onChange={handleChange}/>
+
               </Form.Item>
+              <div style={{marginLeft:228,color:'red'}} hidden={!(dataError&&dataError.error.error.Message)}>name have to be unique</div>
               <Form.Item
                 required
                 label={
@@ -367,7 +387,7 @@ const Question = () => {
                     rules={[
                       {
                         required: true,
-                        message: 'Please select gender!',
+                        message: 'Please select skill!',
                       },
                     ]}
                   >

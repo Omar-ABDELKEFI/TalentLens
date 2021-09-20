@@ -15,19 +15,28 @@ export const questionsConstants = {
 };
 // action create question
 export function createQuestion(question: any) {
-  return (dispatch: any) => {
+  return (dispatch: any,getState:any) => {
     dispatch(request());
     const apiQuestion = JSON.parse(JSON.stringify(question));
     apiQuestion.choices.forEach((choice:Ichoice) => delete choice.id);
     service.questions.editCreate(apiQuestion).then(
       () => {
-        dispatch(success());
+        dispatch(success(undefined));
         console.log('Question created successfully');
-        history.goBack();
+        console.log(getState().test.testID,"getState:anygetState:any");
+        if (getState().test.testID){
+          history.goBack()
+        }
+        else {
+          history.push("/my-tests")
+        }
       },
       (data: any) => {
-        console.log(data.error.errors,"errorerror");
-        dispatch(failure(data.error.errors));
+        if(data.error.error==="token invalid"){
+          history.push("/403")
+        }
+        console.log(data,"ssssssssssss");
+        dispatch(failure(data.error.errors,data.error.error,data));
       }
     );
   };
@@ -36,17 +45,18 @@ export function createQuestion(question: any) {
     return { type: questionsConstants.CREATE_QUESTION_REQUEST };
   }
 
-  function success() {
-    return { type: questionsConstants.CREATE_QUESTION_SUCCESS };
+  function success(dataError:any) {
+    return { type: questionsConstants.CREATE_QUESTION_SUCCESS,dataError};
   }
 
-  function failure(error: any) {
-    return { type: questionsConstants.CREATE_QUESTION_FAILURE, error: error };
+  function failure(error: any,tokenError:any,dataError:any) {
+    return { type: questionsConstants.CREATE_QUESTION_FAILURE, error: error,tokenError:tokenError,dataError};
   }
 }
 //action get  questions
 export function getQuestions() {
   return (dispatch: any) => {
+    service.baseApiParams.headers={'Authorization': 'Bearer ' +localStorage.getItem("token")}
     dispatch(request());
     service.questions.questionsList().then(
       (questions: any) => {
@@ -54,7 +64,10 @@ export function getQuestions() {
       },
       (data: any) => {
         console.log(data.error.errors,"errorerror");
-        dispatch(failure(data.error.errors));
+        if(data.error.error==="token invalid"){
+          history.push("/403")
+        }
+        dispatch(failure(data.error.errors,data.error.error));
       }
     );
   };
@@ -64,7 +77,7 @@ export function getQuestions() {
   function success(questions: any) {
     return { type: questionsConstants.FETCH_QUESTIONS_SUCCESS, questions: questions };
   }
-  function failure(error: any) {
-    return { type: questionsConstants.FETCH_QUESTIONS_FAILURE, error: error };
+  function failure(error: any,tokenError:any) {
+    return { type: questionsConstants.FETCH_QUESTIONS_FAILURE, error: error,tokenError:tokenError };
   }
 }

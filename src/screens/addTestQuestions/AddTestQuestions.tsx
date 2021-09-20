@@ -11,6 +11,7 @@ const AddTestQuestions: React.FC<any> = () => {
   const questions = useSelector((state: any) => state.questions.questions);
   const test = useSelector((state:any) => state.test.test )
   const errors = useSelector((state: any) => state.questions.error);
+  const tokenError = useSelector((state: any) => state.questions.tokenError);
   const dispatch = useDispatch();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const showModal = () => {
@@ -22,7 +23,7 @@ const AddTestQuestions: React.FC<any> = () => {
     dispatch(getQuestions());
 
   }, []);
-  return errors ? (
+  return tokenError?(<></>):errors ? (
     <h1>{errors}</h1>
   ) : (
     <div>

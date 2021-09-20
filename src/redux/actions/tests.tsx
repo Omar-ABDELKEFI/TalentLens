@@ -52,15 +52,20 @@ export const testConstants = {
 export function createTest() {
   return (dispatch: any) => {
     dispatch(request(true));
-
-    service.myTests.myTestsCreate({passing_score:50, name:"test demo", show_score:false, timing_policy:"Medium", time_limit:3 }) // id create automaticly
+    service.baseApiParams.headers={'Authorization': 'Bearer ' +localStorage.getItem("token")}
+    service.myTests.myTestsCreate({passing_score:50, name:"test demo", show_score:false, timing_policy:"Medium", time_limit:3 }) // id create automatically
       .then(
         (res: any) => {
-          dispatch(success(false));
+          console.log("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+          dispatch(success(false,res.data.test.ID));
           history.push(`/my-tests/${res.data.test.ID}`)
         },
         (res: any) => {
-          dispatch(failure(res.error.error.toString(), false));
+          if(res.error.error==="token invalid"){
+            history.push("/403")
+          }
+
+          dispatch(failure(res.error.error, false));
         }
       );
   };
@@ -69,8 +74,8 @@ export function createTest() {
     return { loading, type: testConstants.CREATE_TEST_REQUEST };
   }
 
-  function success(loading: boolean) {
-    return { loading, type: testConstants.CREATE_TEST_SUCCESS };
+  function success(loading: boolean,testID:any) {
+    return { loading,testID,type: testConstants.CREATE_TEST_SUCCESS };
   }
 
   function failure(error: string, loading: boolean) {
@@ -199,13 +204,16 @@ return{
 export function getTest(testId : any) {
   return (dispatch: any) => {
     dispatch(request());
-
+    service.baseApiParams.headers={'Authorization': 'Bearer ' +localStorage.getItem("token")}
     service.myTests.getTest(testId)
       .then(
         (res: any) => {
           res.data.data.questions && dispatch(success(res.data.data));
         },
         (res: any) => {
+          if(res.error.error==="token invalid"){
+            history.push("/403")
+          }
           dispatch(failure(res.error.error.toString()));
         }
       );

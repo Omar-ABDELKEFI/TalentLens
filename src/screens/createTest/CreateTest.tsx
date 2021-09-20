@@ -20,7 +20,10 @@ function CreateTest() {
   const handleAddClick = () => {
     setShowQuestionList(!showQuestionList);
   };
+  const errorToken=useSelector((state: any) => state.test.error);
+  const tokenErrorCerateQuestion=useSelector((state: any) => state.questions.tokenError);
 
+  console.log(errorToken,"errorToken");
   useEffect(() => {
     dispatch(getTest(idTest));
   }, []);
@@ -30,7 +33,7 @@ function CreateTest() {
       setShowQuestionList(false)
     }
   }
-  return (
+  return (<>{errorToken||tokenErrorCerateQuestion ? <></>:
     <>
       <SubHeader/>
       <div className={'create-test__main-container'}>
@@ -60,7 +63,7 @@ function CreateTest() {
         </div>
       </div>
 
-    </>
+    </>}</>
   );
 }
 

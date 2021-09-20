@@ -16,6 +16,7 @@ export function test(state = initialState, action: any) {
             return {
                 ...state,
                 createTest: true,
+                testID:action.testID
             };
         case testConstants.CREATE_TEST_REQUEST:
             return {

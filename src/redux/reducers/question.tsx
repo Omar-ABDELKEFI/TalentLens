@@ -1,4 +1,5 @@
 import { questionsConstants } from '@redux/actions/question';
+import { act } from 'react-dom/test-utils';
 
 // initialize state for question reduce
 const initialState = {
@@ -21,7 +22,9 @@ export function questions(state = initialState, action: any) {
       return {
         ...state,
         loading: false,
-        error: action.error
+        error: action.error,
+        tokenError:action.tokenError,
+        dataError:action.dataError
       };
     case questionsConstants.FETCH_QUESTIONS_REQUEST:
       return {
@@ -38,7 +41,8 @@ export function questions(state = initialState, action: any) {
       return {
         ...state,
         loading: false,
-        error: action.error
+        error: action.error,
+        tokenError:action.tokenError
       };
     default:
       return state;
