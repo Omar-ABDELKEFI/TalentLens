@@ -11,11 +11,14 @@ import {ArgsProps} from "antd/lib/notification";
 import {ConfigProps} from "antd/lib/notification";
 import {ModelsLoginInput} from "../../myApi"
 import service from '@service/test-api';
+import { preprocessDirectives } from 'tslint/lib/verify/parse';
+import { Redirect } from 'react-router-dom';
 
 const Login = () => {
   console.log(localStorage.getItem('token'),"localStorage.getItem('token')localStorage.getItem('token')");
     const [login, setLogin] = useState<ModelsLoginInput>({email: "", password: ""})
     const error = useSelector((state: any) => state.login.error);
+    const token=localStorage.getItem("token")
     const loginin = useSelector((state: any) => state.login.loggingIn);
     console.log(loginin, "logininloginin")
   console.log(service,"serviceservice");
@@ -38,7 +41,7 @@ const Login = () => {
         } as ArgsProps & string & ConfigProps);
     };
 
-    return (
+    return token ? (<Redirect to={"/my-tests"}/>):(
             <div className="login">
 
                 <Form className="login__containerForm"

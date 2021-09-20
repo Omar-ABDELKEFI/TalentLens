@@ -87,7 +87,7 @@ export function createTest() {
 export function updateTest(testId: number, test: ModelsTest) {
   return (dispatch: any) => {
     dispatch(request(true));
-
+    service.baseApiParams.headers={'Authorization': 'Bearer ' +localStorage.getItem("token")}
     service.myTests.updateTest(testId, test)
       .then(
         (res: any) => {
@@ -97,6 +97,9 @@ export function updateTest(testId: number, test: ModelsTest) {
 
         },
         (res: any) => {
+          if(res.error.error==="token invalid"){
+            history.push("/403")
+          }
           dispatch(failure(res.error.error.toString(), false));
         }
       );
@@ -119,7 +122,7 @@ export function updateTest(testId: number, test: ModelsTest) {
 export function create_candidate(candidate: ModelsCandidateRequest[]) {
   return (dispatch: any) => {
     dispatch(request(true));
-
+    service.baseApiParams.headers={'Authorization': 'Bearer ' +localStorage.getItem("token")}
     service.candidate.candidateCreate(candidate)
       .then(
         () => {
@@ -128,6 +131,9 @@ export function create_candidate(candidate: ModelsCandidateRequest[]) {
 
         },
         (res: any) => {
+          if(res.error.error==="token invalid"){
+            history.push("/403")
+          }
           console.log(res,"resresresresres");
           dispatch(failure(res.error.emailsDuplicate, true));
 
