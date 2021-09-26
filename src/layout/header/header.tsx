@@ -22,7 +22,7 @@ const SubHeader = () => {
   const currentScreenKey = useSelector((state:any)=> state.currentScreen.currentScreen)
   return (
     <Header >
-      <Menu triggerSubMenuAction="click" onOpenChange={()=>setIsOpen(!isOpen)}	 className="header__container" theme="dark" mode="horizontal" defaultSelectedKeys={currentScreenKey}>
+      <Menu triggerSubMenuAction="click" onOpenChange={()=>setIsOpen(!isOpen)}	 className="header__container" theme="dark" mode="horizontal" defaultSelectedKeys={currentScreenKey} selectedKeys={currentScreenKey}>
         <Menu.Item key="1" onClick={()=>dispatch(setCurrentScreen("1"))} ><Link to="/my-tests">
           <span className="header__item">My Tests</span>
         </Link></Menu.Item>

@@ -1,7 +1,7 @@
 import { currentScreenConstants } from '@redux/actions/currentScreen';
 
 const initialState = {
-  currentScreen : ["1"]
+  currentScreen : [""]
 }
 // create reduce test
 export function currentScreen(state = initialState, action: any) {

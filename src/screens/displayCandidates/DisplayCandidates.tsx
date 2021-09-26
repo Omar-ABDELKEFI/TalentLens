@@ -3,14 +3,14 @@ import { Table, Input, Select } from 'antd';
 import './DisplayCandidates.less';
 import service from '@service/test-api';
 import Header from '@layout/header/header';
-import { Redirect } from 'react-router-dom';
 import ScoreCol from '@components/display_candidates/ScoreCol/ScoreCol';
 import CandidateCol from '@components/display_candidates/CandidateCol/CandidateCol';
 import { history } from '@redux/store';
-import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { setCurrentScreen } from '@redux/actions/currentScreen';
 
 const DisplayCandidates = () => {
-
+  const dispatch = useDispatch()
   const [dataSource, setDataSource] = useState<any>([]);
   const [value, setValue] = useState('');
   const [data, setData] = useState([]);
@@ -44,6 +44,7 @@ const DisplayCandidates = () => {
 
   ];
   useEffect(() => {
+    dispatch(setCurrentScreen("2"))
     service.baseApiParams.headers={'Authorization': 'Bearer ' +localStorage.getItem("token")}
     service.testscandidates.testscandidatesList().then(
       (res: any) => {

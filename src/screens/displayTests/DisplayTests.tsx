@@ -7,6 +7,7 @@ import { Redirect } from 'react-router-dom';
 import TestCard from '@components/test_card/TestCard';
 import Header from '@layout/header/header';
 import ListCardSkeleton from '../../skeleton/ListCardSkeleton/ListCardSkeleton';
+import { setCurrentScreen } from '@redux/actions/currentScreen';
 
 
 function DisplayTests() {
@@ -14,6 +15,7 @@ function DisplayTests() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(setCurrentScreen("1"))
     dispatch(actionTest.getMyTests());
   }, []);
   const isLoading = useSelector((state: any) => state.test.loading);
