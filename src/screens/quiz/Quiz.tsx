@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Mca from '@components/Quiz/Mca/Mca';
 import './Quiz.less';
 import service from '@service/test-api';
-import { createResult, getQuiz, updateCurrentQuestion } from '@redux/actions/quiz';
+import { createResult, getQuiz, updateCurrentQuestion, updateTestStatus } from '@redux/actions/quiz';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import McaQuestion from '@components/Quiz/McaQuestion/McaQuestion';
@@ -29,9 +29,12 @@ const Quiz = () => {
     service.answers.answersCreate(idTestCandidate, apiAnswer).then(
       (res: any) => {
         const questionNumber = currentQuestion + 1;
+        console.log(currentQuestion,"currentQuestion");
+        console.log(questionNumber !== quiz.questions.length,"questionNumber !== quiz.questions.length");
         if (questionNumber !== quiz.questions.length) {
           dispatch(updateCurrentQuestion(idTestCandidate, { current_question: questionNumber }));
         } else {
+          console.log('rehifgioerhgiorhe');
           dispatch(createResult(idTestCandidate));
         }
       },

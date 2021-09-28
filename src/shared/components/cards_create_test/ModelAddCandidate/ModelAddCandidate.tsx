@@ -1,10 +1,11 @@
-import React, {ChangeEvent, useState} from 'react';
-import { Row, Col, Slider, InputNumber, Button, Select, Modal, Form } from 'antd';
+import React, { ChangeEvent, useEffect, useState } from 'react';
+import { Row, Col, Slider, InputNumber, Button, Select, Modal, Form, notification } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import {actionTest} from "@redux/actions";
 import { ReactMultiEmail } from "react-multi-email";
 import "react-multi-email/style.css";
 import {useParams} from "react-router-dom";
+import { ArgsProps, ConfigProps, NotificationApi } from 'antd/lib/notification';
 
 function ModelAddCandidates({isModalVisible,setIsModalVisible}:any) {
 
@@ -13,12 +14,14 @@ function ModelAddCandidates({isModalVisible,setIsModalVisible}:any) {
   const dispatch = useDispatch()
   const {idTest} = useParams();
   const errorDuplicate = useSelector(((state: any) => state.test.error_add_candidate));
+
   console.log(errorDuplicate,"errorDuplicate");
   const time_limit = useSelector(((state:any) => state.test.test.time_limit))
 
   function handleChange(value:any) {
     dispatch(actionTest.updateTest(idTest, { time_limit:value }))
   }
+
   console.log(emails,"emails");
   const handleOk = () => {
     if(emails.length>0){
@@ -27,6 +30,7 @@ function ModelAddCandidates({isModalVisible,setIsModalVisible}:any) {
       }))
       console.log(valueCandidate,"valueCandidate");
       dispatch(actionTest.create_candidate(valueCandidate))
+
     }
     else{
       dispatch(actionTest.removeError([]))

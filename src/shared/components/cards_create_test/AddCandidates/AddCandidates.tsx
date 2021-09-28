@@ -18,7 +18,9 @@ function AddCandidates({ idTest, initialPassingScore }: any) {
       if (errorDuplicate&&errorDuplicate.length!==0) {
         console.log(errorDuplicate,"error1");
         errorDuplicate.map((email:any)=>openNotificationWithIcon("error", `the candidate with email ${email} already invited`))
+        dispatch(actionTest.removeError([]))
       }
+
     }
     , [errorDuplicate])
   const openNotificationWithIcon = (type: string, description: string) => {
@@ -88,7 +90,7 @@ function AddCandidates({ idTest, initialPassingScore }: any) {
         <Col>
           <div>
             <Button type="primary" style={{ background: '#28a745', borderColor: '#28a745' }}
-                    disabled={loading || questions.length === 0} onClick={showModal}>add candidate</Button>
+                    disabled={ questions.length === 0} onClick={showModal}>add candidate</Button>
           </div>
           <ModelAddCandidates isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible}
                               />

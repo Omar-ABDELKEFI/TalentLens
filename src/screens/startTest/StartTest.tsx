@@ -21,7 +21,7 @@ const StartTest = () => {
   const isLoading = useSelector((state: any) => state.quiz.loadingTesInfo);
   const testInfo = useSelector((state: any) => state.quiz.testInfo);
   const testStatus = useSelector((state: any) => state.quiz.error);
-  console.log(testInfo,"testInfotestInfo");
+  console.log(testInfo,"testInfotestInfotestInfotestInfotestInfotestInfo");
   return (<>
     {
       <>
