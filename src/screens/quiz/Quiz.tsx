@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Mca from '@components/Quiz/Mca/Mca';
 import './Quiz.less';
 import service from '@service/test-api';
-import { createResult, getQuiz, updateCurrentQuestion, updateTestStatus } from '@redux/actions/quiz';
+import { createResult, getQuiz, startQuiz, updateCurrentQuestion, updateTestStatus } from '@redux/actions/quiz';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import McaQuestion from '@components/Quiz/McaQuestion/McaQuestion';
@@ -22,28 +22,39 @@ const Quiz = () => {
 
   const [answer, setAnswer] = useState<any>();
   const handleSubmit = () => {
-    const apiAnswer = {
-      ...answer,
-      question_id: quiz.questions[currentQuestion].ID
-    };
-    service.answers.answersCreate(idTestCandidate, apiAnswer).then(
+    service.startTest.startTest(idTestCandidate).then(
       (res: any) => {
-        const questionNumber = currentQuestion + 1;
-        console.log(currentQuestion,"currentQuestion");
-        console.log(questionNumber !== quiz.questions.length,"questionNumber !== quiz.questions.length");
-        if (questionNumber !== quiz.questions.length) {
-          dispatch(updateCurrentQuestion(idTestCandidate, { current_question: questionNumber }));
-        } else {
-          console.log('rehifgioerhgiorhe');
-          dispatch(createResult(idTestCandidate));
+        if (res.data.data.current_question === currentQuestion && res.data.data.test_status === "started")
+        {
+          const apiAnswer = {
+            ...answer,
+            question_id: quiz.questions[currentQuestion].ID
+          };
+
+          service.answers.answersCreate(idTestCandidate, apiAnswer).then(
+            (res: any) => {
+              const questionNumber = currentQuestion + 1;
+              if (questionNumber !== quiz.questions.length) {
+                dispatch(updateCurrentQuestion(idTestCandidate, { current_question: questionNumber }));
+              } else {
+                dispatch(createResult(idTestCandidate));
+              }
+            },
+            (res: any) => {
+              console.log(res.error);
+            }
+          );
+        }else {
+          dispatch(startQuiz(idTestCandidate));
         }
       },
-      (res: any) => {
-        console.log(res.error);
+      (error: any) => {
       }
     );
 
   };
+
+
   const handleCheckChange = (values: any) => {
     const checkedAnswers = values.map((choice: any) => {
       return { choices_id: choice };
