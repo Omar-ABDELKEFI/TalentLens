@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './ListCard.less';
-import { DashboardOutlined, ClockCircleOutlined, InsertRowBelowOutlined } from '@ant-design/icons';
+import { ClockCircleOutlined, DashboardOutlined, InsertRowBelowOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { removeHtml } from '@utils/common';
@@ -8,7 +8,7 @@ import QuestionPreview from '@components/question/QuestionPreview/QuestionPrevie
 import TextIcon from '@components/TextIcon/TextIcon';
 import { addTestQuestions, removeTestQuestions } from '@redux/actions/tests';
 
-const ListCard: React.FC<any> = ({ question , test }) => {
+const ListCard: React.FC<any> = ({ question, test }) => {
   const { idTest } = useParams();
   const dispatch = useDispatch();
   const [added, setAdded] = useState<boolean>();
@@ -21,15 +21,15 @@ const ListCard: React.FC<any> = ({ question , test }) => {
     setAdded(isAdded);
   }, []);
 
-  const handleAddClick = (e: any, question:any) => {
+  const handleAddClick = (e: any, question: any) => {
     e.stopPropagation();
     setAdded((prevState => !prevState));
     dispatch(addTestQuestions(question, idTest));
   };
-  const handleRemoveClick = (e: any , question:any) => {
+  const handleRemoveClick = (e: any, question: any) => {
     e.stopPropagation();
     setAdded((prevState => !prevState));
-    dispatch(removeTestQuestions(idTest , question));
+    dispatch(removeTestQuestions(idTest, question));
   };
   const [previewModal, setPreviewModal] = useState(false);
 
@@ -59,9 +59,10 @@ const ListCard: React.FC<any> = ({ question , test }) => {
           <span className={'list-card__skill'}>{question.Skill.name}</span>
         </div>
         <div className={'list-card__row-3'}>
-          <TextIcon icon={DashboardOutlined} text={question.difficulty} style={{ padding: '0 5px',color:"#6c757d" }}/>
-          <TextIcon icon={ClockCircleOutlined} text={question.expected_time} style={{ padding: '0 5px' , color:"#6c757d" }}/>
-          <TextIcon icon={InsertRowBelowOutlined} text={question.type} style={{ padding: '0 5px' , color:"#6c757d" }}/>
+          <TextIcon icon={DashboardOutlined} text={question.difficulty} style={{ padding: '0 5px', color: '#6c757d' }}/>
+          <TextIcon icon={ClockCircleOutlined} text={question.expected_time}
+                    style={{ padding: '0 5px', color: '#6c757d' }}/>
+          <TextIcon icon={InsertRowBelowOutlined} text={question.type} style={{ padding: '0 5px', color: '#6c757d' }}/>
         </div>
       </div>
       <QuestionPreview previewModal={previewModal} setPreviewModal={setPreviewModal} question={question}/>

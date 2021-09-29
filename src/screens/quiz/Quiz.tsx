@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import Mca from '@components/Quiz/Mca/Mca';
 import './Quiz.less';
 import service from '@service/test-api';
-import { createResult, getQuiz, startQuiz, updateCurrentQuestion, updateTestStatus } from '@redux/actions/quiz';
+import { createResult, getQuiz, startQuiz, updateCurrentQuestion } from '@redux/actions/quiz';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import McaQuestion from '@components/Quiz/McaQuestion/McaQuestion';
@@ -12,7 +11,7 @@ const Quiz = () => {
   const dispatch = useDispatch();
   const { idTestCandidate } = useParams();
   const isLoading = useSelector((state: any) => state.quiz.loadingQuiz);
-  const loadingTest =useSelector((state: any) => state.quiz.loadingTesInfo);
+  const loadingTest = useSelector((state: any) => state.quiz.loadingTesInfo);
   const currentQuestion = useSelector((state: any) => state.quiz.testInfo.current_question);
   const lastUpdate = useSelector((state: any) => state.quiz.testInfo.updated_at);
   useEffect(() => {
@@ -24,8 +23,7 @@ const Quiz = () => {
   const handleSubmit = () => {
     service.startTest.startTest(idTestCandidate).then(
       (res: any) => {
-        if (res.data.data.current_question === currentQuestion && res.data.data.test_status === "started")
-        {
+        if (res.data.data.current_question === currentQuestion && res.data.data.test_status === 'started') {
           const apiAnswer = {
             ...answer,
             question_id: quiz.questions[currentQuestion].ID
@@ -44,7 +42,7 @@ const Quiz = () => {
               console.log(res.error);
             }
           );
-        }else {
+        } else {
           dispatch(startQuiz(idTestCandidate));
         }
       },
@@ -61,8 +59,8 @@ const Quiz = () => {
     });
     setAnswer({ ...answer, answer_choices: checkedAnswers });
   };
-  if (!isLoading && Date.now() > ((quiz.questions[currentQuestion].expected_time) * 60 * 1000 + Date.parse(lastUpdate) )) {
-    handleSubmit()
+  if (!isLoading && Date.now() > ((quiz.questions[currentQuestion].expected_time) * 60 * 1000 + Date.parse(lastUpdate))) {
+    handleSubmit();
   }
   return (
     <>

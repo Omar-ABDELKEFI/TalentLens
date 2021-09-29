@@ -1,5 +1,6 @@
 import React from 'react';
-import "./ScoreCol.less" ;
+import './ScoreCol.less';
+
 const ScoreCol = ({ score, status }: any) => {
   return (
     <div className="score-col__container">

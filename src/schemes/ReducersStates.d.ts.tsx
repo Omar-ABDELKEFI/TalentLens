@@ -1,11 +1,11 @@
-import {ModelsLoginInput} from "../myApi";
+import { ModelsLoginInput } from '../myApi';
 
 
-export  interface IReducerStates {
-    router?:any
-    loggingIn?:boolean
-    user?:ModelsLoginInput | string
-    error?:string
-    loading?:boolean
+export interface IReducerStates {
+  router?: any
+  loggingIn?: boolean
+  user?: ModelsLoginInput | string
+  error?: string
+  loading?: boolean
 
 }

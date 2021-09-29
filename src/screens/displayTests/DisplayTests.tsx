@@ -3,7 +3,6 @@ import './DisplayTests.less';
 import { Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionTest } from '@redux/actions/index';
-import { Redirect } from 'react-router-dom';
 import TestCard from '@components/test_card/TestCard';
 import Header from '@layout/header/header';
 import ListCardSkeleton from '../../skeleton/ListCardSkeleton/ListCardSkeleton';
@@ -15,19 +14,19 @@ function DisplayTests() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(setCurrentScreen("1"))
+    dispatch(setCurrentScreen('1'));
     dispatch(actionTest.getMyTests());
   }, []);
   const isLoading = useSelector((state: any) => state.test.loading);
   const myTests = useSelector((state: any) => state.test.myTests);
-  const errorToken=useSelector((state: any) => state.test.error);
+  const errorToken = useSelector((state: any) => state.test.error);
 
-  console.log(errorToken,"errorToken");
+  console.log(errorToken, 'errorToken');
   const handelClickCreteTest = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     dispatch(actionTest.createTest());
   };
   const token = localStorage.getItem('token');
-  return (<>{errorToken ? <></>:
+  return (<>{errorToken ? <></> :
       <>
         <Header/>
         <div className={'display-test__main-container'}>
@@ -41,15 +40,16 @@ function DisplayTests() {
             {isLoading ? <>
                 <ListCardSkeleton/>
               </>
-              : myTests===null? <>
+              : myTests === null ? <>
                 Start Testing Candidates
-                Choose one of our predefined tests for the skills you need or add individual questions one by one to a new empty test.
+                Choose one of our predefined tests for the skills you need or add individual questions one by one to a
+                new empty test.
 
                 You can also create your own custom questions to build a test tailored to your needs.
 
 
-              </>: myTests.map((test: any) => {
-                console.log("my testtss ",test);
+              </> : myTests.map((test: any) => {
+                console.log('my testtss ', test);
                 return (
                   <TestCard key={test.test_id} test={test}/>
                 );

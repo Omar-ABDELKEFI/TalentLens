@@ -85,7 +85,7 @@ export function createResult(idTestCandidate: any) {
     dispatch(request());
     service.score.scoreCreate(idTestCandidate).then(
       (res: any) => {
-        console.log(res.data.data,"testtestgg");
+        console.log(res.data.data, 'data createResult');
         dispatch(success(res.data.data));
       },
       (error: any) => {

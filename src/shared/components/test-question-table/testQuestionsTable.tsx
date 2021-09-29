@@ -1,20 +1,21 @@
 import React from 'react';
 
 import { Table } from 'antd';
-const TestQuestionsTable = ({data}:any) => {
+
+const TestQuestionsTable = ({ data }: any) => {
   const columns = [
     {
       title: 'Questions',
       dataIndex: 'Questions',
-      key: 'Questions',
+      key: 'Questions'
 
     },
     {
       title: 'Environment',
       dataIndex: 'Environment',
-      key: 'Environment',
-    },
-    ]
+      key: 'Environment'
+    }
+  ];
 
   return (
     <>

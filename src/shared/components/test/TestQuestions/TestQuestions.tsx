@@ -16,19 +16,19 @@ const TestQuestions = ({ questions }: any) => {
       dataIndex: 'Name',
       width: '50%',
       render: (name: any, record: any) => <NameCol question={record}/>,
-      ellipsis:true
+      ellipsis: true
     },
     {
       title: 'Type',
       dataIndex: 'type',
       width: '12%',
-      render: (type: any) => <TextIcon icon={InsertRowBelowOutlined} text={type} style={{color:"#6c757d"}}/>
+      render: (type: any) => <TextIcon icon={InsertRowBelowOutlined} text={type} style={{ color: '#6c757d' }}/>
     },
     {
       title: 'Difficulty',
       dataIndex: 'difficulty',
       width: '12%',
-      render: (difficulty: any) => <TextIcon icon={DashboardOutlined} text={difficulty} style={{color:"#6c757d"}}/>
+      render: (difficulty: any) => <TextIcon icon={DashboardOutlined} text={difficulty} style={{ color: '#6c757d' }}/>
 
     },
     {

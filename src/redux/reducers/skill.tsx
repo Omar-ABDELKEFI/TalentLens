@@ -1,10 +1,11 @@
 import { skillsConstants } from '@redux/actions/skills';
 import { IskillReducerState } from '../../types';
 
-const initialState : IskillReducerState = {
-  loading : true ,
-  skills : []
-}
+const initialState: IskillReducerState = {
+  loading: true,
+  skills: []
+};
+
 export function skills(state = initialState, action: any) {
   switch (action.type) {
     case skillsConstants.FETCH_SKILLS_REQUEST:
@@ -20,7 +21,7 @@ export function skills(state = initialState, action: any) {
       return {
         loading: false,
         error: action.error,
-        tokenError:action.tokenError
+        tokenError: action.tokenError
       };
     default:
       return state;

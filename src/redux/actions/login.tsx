@@ -25,7 +25,7 @@ export function login(user: ModelsLoginInput) {
 
         },
         (res: any) => {
-          console.log(res, 'resresresr');
+          console.log(res, 'res login');
           dispatch(failure(res.error.error.toString(), false));
         }
       );

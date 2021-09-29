@@ -1,39 +1,37 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
-import { Row, Col, Slider, InputNumber, Button, Select, Modal, Form, notification } from 'antd';
+import React, { useState } from 'react';
+import { Form, Modal, Select } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import {actionTest} from "@redux/actions";
-import { ReactMultiEmail } from "react-multi-email";
-import "react-multi-email/style.css";
-import {useParams} from "react-router-dom";
-import { ArgsProps, ConfigProps, NotificationApi } from 'antd/lib/notification';
+import { actionTest } from '@redux/actions';
+import { ReactMultiEmail } from 'react-multi-email';
+import 'react-multi-email/style.css';
+import { useParams } from 'react-router-dom';
 
-function ModelAddCandidates({isModalVisible,setIsModalVisible}:any) {
+function ModelAddCandidates({ isModalVisible, setIsModalVisible }: any) {
 
-  const [emails,setEmails]=useState<string[]>([])
-  const {Option} =Select
-  const dispatch = useDispatch()
-  const {idTest} = useParams();
+  const [emails, setEmails] = useState<string[]>([]);
+  const { Option } = Select;
+  const dispatch = useDispatch();
+  const { idTest } = useParams();
   const errorDuplicate = useSelector(((state: any) => state.test.error_add_candidate));
 
-  console.log(errorDuplicate,"errorDuplicate");
-  const time_limit = useSelector(((state:any) => state.test.test.time_limit))
+  console.log(errorDuplicate, 'errorDuplicate');
+  const time_limit = useSelector(((state: any) => state.test.test.time_limit));
 
-  function handleChange(value:any) {
-    dispatch(actionTest.updateTest(idTest, { time_limit:value }))
+  function handleChange(value: any) {
+    dispatch(actionTest.updateTest(idTest, { time_limit: value }));
   }
 
-  console.log(emails,"emails");
+  console.log(emails, 'emails');
   const handleOk = () => {
-    if(emails.length>0){
-      const valueCandidate=emails.map((email => {
-        return {"email":email,"test": [{id: Number(idTest)}]}
-      }))
-      console.log(valueCandidate,"valueCandidate");
-      dispatch(actionTest.create_candidate(valueCandidate))
+    if (emails.length > 0) {
+      const valueCandidate = emails.map((email => {
+        return { 'email': email, 'test': [{ id: Number(idTest) }] };
+      }));
+      console.log(valueCandidate, 'valueCandidate');
+      dispatch(actionTest.create_candidate(valueCandidate));
 
-    }
-    else{
-      dispatch(actionTest.removeError([]))
+    } else {
+      dispatch(actionTest.removeError([]));
     }
     setIsModalVisible(false);
   };
@@ -43,53 +41,54 @@ function ModelAddCandidates({isModalVisible,setIsModalVisible}:any) {
   };
   return (
     <>
-          <Modal title="add candidate"  visible={isModalVisible} onOk={handleOk} onCancel={handleCancel} width={700}>
-            <Form
-                  labelCol={{
-                    sm: {span: 6, offset: 0}
-                  }}
-                  colon={false}
-                  labelAlign="left"
-                  size="middle"
-            >
-              <Form.Item
-                label={<label style={{fontSize: "16px", fontWeight: 500, color: "rgb(33,37,41)"}}>Emails<span>*</span></label>}>
-                <ReactMultiEmail
-                  style={{ minHeight: '75px' }}
-                  placeholder="Input candidates emails"
-                  emails={emails}
-                  onChange={(_emails: string[]) => {
-                    setEmails( _emails);
-                  }}
-                  getLabel={(
-                    email: string,
-                    index: number,
-                    removeEmail: (index: number) => void
-                  ) => {
-                    return (
-                      <div data-tag key={index}>
-                        {email}
-                        <span data-tag-handle onClick={() => removeEmail(index)}>
+      <Modal title="add candidate" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel} width={700}>
+        <Form
+          labelCol={{
+            sm: { span: 6, offset: 0 }
+          }}
+          colon={false}
+          labelAlign="left"
+          size="middle"
+        >
+          <Form.Item
+            label={<label
+              style={{ fontSize: '16px', fontWeight: 500, color: 'rgb(33,37,41)' }}>Emails<span>*</span></label>}>
+            <ReactMultiEmail
+              style={{ minHeight: '75px' }}
+              placeholder="Input candidates emails"
+              emails={emails}
+              onChange={(_emails: string[]) => {
+                setEmails(_emails);
+              }}
+              getLabel={(
+                email: string,
+                index: number,
+                removeEmail: (index: number) => void
+              ) => {
+                return (
+                  <div data-tag key={index}>
+                    {email}
+                    <span data-tag-handle onClick={() => removeEmail(index)}>
                   ×
                 </span>
-                      </div>
-                    );
-                  }}
-                />
-              </Form.Item>
-              <Form.Item
-                label={<label
-                  style={{fontSize: "16px", fontWeight: 500, color: "rgb(33,37,41)"}}>Time limit</label>}>
-                <Select defaultValue={time_limit} style={{ width: 120 }} onChange={handleChange}>
-                  <Option value={1}>1 day</Option>
-                  <Option value={3}>3 days</Option>
-                  <Option value={5}>5 days</Option>
-                  <Option value={7}>7 days</Option>
-                  <Option value={14}>14 days</Option>
-                </Select>
-              </Form.Item>
-            </Form>
-          </Modal>
+                  </div>
+                );
+              }}
+            />
+          </Form.Item>
+          <Form.Item
+            label={<label
+              style={{ fontSize: '16px', fontWeight: 500, color: 'rgb(33,37,41)' }}>Time limit</label>}>
+            <Select defaultValue={time_limit} style={{ width: 120 }} onChange={handleChange}>
+              <Option value={1}>1 day</Option>
+              <Option value={3}>3 days</Option>
+              <Option value={5}>5 days</Option>
+              <Option value={7}>7 days</Option>
+              <Option value={14}>14 days</Option>
+            </Select>
+          </Form.Item>
+        </Form>
+      </Modal>
     </>
   )
     ;

@@ -1,6 +1,6 @@
-import React, { ChangeEvent, useState } from 'react';
+import React from 'react';
 import './Settings.less';
-import { Input, Radio, Space, Checkbox, Form, Button } from 'antd';
+import { Button, Checkbox, Form, Input, Radio, Space } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionTest } from '@redux/actions';
 import { useParams } from 'react-router-dom';

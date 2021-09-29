@@ -1,23 +1,23 @@
 import React from 'react';
-import { Row, Button, Space } from 'antd';
+import { Button, Row } from 'antd';
 import { useSelector } from 'react-redux';
 import TestQuestions from '@components/test/TestQuestions/TestQuestions';
 import TestQuestionsSkeleton from '../../../../skeleton/TestQuestionsSkeleton/TestQuestionsSkeleton';
 
 function AddQuestions({ handleAddClick, questions }: any) {
   const loading = useSelector((state: any) => (state.test.loading));
-  const sum = (questions :any) => {
-   return  questions.reduce((accum : any ,item : any) =>
+  const sum = (questions: any) => {
+    return questions.reduce((accum: any, item: any) =>
       accum + item.expected_time
-   ,0)
+      , 0);
 
-  }
+  };
   return (
     <>
       {
-        loading ? (<TestQuestionsSkeleton />) :
+        loading ? (<TestQuestionsSkeleton/>) :
           <>
-            <Row justify="space-between" style={{marginBottom:"10px"}}>
+            <Row justify="space-between" style={{ marginBottom: '10px' }}>
               <div>{questions.length === 0 ? 'Add questions to see the expected solving time.' : `Expected solving time ${sum(questions)} min`}</div>
               <div>
                 <div>

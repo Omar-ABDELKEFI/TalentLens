@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import { removeHtml } from '@utils/common';
 import './NameCol.less';
-import { Modal } from 'antd';
-import McaQuestion from '@components/Quiz/McaQuestion/McaQuestion';
-import Question from '@components/questions_types/McaQuestions/McaQuestions';
 import QuestionPreview from '@components/question/QuestionPreview/QuestionPreview';
 
 const NameCol = ({ question }: any) => {

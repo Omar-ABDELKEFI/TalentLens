@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import TestQuestionsTable from '../test-question-table/testQuestionsTable';
 import { Button } from 'antd';
-import './QuizWaiting.less'
+import './QuizWaiting.less';
 import { useDispatch } from 'react-redux';
 import { updateTestStatus } from '@redux/actions/quiz';
 
-const QuizWaiting = ({testInfo , idTestCandidate} : any) => {
+const QuizWaiting = ({ testInfo, idTestCandidate }: any) => {
   const data = testInfo.questions.map((questions: any, key: any) => {
     return {
       'key': key,
@@ -30,7 +30,7 @@ const QuizWaiting = ({testInfo , idTestCandidate} : any) => {
         <div style={{ marginBottom: 5 }}><b>EMAIL:</b></div>
         <p>{testInfo.email}</p>
         <Button type="primary" style={{ width: '20' }} block size="large" onClick={() => {
-          dispatch(updateTestStatus(idTestCandidate,{test_status:"started"}))
+          dispatch(updateTestStatus(idTestCandidate, { test_status: 'started' }));
         }}>Start Test</Button>
       </div>
     </div>

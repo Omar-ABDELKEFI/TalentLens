@@ -821,19 +821,19 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         ...params,
       }),
   };
-  testscandidates = {
+  testsCandidates = {
     /**
      * @description get candidates and their tests
      *
      * @tags test_candidate
-     * @name TestscandidatesList
+     * @name TestsCandidatesList
      * @summary get candidates and their tests
-     * @request GET:/testscandidates
+     * @request GET:/testsCandidates
      * @secure
      */
-    testscandidatesList: (params: RequestParams = {}) =>
+    testsCandidatesList: (params: RequestParams = {}) =>
       this.request<ModelsTestsCandidatesResponse[], any>({
-        path: `/testscandidates`,
+        path: `/testsCandidates`,
         method: "GET",
         secure: true,
         type: ContentType.Json,

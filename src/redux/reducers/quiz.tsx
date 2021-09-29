@@ -1,30 +1,31 @@
 import { quizConstants } from '@redux/actions/quiz';
-const initialState = {
-  loadingTesInfo : true ,
-  loadingQuiz : true ,
-  quiz : {
-    questions: [],
-  },
-  testInfo : {
-    questions: [],
-  }
-}
 
-export function quiz(state =initialState, action: any) {
+const initialState = {
+  loadingTesInfo: true,
+  loadingQuiz: true,
+  quiz: {
+    questions: []
+  },
+  testInfo: {
+    questions: []
+  }
+};
+
+export function quiz(state = initialState, action: any) {
   switch (action.type) {
     case quizConstants.START_QUIZ_REQUEST:
       return {
         ...state,
-        loadingTesInfo:action.loading
+        loadingTesInfo: action.loading
       };
     case quizConstants.START_QUIZ_SUCCESS:
       return {
         ...state,
-        loadingTesInfo:action.loading,
+        loadingTesInfo: action.loading,
         testInfo: action.testInfo
       };
     case quizConstants.START_QUIZ_FAILURE:
-      return {error:action.error,loadingTesInfo:action.loading};
+      return { error: action.error, loadingTesInfo: action.loading };
 
     case quizConstants.FETCH_QUIZ_REQUEST:
       return {
@@ -53,7 +54,7 @@ export function quiz(state =initialState, action: any) {
       return {
         ...state,
         loadingTesInfo: false,
-        testInfo: {...state.testInfo , test_status:action.result.test_status , score: action.result.score}
+        testInfo: { ...state.testInfo, test_status: action.result.test_status, score: action.result.score }
       };
     case quizConstants.CREATE_RESULT_FAILURE:
       return {
@@ -70,7 +71,7 @@ export function quiz(state =initialState, action: any) {
       return {
         ...state,
         loadingTesInfo: false,
-        testInfo: {...state.testInfo,test_status:action.payload.test_status,updated_at:action.payload.updated_at}
+        testInfo: { ...state.testInfo, test_status: action.payload.test_status, updated_at: action.payload.updated_at }
       };
     case quizConstants.UPDATE_QUIZ_STATUS_FAILURE:
       return {
@@ -87,7 +88,11 @@ export function quiz(state =initialState, action: any) {
       return {
         ...state,
         loadingTesInfo: false,
-        testInfo: {...state.testInfo,current_question:action.payload.current_question, updated_at: action.payload.updated_at}
+        testInfo: {
+          ...state.testInfo,
+          current_question: action.payload.current_question,
+          updated_at: action.payload.updated_at
+        }
       };
     case quizConstants.UPDATE_CURRENT_QUESTION_FAILURE:
       return {

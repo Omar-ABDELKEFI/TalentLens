@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './McaQuestions.less';
-import { Form, Input, Button, Slider, Select, notification, Modal } from 'antd';
+import { Button, Form, Input, Modal, notification, Select, Slider } from 'antd';
 
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -9,15 +9,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import Choice from '@components/question/Choice/Choice';
 import { getSkills } from '@redux/actions/skills';
 import { createQuestion } from '@redux/actions/question';
-import { Redirect } from 'react-router-dom';
 import Header from '@layout/header/header';
-import { ModelsLoginInput } from '../../../../myApi';
-import errorsTypes from '@utils/errorsTypes.json';
-import { constTypes, handleError } from '@utils/constTypesError';
-import { IErrortypes } from '@schemes/errorTypes';
+import { handleError } from '@utils/constTypesError';
 import { ArgsProps, ConfigProps, NotificationApi } from 'antd/lib/notification';
 import McaQuestion from '@components/Quiz/McaQuestion/McaQuestion';
-import { log } from 'util';
 
 interface Ichoice {
   choice_text: string;
@@ -44,7 +39,7 @@ const Question = () => {
 
   const [thereOneAnswer, setThereOneAnswer] = useState<boolean>(true);
   const dataError = useSelector((state: any) => state.questions.dataError);
-  console.log(dataError&&dataError.error.error.Message,"daataError");
+  console.log(dataError && dataError.error.error.Message, 'daataError');
   const handleCkeElement = (question_text: any) => {
     const ckeElement = document.getElementsByClassName('ck-editor__main');
     console.log(question.question_text, 'question.question_text');
@@ -52,11 +47,11 @@ const Question = () => {
       setQuestionTestIsValid(false);
       console.log(ckeElement[0], 'ckeElement');
       ckeElement[0].classList.add('McaQuestions__ckEditor');
-      return false
+      return false;
     } else {
       setQuestionTestIsValid(true);
       ckeElement[0].classList.remove('McaQuestions__ckEditor');
-      return true
+      return true;
     }
   };
 
@@ -87,14 +82,14 @@ const Question = () => {
     skill_name: '',
     type: 'mca'
   });
-  const tokenError=useSelector((state: any) => state.skills.tokenError);
+  const tokenError = useSelector((state: any) => state.skills.tokenError);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getSkills());
   }, [dataError]);
   const skills = useSelector((state: any) => state.skills.skills);
 
-  console.log(skills,"skiils");
+  console.log(skills, 'skiils');
   const [customSkill, setCustomSkill] = useState<boolean>(false);
   const handleAddButton = () => {
     setQuestion({
@@ -138,11 +133,11 @@ const Question = () => {
   };
   const handleSelectSkill = (value: any) => {
 
-    for(const skill of skills){
-      if(skill.ID===value){
-        const name=skill.name
-        setQuestion({ ...question, skill_id: value,skill_name:name });
-        break
+    for (const skill of skills) {
+      if (skill.ID === value) {
+        const name = skill.name;
+        setQuestion({ ...question, skill_id: value, skill_name: name });
+        break;
       }
     }
     console.log(question);
@@ -163,66 +158,66 @@ const Question = () => {
           : choice
       )
     });
-    for(const choice of question.choices){
-      if(choice.id===id&&!choice.is_answer){
-        setThereOneAnswer(true)
-        return true
+    for (const choice of question.choices) {
+      if (choice.id === id && !choice.is_answer) {
+        setThereOneAnswer(true);
+        return true;
       }
-      if(choice.is_answer===true){
-        setThereOneAnswer(true)
-        return true
+      if (choice.is_answer === true) {
+        setThereOneAnswer(true);
+        return true;
       }
     }
   };
   const handleForm =
     (e: any) => {
 
-      console.log(e,"fffffffffffffffff");
-      handleCkeElement(question.question_text)
-      for(const choice of question.choices){
-        if(choice.choice_text===""){
-          setChoiceTestIsValid(false)
-          return false
+      console.log(e, 'fffffffffffffffff');
+      handleCkeElement(question.question_text);
+      for (const choice of question.choices) {
+        if (choice.choice_text === '') {
+          setChoiceTestIsValid(false);
+          return false;
         }
       }
-      setChoiceTestIsValid(true)
-      let choicesValide=false
-      for(const choice of question.choices){
-        if(choice.is_answer===true){
-          choicesValide=true
-          setThereOneAnswer(true)
-          return true
+      setChoiceTestIsValid(true);
+      let choicesValide = false;
+      for (const choice of question.choices) {
+        if (choice.is_answer === true) {
+          choicesValide = true;
+          setThereOneAnswer(true);
+          return true;
         }
       }
-      setThereOneAnswer(false)
-      if(!choicesValide){
-        return false
+      setThereOneAnswer(false);
+      if (!choicesValide) {
+        return false;
       }
 
-      return true
+      return true;
     };
   const handleSubmit = (e: any) => {
-    const questionTextValide=handleCkeElement(question.question_text);
-     const choicesValide=handleForm(e)
-    console.log(choicesValide,"choicesValide");
-    if (questionTextValide&&choicesValide) {
+    const questionTextValide = handleCkeElement(question.question_text);
+    const choicesValide = handleForm(e);
+    console.log(choicesValide, 'choicesValide');
+    if (questionTextValide && choicesValide) {
       dispatch(createQuestion(question));
     }
   };
   const error = useSelector((state: any) => state.questions.error);
 
-  console.log(dataError&&dataError.error.error.Message,"dataError");
+  console.log(dataError && dataError.error.error.Message, 'dataError');
   useEffect(() => {
       if (error) {
-        console.log(error.errors,"error1");
-        error.map((err:any)=>openNotificationWithIcon("error", handleError(err)))
+        console.log(error.errors, 'error1');
+        error.map((err: any) => openNotificationWithIcon('error', handleError(err)));
       }
     }
-    , [error])
+    , [error]);
   const openNotificationWithIcon = (type: string, description: string) => {
     notification[type as keyof NotificationApi]({
       message: 'error',
-      description,
+      description
     } as ArgsProps & string & ConfigProps);
   };
   const handleEditorChange = (event: any, editor: any) => {
@@ -271,15 +266,17 @@ const Question = () => {
                 rules={[
                   {
                     required: true,
-                    message:"name is required"
-                  },
+                    message: 'name is required'
+                  }
                 ]}
               >
 
                 <Input defaultValue={question.name} placeholder="Name" name="name" onChange={handleChange}/>
 
               </Form.Item>
-              <div style={{marginLeft:228,color:'red'}} hidden={!(dataError&&dataError.error.error.Message)}>name have to be unique</div>
+              <div style={{ marginLeft: 228, color: 'red' }} hidden={!(dataError && dataError.error.error.Message)}>name
+                have to be unique
+              </div>
               <Form.Item
                 required
                 label={
@@ -320,7 +317,9 @@ const Question = () => {
                   </Button>
                 </div>
                 <div style={{ color: 'red' }} hidden={choiceTestIsValid}>The choice text is required</div>
-                <div style={{ color: 'red' }} hidden={!choiceTestIsValid?true:thereOneAnswer}>There should be one correct answer</div>
+                <div style={{ color: 'red' }} hidden={!choiceTestIsValid ? true : thereOneAnswer}>There should be one
+                  correct answer
+                </div>
               </Form.Item>
               <Form.Item
                 label={
@@ -382,13 +381,13 @@ const Question = () => {
               >
                 <div className="McaQuestions__add-skill">
                   {!customSkill ? <Form.Item
-                    style={{width:"100%"}}
+                    style={{ width: '100%' }}
                     name="skill"
                     rules={[
                       {
                         required: true,
-                        message: 'Please select skill!',
-                      },
+                        message: 'Please select skill!'
+                      }
                     ]}
                   >
                     <Select onChange={handleSelectSkill} placeholder="select skill">
@@ -401,18 +400,18 @@ const Question = () => {
                         );
                       })}
                     </Select>
-                   </Form.Item>: <Form.Item name="skillInput" style={{width:"100%"}} rules={[
+                  </Form.Item> : <Form.Item name="skillInput" style={{ width: '100%' }} rules={[
                     {
                       required: true,
-                      message: 'Please enter skill!',
-                    },
+                      message: 'Please enter skill!'
+                    }
                   ]}>
                     <Input
                       placeholder="Type your custom skill name"
                       name="skillInput"
                       onChange={handleNewSkill}
                     /></Form.Item>
-                    }
+                  }
                   <Button type="primary" onClick={handleAddSkillClick}>
                     {customSkill ? 'Discard custom skill' : 'Add new skkill'}
                   </Button>

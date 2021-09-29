@@ -1,6 +1,6 @@
-import {createBrowserHistory, History} from 'history';
-import {routerMiddleware} from 'connected-react-router';
-import {createStore, applyMiddleware, compose} from 'redux';
+import { createBrowserHistory, History } from 'history';
+import { routerMiddleware } from 'connected-react-router';
+import { applyMiddleware, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import createRootReducer from './reducers';
 
@@ -13,6 +13,6 @@ const middleware = [routerMiddleware(history), thunk];// Redux Thunk middleware 
 const store = createStore(createRootReducer(history), composeEnhancers(applyMiddleware(...middleware))); // holds the whole state tree of your application
 
 
-export {history};
+export { history };
 
 export default store;

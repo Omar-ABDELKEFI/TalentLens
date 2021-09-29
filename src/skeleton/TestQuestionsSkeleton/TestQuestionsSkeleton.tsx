@@ -41,7 +41,7 @@ const TestQuestionsSkeleton = () => {
 
   return (
     <div>
-      <Row justify="space-between" align={"middle"} style={{marginBottom:"10px"}}>
+      <Row justify="space-between" align={'middle'} style={{ marginBottom: '10px' }}>
         <Col>
           <Skeleton paragraph={false} title={{ width: 150 }} active/>
         </Col>

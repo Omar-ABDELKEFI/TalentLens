@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Input, Select } from 'antd';
+import { Input, Select, Table } from 'antd';
 import './DisplayCandidates.less';
 import service from '@service/test-api';
 import Header from '@layout/header/header';
@@ -10,11 +10,11 @@ import { useDispatch } from 'react-redux';
 import { setCurrentScreen } from '@redux/actions/currentScreen';
 
 const DisplayCandidates = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [dataSource, setDataSource] = useState<any>([]);
   const [value, setValue] = useState('');
   const [data, setData] = useState([]);
-  const [errorToken,setErrorToken]=useState(undefined)
+  const [errorToken, setErrorToken] = useState(undefined);
   const columns = [
     {
       title: 'Score',
@@ -33,7 +33,7 @@ const DisplayCandidates = () => {
       title: 'Test',
       dataIndex: 'test_name',
       width: '20%',
-      render: (test: any, record: any) => <span className={"display-candidates__test-name"}
+      render: (test: any, record: any) => <span className={'display-candidates__test-name'}
                                                 onClick={() => history.push(`/my-tests/${record.test_candidate_id.slice(0, record.test_candidate_id.indexOf('-'))}`)}>{test}</span>
     },
     {
@@ -44,18 +44,18 @@ const DisplayCandidates = () => {
 
   ];
   useEffect(() => {
-    dispatch(setCurrentScreen("2"))
-    service.baseApiParams.headers={'Authorization': 'Bearer ' +localStorage.getItem("token")}
-    service.testscandidates.testscandidatesList().then(
+    dispatch(setCurrentScreen('2'));
+    service.baseApiParams.headers = { 'Authorization': 'Bearer ' + localStorage.getItem('token') };
+    service.testsCandidates.testsCandidatesList().then(
       (res: any) => {
         setData(res.data.data);
         setDataSource(res.data.data);
       },
       (e) => {
-        if(e.error.error==="token invalid"){
-          history.push("/403")
+        if (e.error.error === 'token invalid') {
+          history.push('/403');
         }
-        setErrorToken(e.error.error)
+        setErrorToken(e.error.error);
       }
     );
   }, []);
@@ -81,7 +81,7 @@ const DisplayCandidates = () => {
         setDataSource(data);
     }
   };
-  return (<>{errorToken ? <></>:
+  return (<>{errorToken ? <></> :
       <>
         <Header/>
         <div className={'display-candidates__main-container'}>

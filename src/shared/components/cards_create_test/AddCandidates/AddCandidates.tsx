@@ -1,10 +1,8 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
-import { Row, Col, Slider, InputNumber, Button, Input, Modal, notification } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Button, Col, InputNumber, notification, Row, Slider } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionTest } from '@redux/actions';
-import { useParams } from 'react-router-dom';
 import ModelAddCandidates from '@components/cards_create_test/ModelAddCandidate/ModelAddCandidate';
-import { handleError } from '@utils/constTypesError';
 import { ArgsProps, ConfigProps, NotificationApi } from 'antd/lib/notification';
 
 function AddCandidates({ idTest, initialPassingScore }: any) {
@@ -13,20 +11,20 @@ function AddCandidates({ idTest, initialPassingScore }: any) {
   const loading = useSelector(((state: any) => state.test.loading));
   const questions = useSelector(((state: any) => state.test.test.questions));
   const errorDuplicate = useSelector(((state: any) => state.test.error_add_candidate));
-  console.log(errorDuplicate,"errorDuplicate");
+  console.log(errorDuplicate, 'errorDuplicate');
   useEffect(() => {
-      if (errorDuplicate&&errorDuplicate.length!==0) {
-        console.log(errorDuplicate,"error1");
-        errorDuplicate.map((email:any)=>openNotificationWithIcon("error", `the candidate with email ${email} already invited`))
-        dispatch(actionTest.removeError([]))
+      if (errorDuplicate && errorDuplicate.length !== 0) {
+        console.log(errorDuplicate, 'error1');
+        errorDuplicate.map((email: any) => openNotificationWithIcon('error', `the candidate with email ${email} already invited`));
+        dispatch(actionTest.removeError([]));
       }
 
     }
-    , [errorDuplicate])
+    , [errorDuplicate]);
   const openNotificationWithIcon = (type: string, description: string) => {
     notification[type as keyof NotificationApi]({
       message: 'error',
-      description,
+      description
     } as ArgsProps & string & ConfigProps);
   };
   const onAfterChange = (value: any) => {
@@ -90,10 +88,10 @@ function AddCandidates({ idTest, initialPassingScore }: any) {
         <Col>
           <div>
             <Button type="primary" style={{ background: '#28a745', borderColor: '#28a745' }}
-                    disabled={ questions.length === 0} onClick={showModal}>add candidate</Button>
+                    disabled={questions.length === 0} onClick={showModal}>add candidate</Button>
           </div>
           <ModelAddCandidates isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible}
-                              />
+          />
         </Col>
       </Row>
 

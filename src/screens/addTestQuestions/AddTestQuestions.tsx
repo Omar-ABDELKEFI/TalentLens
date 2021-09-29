@@ -5,11 +5,10 @@ import ListCard from '@components/question/ListCard/ListCard';
 import './AddTestQuestions.less';
 import { Button } from 'antd';
 import ModelQuestionsTypes from '@components/question/ModelQuestionsTypes/ModelQuestionsTypes';
-import McaQuestion from '@components/Quiz/McaQuestion/McaQuestion';
 
 const AddTestQuestions: React.FC<any> = () => {
   const questions = useSelector((state: any) => state.questions.questions);
-  const test = useSelector((state:any) => state.test.test )
+  const test = useSelector((state: any) => state.test.test);
   const errors = useSelector((state: any) => state.questions.error);
   const tokenError = useSelector((state: any) => state.questions.tokenError);
   const dispatch = useDispatch();
@@ -23,7 +22,7 @@ const AddTestQuestions: React.FC<any> = () => {
     dispatch(getQuestions());
 
   }, []);
-  return tokenError?(<></>):errors ? (
+  return tokenError ? (<></>) : errors ? (
     <h1>{errors}</h1>
   ) : (
     <div>
@@ -33,11 +32,11 @@ const AddTestQuestions: React.FC<any> = () => {
       </div>
       {questions && questions.map((question: any) => {
 
-        return (
-          // return question in card
-          <ListCard question={question} test={test} key={question.ID}/>
-        );
-      }
+          return (
+            // return question in card
+            <ListCard question={question} test={test} key={question.ID}/>
+          );
+        }
       )}
     </div>
   );

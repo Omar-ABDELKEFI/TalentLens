@@ -1,8 +1,9 @@
 import { currentScreenConstants } from '@redux/actions/currentScreen';
 
 const initialState = {
-  currentScreen : [""]
-}
+  currentScreen: ['']
+};
+
 // create reduce test
 export function currentScreen(state = initialState, action: any) {
 
@@ -10,10 +11,10 @@ export function currentScreen(state = initialState, action: any) {
     case currentScreenConstants.SET_CURRENT_SCREEN:
       return {
         ...state,
-        currentScreen: [action.key],
+        currentScreen: [action.key]
       };
     default:
-      return state
+      return state;
 
   }
 }
