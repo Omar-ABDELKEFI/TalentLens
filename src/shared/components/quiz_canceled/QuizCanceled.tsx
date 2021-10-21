@@ -16,10 +16,10 @@ const QuizCanceled = ({ testStatus }: any) => {
 
   }
 
-  const token = localStorage.getItem('token');
+
 
   return (<> {
-    (!token ? <Redirect to="/403"/> :
+    (
       (<>
         <div className="start-test__container"><h1>Test invitation has expired</h1><p>Test invitation for test
           "{testStatus.testCandidate.name}" has expired on: {parseISOString(testStatus.time)}. Please contact us for
