@@ -1,4 +1,4 @@
-FROM node:alpine
+FROM node:16.5.0-alpine
 
 # Create and define the node_modules's cache directory.
 
