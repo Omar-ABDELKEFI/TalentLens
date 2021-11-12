@@ -1,0 +1,52 @@
+# This is a basic workflow to help you get started with Actions
+
+# Define a name of the workflow
+name: Create and publish a Docker image
+
+# This controls when the action will run. 
+on:
+# Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [develop ]
+  pull_request:
+    branches: [develop ]
+# Allows you to run this workflow manually from the Actions tab
+#name: Main Workflow
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+# This workflow contains a single job called "build"
+  build-and-push-image:
+  # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+# Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      # Login to your repository under
+    - name: Login to GitHub Container Registry
+      uses: mr-smithers-excellent/docker-build-push@v5
+      with:
+        #registry: ghcr.io
+        #githubOrg: override-org # optional
+        image: github-repo/image-name
+        registry: docker.pkg.github.com
+        #run: echo ${{ secrets.GHCR_TOKEN  }} | docker login -u ${{ secrets.GHCR_USERNAME   }} --password-stdin ghcr.io
+        username: ${{ secrets.GHCR_USERNAME }}
+        password: ${{ secrets.GHCR_TOKEN }}    
+
+
+  # Build and push container
+    - name: Build and push
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        file: ./Dockerfile
+        push: true
+        tags: tekab-dev/tekab-test-react
+        build-args: |
+            BASE_IMAGE=localhost:3000
