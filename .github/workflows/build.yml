@@ -82,9 +82,9 @@ jobs:
         tags: docker-build-push
         file: ./Dockerfile
        # Push container   
-    # - name: Push image
-    #   uses: docker/build-push-action@v2
-    #   with:
-    #     push: true
-    #     tags: docker-build-push
-    #     file: ./Dockerfile
+    - name: Push image
+      uses: docker/build-push-action@v2
+      with:
+        push: true
+        tags: docker-build-push
+        file: ./Dockerfile
