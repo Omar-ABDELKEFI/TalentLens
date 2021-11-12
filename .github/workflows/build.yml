@@ -79,12 +79,12 @@ jobs:
     - name: Build image
       uses: docker/build-push-action@v2
       with:
-        tags: ${{ steps.docker_meta.outputs.tags }} 
+        tags: docker-build-push
         file: ./Dockerfile
        # Push container   
     - name: Push image
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: ${{ steps.docker_meta.outputs.tags }}
+        tags: docker-build-push
         file: ./Dockerfile
