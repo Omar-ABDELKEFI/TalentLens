@@ -28,14 +28,6 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Docker meta
-        id: docker_meta
-        uses: crazy-max/ghaction-docker-meta@v1
-        with:
-          images: ghcr.io/gbaeke/rgapi
-          tag-sha: true
-          tag-edge: false
-          tag-latest: true
     - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
 
