@@ -90,7 +90,7 @@ jobs:
 
     - name: Build image
       uses: actions/checkout@v2
-      Run: |
+      run: |
         docker build ./ -t web-dev
        # Push container   
     # - name: Push image
