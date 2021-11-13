@@ -90,7 +90,7 @@ jobs:
 
     - name: Build image
       run: |
-        docker build ./ -t web-dev
+        docker build ./ -t web-dev-image
        # Push container   
     # - name: Push image
     #   uses: docker/build-push-action@v2
