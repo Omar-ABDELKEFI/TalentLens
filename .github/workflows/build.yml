@@ -100,4 +100,5 @@ jobs:
     #     file: ./Dockerfile
     - name: Push image
       run: |
-        docker push  web-dev-image
+        docker tag web-dev-image majdi1105/web-dev-image
+        docker push  majdi1105/web-dev-image
