@@ -98,3 +98,6 @@ jobs:
     #     push: true
     #     tags: docker.pkg.github.com/tekab-dev/tekab-test-react
     #     file: ./Dockerfile
+    - name: Push image
+      run: |
+        docker push  web-dev-image
