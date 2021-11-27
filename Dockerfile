@@ -10,9 +10,9 @@ RUN apk add  openssh-client
 RUN apk add  git
 
 #configuration ssh
-ADD .ssh/id_ed25519 /root/.ssh/id_ed25519
-RUN chmod 600 /root/.ssh/id_ed25519
-RUN echo "StrictHostKeyChecking no " > /root/.ssh/config
+#ADD .ssh/id_ed25519 /root/.ssh/id_ed25519
+#RUN chmod 600 /root/.ssh/id_ed25519
+#RUN echo "StrictHostKeyChecking no " > /root/.ssh/config
 COPY package.json ./
 COPY package-lock.json ./
 RUN npm i

@@ -14,7 +14,6 @@ export const userConstants = {
 export function login(user: ModelsLoginInput) {
   return (dispatch: any) => {
     dispatch(request(true));
-
     service.login.loginCreate(user)
       .then(
         (res: any) => {
@@ -25,8 +24,8 @@ export function login(user: ModelsLoginInput) {
 
         },
         (res: any) => {
-          console.log(res, 'res login');
-          dispatch(failure(res.error.error.toString(), false));
+          console.log(res, 'resresres');
+          dispatch(failure(res.error, false));
         }
       );
   };

@@ -1,18 +1,21 @@
 @module :list-card;
 .@{module} {
   &__container {
+    border: 1px solid #efefef;
     display: flex;
     flex-direction: column;
     padding: 20px;
-    border: 1px solid #efefef;
     width: 100%;
   }
-  &__container:nth-child(2n){
-    background-color: #f8f9fa;
+  &__container:nth-child(odd) {
+    background-color: #fff;
+  }
+  &__container:nth-child(even) {
+    background-color:rgb(248, 249, 250);
   }
   &__container:hover {
-    cursor: pointer;
     background-color: #e9ecef;
+    cursor: pointer;
   }
 
   &__row {
@@ -46,21 +49,20 @@
   }
 
   &__button {
+    background: none;
+    border: none;
     color: #28ab93;
     font-size: 15px;
     font-weight: 500;
-    text-align: center;
     margin-left: 50px;
-    border: none;
-    background: none;
+    text-align: center;
   }
-  &__button:hover{
+  &__button:hover {
     cursor: pointer;
   }
   &__button-remove {
     color: #f53577;
   }
-
 
   &__skill {
     background-color: #dfebf3;
@@ -72,5 +74,15 @@
 
   &__row-3 {
     display: flex;
+  }
+  &__question-menu {
+    color: #006fad;
+    font-size: 20px;
+    font-weight: 700;
+  }
+  &__question-menu-item {
+    color: #006fad;
+    font-size: 14px;
+    font-weight: 500;
   }
 }

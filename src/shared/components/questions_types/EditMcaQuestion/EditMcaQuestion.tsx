@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import './McaQuestions.less';
 import { Button, Form, Input, Modal, notification, Select, Slider } from 'antd';
-
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-
-import { useDispatch, useSelector } from 'react-redux';
 import Choice from '@components/question/Choice/Choice';
+import McaQuestion from '@components/Quiz/McaQuestion/McaQuestion';
+import { useDispatch, useSelector } from 'react-redux';
 import { getSkills } from '@redux/actions/skills';
-import { createQuestion } from '@redux/actions/question';
-import Header from '@layout/header/header';
+import { createQuestion, updateQuestion } from '@redux/actions/question';
 import { handleError } from '@utils/constTypesError';
 import { ArgsProps, ConfigProps, NotificationApi } from 'antd/lib/notification';
-import McaQuestion from '@components/Quiz/McaQuestion/McaQuestion';
+import service from '@service/test-api';
+import { useParams } from 'react-router';
 import { history } from '@redux/store';
+import Header from '@layout/header/header';
+import "./EditMcaQuestion.less";
 
 interface Ichoice {
   choice_text: string;
@@ -34,7 +34,7 @@ interface Iquestion {
   skill_name?: string
 }
 
-const Question = () => {
+const EditMcaQuestion = () => {
   const [questionTestIsValid, setQuestionTestIsValid] = useState<boolean>(true);
   const [choiceTestIsValid, setChoiceTestIsValid] = useState<boolean>(true);
 
@@ -44,11 +44,11 @@ const Question = () => {
     const ckeElement = document.getElementsByClassName('ck-editor__main');
     if (question_text === '') {
       setQuestionTestIsValid(false);
-      ckeElement[0].classList.add('McaQuestions__ckEditor');
+      ckeElement[0].classList.add('EditMcaQuestions__ckEditor');
       return false;
     } else {
       setQuestionTestIsValid(true);
-      ckeElement[0].classList.remove('McaQuestions__ckEditor');
+      ckeElement[0].classList.remove('EditMcaQuestions__ckEditor');
       return true;
     }
   };
@@ -66,23 +66,25 @@ const Question = () => {
     40: '40',
     60: '60'
   };
-  const [question, setQuestion] = useState<Iquestion>({
-    name: '',
-    choices: [
-      { choice_text: '', is_answer: false, id: Math.random() },
-      { choice_text: '', is_answer: false, id: Math.random() }
-
-    ],
-    difficulty: 'easy',
-    max_points: 1,
-    expected_time: 1,
-    question_text: '',
-    skill_name: '',
-    type: 'mca'
-  });
+  const [question, setQuestion] = useState<Iquestion | any>();
   const tokenError = useSelector((state: any) => state.skills.tokenError);
   const dispatch = useDispatch();
+  const { id } = useParams();
   useEffect(() => {
+    service.baseApiParams.headers = { 'Authorization': 'Bearer ' + localStorage.getItem('token') };
+    service.questions.editDetail(id).then(
+      (res: any) => {
+        console.log(res.data);
+        setQuestion(res.data.data);
+      },
+      (res: any) => {
+        if (res.error.error === 'token invalid') {
+          history.push('/403');
+        }
+        console.log(res, 'resresresr');
+      }
+    );
+
     dispatch(getSkills());
   }, [dataError]);
   const skills = useSelector((state: any) => state.skills.skills);
@@ -96,7 +98,7 @@ const Question = () => {
   };
   const handleDelete = (id?: number) => {
     if (question.choices?.length > 2) {
-      const updatedChoices = question.choices!.filter(choice => choice.id !== id);
+      const updatedChoices = question.choices!.filter((choice: any) => choice.id !== id);
       setQuestion({ ...question, choices: updatedChoices });
     }
   };
@@ -104,7 +106,7 @@ const Question = () => {
     const value = e.target.value;
     setQuestion({
       ...question,
-      choices: question.choices!.map(choice =>
+      choices: question.choices!.map((choice: any) =>
         choice.id === id
           ? {
             ...choice,
@@ -139,7 +141,7 @@ const Question = () => {
   const handleCheckChange = (id?: number) => {
     setQuestion({
       ...question,
-      choices: question.choices!.map(choice =>
+      choices: question.choices!.map((choice: any) =>
         choice.id === id
           ? {
             ...choice,
@@ -188,14 +190,14 @@ const Question = () => {
     const questionTextValide = handleCkeElement(question.question_text);
     const choicesValide = handleForm(e);
     if (questionTextValide && choicesValide) {
-      dispatch(createQuestion(question));
+      dispatch(updateQuestion(id, question));
     }
   };
   const error = useSelector((state: any) => state.questions.error);
 
   useEffect(() => {
       if (error) {
-        error.map((err:any)=>openNotificationWithIcon("error", handleError(err)))
+        error.map((err: any) => openNotificationWithIcon('error', handleError(err)));
       }
     }
     , [error]);
@@ -220,14 +222,14 @@ const Question = () => {
 
   const token = localStorage.getItem('token');
   const [showModal, setShowModal] = useState<boolean | undefined>(false);
-
   return (
-    <>{tokenError ? <></> :
-      <>
-        <Header/>
-        <div className="McaQuestions__main-container">
-          <div className="McaQuestions__container">
-            <h1 className="McaQuestions__title">New Multiple Correct Answers Question</h1>
+    <>
+      <Header/>
+      <div className="EditMcaQuestions__main-container">
+        <div className="EditMcaQuestions__container">
+          <h1 className="EditMcaQuestions__title">Edit Multiple Correct Answers Question</h1>
+          {
+            question &&
             <Form
               scrollToFirstError
               labelCol={{
@@ -251,10 +253,10 @@ const Question = () => {
                     required: true,
                     message: 'name is required'
                   }
-                ]}
+                ]} initialValue={question.name}
               >
 
-                <Input defaultValue={question.name} placeholder="Name" name="name" onChange={handleChange}/>
+                <Input placeholder="Name" name="name" onChange={handleChange}/>
 
               </Form.Item>
               <div style={{ marginLeft: 228, color: 'red' }} hidden={!(dataError && dataError.error.error.Message)}>name
@@ -270,8 +272,7 @@ const Question = () => {
 
               >
                 <CKEditor editor={ClassicEditor}
-
-
+                          data={question.question_text}
                           onChange={(e: any, editor: any) => handleEditorChange(e, editor)}/>
                 <div hidden={questionTestIsValid} style={{ color: 'red' }}>the question test is required</div>
               </Form.Item>
@@ -284,7 +285,7 @@ const Question = () => {
                 }
               >
                 <div>
-                  {question.choices!.map((choice, index) => {
+                  {question.choices!.map((choice: any, index: number) => {
                     return (
                       <Choice
                         key={choice.id}
@@ -362,18 +363,12 @@ const Question = () => {
                   </label>
                 }
               >
-                <div className="McaQuestions__add-skill">
+                <div className="EditMcaQuestions__add-skill">
                   {!customSkill ? <Form.Item
                     style={{ width: '100%' }}
                     name="skill"
-                    rules={[
-                      {
-                        required: true,
-                        message: 'Please select skill!'
-                      }
-                    ]}
                   >
-                    <Select onChange={handleSelectSkill} placeholder="select skill">
+                    <Select onChange={handleSelectSkill} placeholder="select skill" defaultValue={question.Skill.ID}>
                       {skills &&
                       skills.map((skill: any) => {
                         return (
@@ -430,15 +425,17 @@ const Question = () => {
                 >
                   Save
                 </Button>
-                <Button size={'large'} style={{ backgroundColor: '#28A745', color: '#fff' }} onClick={()=> history.goBack()}>
+
+                <Button size={'large'} style={{ backgroundColor: '#28A745', color: '#fff' }}
+                        onClick={() => history.goBack() }>
                   Close editor
                 </Button>
               </Form.Item>
-            </Form>
-          </div>
+            </Form>}
         </div>
-      </>}</>
-  )
-    ;
+      </div>
+    </>
+  );
 };
-export default Question;
+
+export default EditMcaQuestion;

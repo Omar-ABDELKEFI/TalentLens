@@ -20,6 +20,7 @@ export function createQuestion(question: any) {
     dispatch(request());
     const apiQuestion = JSON.parse(JSON.stringify(question));
     apiQuestion.choices.forEach((choice: Ichoice) => delete choice.id);
+    service.baseApiParams.headers = { 'Authorization': 'Bearer ' + localStorage.getItem('token') };
     service.questions.editCreate(apiQuestion).then(
       () => {
         dispatch(success(undefined));
@@ -28,7 +29,7 @@ export function createQuestion(question: any) {
         if (getState().test.testID) {
           history.goBack();
         } else {
-          history.push('/my-tests');
+          history.push('/questions');
         }
       },
       (data: any) => {
@@ -83,5 +84,38 @@ export function getQuestions() {
 
   function failure(error: any, tokenError: any) {
     return { type: questionsConstants.FETCH_QUESTIONS_FAILURE, error: error, tokenError: tokenError };
+  }
+}
+export function updateQuestion(questionId :any ,question: any) {
+  return (dispatch: any,getState:any) => {
+    dispatch(request());
+    const apiQuestion = JSON.parse(JSON.stringify(question));
+    apiQuestion.choices.forEach((choice:Ichoice) => delete choice.id);
+    service.baseApiParams.headers = { 'Authorization': 'Bearer ' + localStorage.getItem('token') };
+    service.questions.editCreate2(questionId,apiQuestion).then(
+      () => {
+        dispatch(success(undefined));
+          history.push("/questions")
+      },
+      (data: any) => {
+        if(data.error.error==="token invalid"){
+          history.push("/403")
+        }
+        console.log(data,"ssssssssssss");
+        dispatch(failure(data.error.errors,data.error.error,data));
+      }
+    );
+  };
+
+  function request() {
+    return { type: questionsConstants.CREATE_QUESTION_REQUEST };
+  }
+
+  function success(dataError:any) {
+    return { type: questionsConstants.CREATE_QUESTION_SUCCESS,dataError};
+  }
+
+  function failure(error: any,tokenError:any,dataError:any) {
+    return { type: questionsConstants.CREATE_QUESTION_FAILURE, error: error,tokenError:tokenError,dataError};
   }
 }

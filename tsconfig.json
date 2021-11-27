@@ -7,7 +7,7 @@
       "dom.iterable",
       "esnext"
     ],
-    "isolatedModules": false,
+    "isolatedModules": true,
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -17,7 +17,6 @@
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "isolatedModules": true,
     "noEmit": true,
     "jsx": "react",
     "noFallthroughCasesInSwitch": true,

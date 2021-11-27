@@ -11,8 +11,8 @@ import { setCurrentScreen } from '@redux/actions/currentScreen';
 
 function DisplayTests() {
 
-  const dispatch = useDispatch();
-
+  const dispatch = useDispatch()
+  
   useEffect(() => {
     dispatch(setCurrentScreen('1'));
     dispatch(actionTest.getMyTests());

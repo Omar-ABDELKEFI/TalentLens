@@ -14,6 +14,10 @@ const DisplayTests = React.lazy(() => import('@screens/displayTests/DisplayTests
 const DisplayQuiz = React.lazy(() => import('@screens/quiz/Quiz'));
 const StartTest = React.lazy(() => import('@screens/startTest/StartTest'));
 const DisplayCandidates = React.lazy(() => import('@screens/displayCandidates/DisplayCandidates'));
+const DisplayQuestions = React.lazy(() => import('@screens/question/Question'));
+const EditMcaQuestion = React.lazy(() =>
+  import('@components/questions_types/EditMcaQuestion/EditMcaQuestion')
+);
 
 // @ts-ignore
 
@@ -25,6 +29,8 @@ const public_paths = [
   { exact: true, path: '/questions/edit', component: Question },
   { exact: true, path: '/quiz/:idTestCandidate', component: StartTest },
   { exact: true, path: '/candidates', component: DisplayCandidates },
+  { exact: true, path: '/questions', component: DisplayQuestions },
+  { exact: true, path: '/questions/edit/:id', component: EditMcaQuestion },
   { exact: true, path: '/403', component: notAutorized },
   { exact: false, path: '/*', component: PageNotExist }
 ];
@@ -32,7 +38,6 @@ const public_paths = [
 const public_routes = public_paths.map(({ path, ...props }) => (
   <Route key={path} path={path} {...props} />
 ));
-
 
 const App = () => (
   <Provider store={store}>

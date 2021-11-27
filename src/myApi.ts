@@ -77,7 +77,7 @@ export interface ModelsCreateQuestionInput {
   name: string;
   question_text: string;
   skill_id?: number;
-  skill_name: string;
+  skill_name?: string;
   type?: string;
 }
 
@@ -276,7 +276,7 @@ export class HttpClient<SecurityDataType = unknown> {
   private abortControllers = new Map<CancelToken, AbortController>();
   private customFetch = (...fetchParams: Parameters<typeof fetch>) => fetch(...fetchParams);
 
-  baseApiParams: RequestParams = {
+  public baseApiParams: RequestParams = {
     credentials: "same-origin",
     headers: {},
     redirect: "follow",
@@ -637,12 +637,14 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name QuestionsList
      * @summary find a question
      * @request GET:/questions
+     * @secure
      */
     questionsList: (query?: { type?: string; difficulty?: string }, params: RequestParams = {}) =>
       this.request<ModelsQuestion[], any>({
         path: `/questions`,
         method: "GET",
         query: query,
+        secure: true,
         type: ContentType.Json,
         format: "json",
         ...params,
@@ -655,12 +657,55 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name EditCreate
      * @summary add new  question
      * @request POST:/questions/edit
+     * @secure
      */
     editCreate: (question: ModelsCreateQuestionInput, params: RequestParams = {}) =>
       this.request<ModelsQuestion, any>({
         path: `/questions/edit`,
         method: "POST",
         body: question,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * @description find a question to edit
+     *
+     * @tags question
+     * @name EditDetail
+     * @summary find a question
+     * @request GET:/questions/edit/{id}
+     * @secure
+     */
+    editDetail: (id: string, params: RequestParams = {}) =>
+      this.request<ModelsQuestion, any>({
+        path: `/questions/edit/${id}`,
+        method: "GET",
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * @description update a question
+     *
+     * @tags question
+     * @name EditCreate2
+     * @summary update a question
+     * @request POST:/questions/edit/{id}
+     * @originalName editCreate
+     * @duplicate
+     * @secure
+     */
+    editCreate2: (id: string, question: ModelsCreateQuestionInput, params: RequestParams = {}) =>
+      this.request<ModelsQuestion, any>({
+        path: `/questions/edit/${id}`,
+        method: "POST",
+        body: question,
+        secure: true,
         type: ContentType.Json,
         format: "json",
         ...params,
