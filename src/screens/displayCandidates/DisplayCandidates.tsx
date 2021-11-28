@@ -120,7 +120,7 @@ const DisplayCandidates = () => {
                   }
                 }}
               />
-              <Select onChange={handleSelectChange} defaultValue={'date'} showArrow={true}>
+              <Select  className={'display-candidates__sort'} onChange={handleSelectChange} defaultValue={'date'} showArrow={true}>
                 <Select.Option value={'date'}>Sort by Date</Select.Option>
                 <Select.Option value={'email'}>Sort by Email</Select.Option>
                 <Select.Option value={'score'}>Sort by Score</Select.Option>
