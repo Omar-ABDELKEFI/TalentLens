@@ -48,9 +48,10 @@ const TestQuestions = ({ questions }: any) => {
   ];
 
   return (
-    <Table dataSource={questions} columns={columns} rowKey={record => record.ID} bordered
-           rowClassName={(record, index) => index % 2 === 0 ? 'display-candidates__table-even-row' : ''}/>
-  );
+  <Table dataSource={questions} columns={columns} rowKey={record => record.ID} bordered
+         rowClassName={(record, index) => index % 2 === 0 ? 'display-candidates__table-even-row' : ''}/>
+
+);
 };
 
 export default TestQuestions;

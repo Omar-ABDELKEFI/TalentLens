@@ -20,7 +20,7 @@ function ModelQuestionTypes({ isModalVisible, setIsModalVisible }: any) {
     <>
       <Modal title="add candidate" visible={isModalVisible}  onCancel={handleCancel} width={1200} footer={[]}>
         <Row gutter={[16, 16]}>
-          <Col span={8}>
+          <Col sm={24} md={12} lg={8}>
             <Card style={{ background: '#f8f9fa', textAlign: 'center' }} title="Multiple Choice Question (MCQ)"
                   bordered={false}>
               <img src={mca} alt="mca" className="ModelQuestionTypes__img-container"/>
@@ -30,7 +30,7 @@ function ModelQuestionTypes({ isModalVisible, setIsModalVisible }: any) {
                                                    type="primary"> Create Multiple Choice Question </Button></Link>
             </Card>
           </Col>
-          <Col span={8}>
+          <Col  sm={24} md={12} lg={8}>
             <Card style={{ background: '#f8f9fa', textAlign: 'center' }} title="Multiple Choice Question (MCQ)"
                   bordered={false}>
               <img src={mca} alt="mca" className="ModelQuestionTypes__img-container"/>
@@ -40,7 +40,7 @@ function ModelQuestionTypes({ isModalVisible, setIsModalVisible }: any) {
                 Question </Button>
             </Card>
           </Col>
-          <Col span={8}>
+          <Col  sm={24} md={12} lg={8}>
             <Card style={{ background: '#f8f9fa', textAlign: 'center' }} title="Multiple Choice Question (MCQ)"
                   bordered={false}>
               <img src={mca} alt="mca" className="ModelQuestionTypes__img-container"/>
@@ -50,7 +50,7 @@ function ModelQuestionTypes({ isModalVisible, setIsModalVisible }: any) {
                 Question </Button>
             </Card>
           </Col>
-          <Col span={8}>
+          <Col  sm={24} md={12} lg={8}>
             <Card style={{ background: '#f8f9fa', textAlign: 'center' }} title="Multiple Choice Question (MCQ)"
                   bordered={false}>
               <img src={mca} alt="mca" className="ModelQuestionTypes__img-container"/>
@@ -60,7 +60,7 @@ function ModelQuestionTypes({ isModalVisible, setIsModalVisible }: any) {
                 Question </Button>
             </Card>
           </Col>
-          <Col span={8}>
+          <Col  sm={24} md={12} lg={8}>
             <Card style={{ background: '#f8f9fa', textAlign: 'center' }} title="Multiple Choice Question (MCQ)"
                   bordered={false}>
               <img src={mca} alt="mca" className="ModelQuestionTypes__img-container"/>
@@ -70,7 +70,7 @@ function ModelQuestionTypes({ isModalVisible, setIsModalVisible }: any) {
                 Question </Button>
             </Card>
           </Col>
-          <Col span={8}>
+          <Col  sm={24} md={12} lg={8}>
             <Card style={{ background: '#f8f9fa', textAlign: 'center' }} title="Multiple Choice Question (MCQ)"
                   bordered={false}>
               <img src={mca} alt="mca" className="ModelQuestionTypes__img-container"/>

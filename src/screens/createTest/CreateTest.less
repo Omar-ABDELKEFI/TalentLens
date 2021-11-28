@@ -10,10 +10,23 @@
     background-color: rgb(240, 242, 245);
 
   }
+  &__title-container{
+    width: 100%;
+    padding-right: 0.875rem;
+    padding-left: 0.875rem;
+    margin-right: auto;
+    margin-left: auto
+  }
   &__container{
     width: 70%;
   }
+  @media @mobile-and-tablet   {
+    &__container {
+      width: 100%;
+    }
+  }
   &__test-name{
+    padding-left: 6px;
     color: #212529;
     font-size: 30px;
     font-weight: 500;
@@ -90,6 +103,7 @@
   .code-box-demo {
     background: #000;
   }
+
 }
 
 

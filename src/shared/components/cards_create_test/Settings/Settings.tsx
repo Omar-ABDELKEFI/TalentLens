@@ -40,13 +40,13 @@ function Settings() {
           name="notify_emails"
           label={<label style={{ fontSize: '16px', fontWeight: 500, color: 'rgb(33,37,41)' }}
                         placeholder="Enter e-mail addresses of those you want to notify when a candidate finishes this test.">Notify
-            to E-mails</label>}>
+            to <span className={'settings__break'}>E-mails</span></label>}>
           <TextArea rows={2}/>
         </Form.Item>
         <Form.Item
           name="timing_policy"
           label={<label
-            style={{ fontSize: '16px', fontWeight: 500, color: 'rgb(33,37,41)' }}>Timing Policy</label>}>
+            style={{ fontSize: '16px', fontWeight: 500, color: 'rgb(33,37,41)' }}>Timing <span className={'settings__break'}>Policy</span></label>}>
           <Radio.Group
           >
             <Space direction="vertical">

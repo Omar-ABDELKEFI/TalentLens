@@ -51,7 +51,7 @@ const ListCard: React.FC<any> = ({ question, test, cardType }) => {
 
   return (
     <>
-      <div className="list-card__container" onClick={() => setPreviewModal((prevState => !prevState))}>
+      <div  className="list-card__container" onClick={() => setPreviewModal((prevState => !prevState))}>
         <div className={'list-card__row'}>
           <div className={'list-card__question-body'}>
             <span>{question.name} - &nbsp;</span>

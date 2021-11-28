@@ -8,6 +8,8 @@ import CandidateCol from '@components/display_candidates/CandidateCol/CandidateC
 import { history } from '@redux/store';
 import { useDispatch } from 'react-redux';
 import { setCurrentScreen } from '@redux/actions/currentScreen';
+import { log } from 'util';
+import { useWindowDimensions } from '@utils/common';
 
 const DisplayCandidates = () => {
   const dispatch = useDispatch();
@@ -15,6 +17,12 @@ const DisplayCandidates = () => {
   const [value, setValue] = useState('');
   const [data, setData] = useState([]);
   const [errorToken, setErrorToken] = useState(undefined);
+  const { height, width } = useWindowDimensions();
+  const checkWidth = (width: number) =>{
+    if (width < 990){
+      return true
+    }
+  }
   const columns = [
     {
       title: 'Score',
@@ -43,6 +51,13 @@ const DisplayCandidates = () => {
     }
 
   ];
+  const columnCandidate =[{
+    title: 'Candidate',
+    dataIndex: 'candidate_email',
+    width: '50%',
+    render: (email: any, record: any,test:any) => <CandidateCol email={email} record={record} checkWidth={checkWidth(width)} />
+
+  },]
   useEffect(() => {
     dispatch(setCurrentScreen('2'));
     service.baseApiParams.headers = { 'Authorization': 'Bearer ' + localStorage.getItem('token') };
@@ -59,6 +74,7 @@ const DisplayCandidates = () => {
       }
     );
   }, []);
+  console.log(dataSource,"fffffffffff")
   const token = localStorage.getItem('token');
   const handleSelectChange = (value: any) => {
     switch (value) {
@@ -98,20 +114,19 @@ const DisplayCandidates = () => {
                   if (currValue.length === 0) {
                     setDataSource(data);
                   } else {
-                    const filteredData = dataSource.filter((entry: any) => entry.candidate_name.toLowerCase().includes(currValue.toLowerCase()) || entry.candidate_email.toLowerCase().includes(currValue.toLowerCase())
+                    const filteredData = dataSource.filter((entry: any) =>  entry.candidate_email.toLowerCase().includes(currValue.toLowerCase())
                     );
                     setDataSource(filteredData);
                   }
                 }}
               />
-              <Select onChange={handleSelectChange} defaultValue={'date'}>
+              <Select onChange={handleSelectChange} defaultValue={'date'} showArrow={true}>
                 <Select.Option value={'date'}>Sort by Date</Select.Option>
                 <Select.Option value={'email'}>Sort by Email</Select.Option>
-                <Select.Option value={'name'}>Sort by Name</Select.Option>
                 <Select.Option value={'score'}>Sort by Score</Select.Option>
               </Select>
             </div>
-            <Table columns={columns} dataSource={dataSource} rowKey={record => record.test_candidate_id} bordered
+            <Table columns={!checkWidth(width)?columns:columnCandidate} dataSource={dataSource} rowKey={record => record.test_candidate_id} bordered
                    rowClassName={(record, index) => index % 2 === 0 ? 'display-candidates__table-even-row' : ''}
             />
           </div>

@@ -1,4 +1,7 @@
+@import '../../styles/settings';
+@import '../../styles/tools';
 @module: display-candidates;
+
 .@{module} {
   &__main-container {
     background-color: rgb(248, 249, 250);
@@ -20,21 +23,31 @@
 
   &__search {
     width: 200px;
+    float: right;
     margin-bottom: 10px;
   }
-  &__filters{
-    display: flex;
-    justify-content: space-between;
-  }
+
   &__table-even-row{
     background-color: rgb(248, 249, 250);
   }
   &__test-name {
-    color: #006fad
+    color: #006fad;
+
   }
   &__test-name:hover{
     cursor: pointer;
     text-decoration: underline;
+  }
+  @media only screen and (min-width: 600px) {
+    &__filters{
+      display: flex;
+      flex-direction: column-reverse;
+    }
+    &__search{
+      float:none ;
+      align-self: flex-end;
+      margin-top: 10px;
+    }
   }
 
 

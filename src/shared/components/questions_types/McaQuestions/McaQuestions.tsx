@@ -14,6 +14,7 @@ import { handleError } from '@utils/constTypesError';
 import { ArgsProps, ConfigProps, NotificationApi } from 'antd/lib/notification';
 import McaQuestion from '@components/Quiz/McaQuestion/McaQuestion';
 import { history } from '@redux/store';
+import { useWindowDimensions } from '@utils/common';
 
 interface Ichoice {
   choice_text: string;
@@ -80,6 +81,12 @@ const Question = () => {
     skill_name: '',
     type: 'mca'
   });
+  const { height, width } = useWindowDimensions();
+  const checkWidth = (width: number) =>{
+    if (width > 940){
+      return true
+    }
+  }
   const tokenError = useSelector((state: any) => state.skills.tokenError);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -230,9 +237,7 @@ const Question = () => {
             <h1 className="McaQuestions__title">New Multiple Correct Answers Question</h1>
             <Form
               scrollToFirstError
-              labelCol={{
-                span: 5
-              }}
+              layout={checkWidth(width)?'horizontal':'vertical'}
               colon={false}
               onFinishFailed={handleForm}
               onFinish={handleSubmit}
@@ -263,7 +268,7 @@ const Question = () => {
               <Form.Item
                 required
                 label={
-                  <label style={{ fontSize: '16px', fontWeight: 500, color: 'rgb(33,37,41)' }}>
+                  <label style={{ fontSize: '16px', fontWeight: 500, color: 'rgb(33,37,41)' }} >
                     Question Text
                   </label>
                 }
@@ -438,6 +443,7 @@ const Question = () => {
           </div>
         </div>
       </>}</>
+
   )
     ;
 };

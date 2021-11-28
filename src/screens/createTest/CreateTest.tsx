@@ -39,13 +39,13 @@ function CreateTest() {
 
           <div className={'create-test__container'}>
             <Layout style={{ minHeight: '100vh' }}>
-              <Content style={{ marginTop: 25 }}>
+              <Content style={{ marginTop: 25,marginBottom:25 }}>
                 <div className="card-container">
-                  <Row style={{ marginBottom: 15 }} align={'middle'}>
+                  <Row className={'create-test__title-container'} style={{ marginBottom: 15 }} align={'middle'}>
                     <span className={'create-test__test-name'}>{test.name}</span>
                   </Row>
                   <Tabs type="card" onTabClick={handleTabChange}>
-                    <TabPane tab="Questions" key="1">
+                    <TabPane tab="Questions" key="1" >
                       {showQuestionList ? <AddTestQuestions/> :
                         <AddQuestions handleAddClick={handleAddClick} questions={test.questions}/>}
                     </TabPane>

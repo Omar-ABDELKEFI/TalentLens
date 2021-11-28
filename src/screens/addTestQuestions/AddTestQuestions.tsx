@@ -25,7 +25,7 @@ const AddTestQuestions: React.FC<any> = () => {
   return tokenError ? (<></>) : errors ? (
     <h1>{errors}</h1>
   ) : (
-    <div>
+    <>
       <div className={'add-questions__add-btn-container'}>
         <Button onClick={showModal} className="add-questions__create-button">Create Question</Button>
         <ModelQuestionsTypes isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible}/>
@@ -38,7 +38,7 @@ const AddTestQuestions: React.FC<any> = () => {
           );
         }
       )}
-    </div>
+    </>
   );
 
 };

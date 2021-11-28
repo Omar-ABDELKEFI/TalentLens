@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { actionTest } from '@redux/actions';
 import ModelAddCandidates from '@components/cards_create_test/ModelAddCandidate/ModelAddCandidate';
 import { ArgsProps, ConfigProps, NotificationApi } from 'antd/lib/notification';
+import { useWindowDimensions } from '@utils/common';
 
 function AddCandidates({ idTest, initialPassingScore }: any) {
   const dispatch = useDispatch();
@@ -11,7 +12,11 @@ function AddCandidates({ idTest, initialPassingScore }: any) {
   const loading = useSelector(((state: any) => state.test.loading));
   const questions = useSelector(((state: any) => state.test.test.questions));
   const errorDuplicate = useSelector(((state: any) => state.test.error_add_candidate));
+  const { height, width } = useWindowDimensions();
   console.log(errorDuplicate, 'errorDuplicate');
+  const checkWidth = (width: number) =>{
+    return width > 650;
+  }
   useEffect(() => {
       if (errorDuplicate && errorDuplicate.length !== 0) {
         console.log(errorDuplicate, 'error1');
@@ -48,17 +53,18 @@ function AddCandidates({ idTest, initialPassingScore }: any) {
     <>
       <Row justify="space-between">
 
-        <Col>
+        <Col order={1}>
           <div>No candidates invited</div>
         </Col>
-        <Col>
+        <Col span={checkWidth(width)?8:24} order={!checkWidth(width)?3:2}>
 
-          <Col span={24}>
-            <div>passing score</div>
+          <Col span={24} hidden={!checkWidth(width)}>
+            <div style={{marginLeft:4}}>passing score</div>
           </Col>
 
           <Row>
-            <Col span={13}>
+            <Col span={13} hidden={!checkWidth(width)} >
+
               <Slider
                 min={0}
                 max={100}
@@ -69,7 +75,9 @@ function AddCandidates({ idTest, initialPassingScore }: any) {
 
               />
             </Col>
-            <Col span={8}>
+            <span style={{verticalAlign:"middle",lineHeight:2,marginRight:5}} hidden={checkWidth(width)}>passing score</span>
+            <Col span={checkWidth(width)?8:3}>
+
               <InputNumber
                 min={0}
                 max={100}
@@ -85,10 +93,10 @@ function AddCandidates({ idTest, initialPassingScore }: any) {
 
         </Col>
 
-        <Col>
+        <Col order={!checkWidth(width)?2:3}>
           <div>
             <Button type="primary" style={{ background: '#28a745', borderColor: '#28a745' }}
-                    disabled={questions.length === 0} onClick={showModal}>add candidate</Button>
+                    disabled={questions.length === 0} onClick={showModal}>invite <span hidden={!checkWidth(width)}>&nbsp;candidate</span></Button>
           </div>
           <ModelAddCandidates isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible}
           />
@@ -96,7 +104,7 @@ function AddCandidates({ idTest, initialPassingScore }: any) {
       </Row>
 
       <Row justify="center" style={{ margin: 20 }}>
-        <Col span={8}>
+        <Col span={24} lg={8}>
           <Row justify="center">
             <div>Invite Candidates to Your Test</div>
           </Row>

@@ -45,15 +45,15 @@ const TestCard = ({ test }: any) => {
         </Col>
       </Row>
       <Row>
-        <Col span={6}>
+        <Col span={8} xs={9}>
           <TextIcon icon={UsergroupDeleteOutlined} text={`${test.number_candidate} candidates`}
                     style={{ color: '#006FAD' }}/>
         </Col>
-        <Col span={6}>
+        <Col span={8} xs={9}>
           <TextIcon icon={UnorderedListOutlined} text={`${test.number_Question} Questions`}
                     style={{ color: '#006FAD' }}/>
         </Col>
-        <Col span={12}>
+        <Col span={8} xs={6}>
           <TextIcon icon={ClockCircleOutlined} text={test.expected_time === null ? '-' : `${test.expected_time} mins`}
                     style={{ color: '#006FAD' }}/>
         </Col>

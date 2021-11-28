@@ -3,9 +3,18 @@ import { Button, Row } from 'antd';
 import { useSelector } from 'react-redux';
 import TestQuestions from '@components/test/TestQuestions/TestQuestions';
 import TestQuestionsSkeleton from '../../../../skeleton/TestQuestionsSkeleton/TestQuestionsSkeleton';
+import { useWindowDimensions } from '@utils/common';
+import ListCard from '@components/question/ListCard/ListCard';
+import TestQuestionsCard from '@components/test/TestQuestionCard/TestQuestionCard';
 
 function AddQuestions({ handleAddClick, questions }: any) {
   const loading = useSelector((state: any) => (state.test.loading));
+  const { height, width } = useWindowDimensions();
+  const checkWidth = (width: number) =>{
+    if (width > 959){
+      return true
+    }
+  }
   const sum = (questions: any) => {
     return questions.reduce((accum: any, item: any) =>
       accum + item.expected_time
@@ -32,8 +41,15 @@ function AddQuestions({ handleAddClick, questions }: any) {
             {questions.length === 0 ?
               <Row justify="center">
                 <div>Add Question to your test</div>
-              </Row> : <TestQuestions questions={questions}/>
-            }
+              </Row> : checkWidth(width) ?<TestQuestions questions={questions} /> : questions.map((question: any) => {
+
+                  return (
+                    // return question in card
+                    <TestQuestionsCard question={question} />
+                  );
+                }
+              )}
+
           </>
       }
     </>
