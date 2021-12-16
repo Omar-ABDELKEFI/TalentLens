@@ -14,6 +14,7 @@ import { useParams } from 'react-router';
 import { history } from '@redux/store';
 import Header from '@layout/header/header';
 import "./EditMcaQuestion.less";
+import RadioChoices from '@components/RadioChoices/RadioChoices';
 
 interface Ichoice {
   choice_text: string;
@@ -161,6 +162,33 @@ const EditMcaQuestion = () => {
       }
     }
   };
+  const handleRadioChange = (e: any) => {
+    setQuestion({
+      ...question,
+      choices: question.choices!.map((choice: any) =>
+        choice.id === e.target.value
+          ? {
+            ...choice,
+            is_answer: true
+          }
+          : {
+            ...choice ,
+            is_answer:false
+          }
+      )
+    });
+    for (const choice of question.choices) {
+      if (choice.id === e.target.value && !choice.is_answer) {
+        setThereOneAnswer(true);
+        return true;
+      }
+      if (choice.is_answer === true) {
+        setThereOneAnswer(true);
+        return true;
+      }
+    }
+  };
+
   const handleForm =
     (e: any) => {
       handleCkeElement(question.question_text);
@@ -285,7 +313,8 @@ const EditMcaQuestion = () => {
                 }
               >
                 <div>
-                  {question.choices!.map((choice: any, index: number) => {
+                  {question.type ==="mca" ?
+                    question.choices!.map((choice: any, index: number) => {
                     return (
                       <Choice
                         key={choice.id}
@@ -295,7 +324,14 @@ const EditMcaQuestion = () => {
                         choice={choice}
                       />
                     );
-                  })}
+                  })
+                  :
+                    <RadioChoices choices ={question.choices}
+                                  onDelete={handleDelete}
+                                  onTextChange={handleChoiceChange}
+                                  handleRadioChange={handleRadioChange} />
+
+                  }
                   <Button type="primary" onClick={handleAddButton}>
                     Add new
                   </Button>

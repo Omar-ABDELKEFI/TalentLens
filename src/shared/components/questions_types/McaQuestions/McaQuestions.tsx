@@ -15,6 +15,8 @@ import { ArgsProps, ConfigProps, NotificationApi } from 'antd/lib/notification';
 import McaQuestion from '@components/Quiz/McaQuestion/McaQuestion';
 import { history } from '@redux/store';
 import { useWindowDimensions } from '@utils/common';
+import { useLocation } from 'react-router';
+import RadioChoices from '@components/RadioChoices/RadioChoices';
 
 interface Ichoice {
   choice_text: string;
@@ -31,7 +33,7 @@ interface Iquestion {
   name: string;
   question_text: string;
   skill_id?: number;
-  type?: string;
+  type?: string | null;
   skill_name?: string
 }
 
@@ -53,6 +55,8 @@ const Question = () => {
       return true;
     }
   };
+  const search = useLocation().search;
+  const type = new URLSearchParams(search).get('type');
 
   const marks = {
     1: '1',
@@ -79,7 +83,7 @@ const Question = () => {
     expected_time: 1,
     question_text: '',
     skill_name: '',
-    type: 'mca'
+    type: type
   });
   const { height, width } = useWindowDimensions();
   const checkWidth = (width: number) =>{
@@ -166,6 +170,20 @@ const Question = () => {
       }
     }
   };
+  const handleRadioChange = (e: any) => {
+    setQuestion({
+      ...question,
+      choices: question.choices!.map(choice =>
+        choice.id === e.target.value
+          ? {
+            ...choice,
+            is_answer: true
+          }
+          : { ...choice, is_answer:false }
+      )
+    });
+    setThereOneAnswer(true);
+  };
   const handleForm =
     (e: any) => {
       handleCkeElement(question.question_text);
@@ -227,9 +245,8 @@ const Question = () => {
 
   const token = localStorage.getItem('token');
   const [showModal, setShowModal] = useState<boolean | undefined>(false);
-
   return (
-    <>{tokenError ? <></> :
+    <>{tokenError || !type || !["mca","mcq"].includes(type)  ? <></> :
       <>
         <Header/>
         <div className="McaQuestions__main-container">
@@ -289,7 +306,9 @@ const Question = () => {
                 }
               >
                 <div>
-                  {question.choices!.map((choice, index) => {
+                  {
+                    type ==="mca" ?
+                    question.choices!.map((choice, index) => {
                     return (
                       <Choice
                         key={choice.id}
@@ -299,7 +318,12 @@ const Question = () => {
                         choice={choice}
                       />
                     );
-                  })}
+                  }) :
+                      <RadioChoices choices ={question.choices}
+                                    onDelete={handleDelete}
+                                    onTextChange={handleChoiceChange}
+                                    handleRadioChange={handleRadioChange} />
+                  }
                   <Button type="primary" onClick={handleAddButton}>
                     Add new
                   </Button>

@@ -74,7 +74,6 @@ const DisplayCandidates = () => {
       }
     );
   }, []);
-  console.log(dataSource,"fffffffffff")
   const token = localStorage.getItem('token');
   const handleSelectChange = (value: any) => {
     switch (value) {
@@ -114,7 +113,7 @@ const DisplayCandidates = () => {
                   if (currValue.length === 0) {
                     setDataSource(data);
                   } else {
-                    const filteredData = dataSource.filter((entry: any) =>  entry.candidate_email.toLowerCase().includes(currValue.toLowerCase())
+                    const filteredData = data.filter((entry: any) => entry.candidate_name.toLowerCase().includes(currValue.toLowerCase()) || entry.candidate_email.toLowerCase().includes(currValue.toLowerCase())
                     );
                     setDataSource(filteredData);
                   }

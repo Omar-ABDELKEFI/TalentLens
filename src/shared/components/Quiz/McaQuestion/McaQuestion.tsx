@@ -5,7 +5,7 @@ import './McaQuestion.less';
 
 const { Countdown } = Statistic;
 
-const McaQuestion = ({ quizName, questionIndex, totalQuestion, currentQuestion, handleCheckChange, handleSubmit, lastUpdate, disabled }: any) => {
+const McaQuestion = ({ quizName, questionIndex, totalQuestion, currentQuestion, handleCheckChange, handleRadioChange, handleSubmit, lastUpdate, disabled }: any) => {
   return (
     <>
       <Row justify={'space-between'}>
@@ -19,7 +19,7 @@ const McaQuestion = ({ quizName, questionIndex, totalQuestion, currentQuestion, 
         <Col style={{ paddingLeft: '15px' }}>
           <Form>
 
-            <Mca question={currentQuestion} onCheckChange={handleCheckChange}
+            <Mca question={currentQuestion} onCheckChange={handleCheckChange} onRadioChange={handleRadioChange}
             />
 
             <Form.Item>

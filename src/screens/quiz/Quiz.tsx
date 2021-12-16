@@ -59,6 +59,11 @@ const Quiz = () => {
     });
     setAnswer({ ...answer, answer_choices: checkedAnswers });
   };
+  const handleRadioChange = (e: any) => {
+    console.log(e);
+    const checkedAnswers = [{ choices_id: e.target.value }]
+    setAnswer({ ...answer, answer_choices: checkedAnswers });
+  };
   if (!isLoading && Date.now() > ((quiz.questions[currentQuestion].expected_time) * 60 * 1000 + Date.parse(lastUpdate))) {
     handleSubmit();
   }
@@ -73,6 +78,7 @@ const Quiz = () => {
                        currentQuestion={quiz.questions[currentQuestion]}
                        lastUpdate={Date.parse(lastUpdate)}
                        disabled={(loadingTest || isLoading)}
+                       handleRadioChange={handleRadioChange}
           />
 
         </div>
