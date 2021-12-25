@@ -4,7 +4,7 @@ import { CloseOutlined } from '@ant-design/icons/lib';
 import './RadioChoices.less'
 const RadioChoices = ({choices , onTextChange , onDelete , handleRadioChange } : any) => {
   return (
-    <Radio.Group onChange={handleRadioChange}>
+    <Radio.Group style={{display: 'block'}} onChange={handleRadioChange}>
       {choices.map( (choice : any , index: any) => {
         return(
           <div className="Radio-Choice__choices" key={choice.id}>

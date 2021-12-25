@@ -5,14 +5,22 @@ import ListCard from '@components/question/ListCard/ListCard';
 import Header from '@layout/header/header';
 import { Button, Input } from 'antd';
 import { Link } from 'react-router-dom';
-import "./Question.less"
+import "./DisplayQuestion.less"
 import { setCurrentScreen } from '@redux/actions/currentScreen';
 import { useDispatch } from 'react-redux';
 import ModelQuestionTypes from '@components/question/ModelQuestionsTypes/ModelQuestionsTypes';
+import { useWindowDimensions } from '@utils/common';
 
-const Question = () => {
+const DisplayQuestion = () => {
   const dispatch = useDispatch()
   const [questions, setQuestions] = useState([]);
+  const { height, width } = useWindowDimensions();
+  const checkWidth = (width: number) =>{
+    if (width > 448){
+      return false
+    }
+    else return true
+  }
   useEffect(() => {
     dispatch(setCurrentScreen('3'));
     service.baseApiParams.headers = { 'Authorization': 'Bearer ' + localStorage.getItem('token') };
@@ -41,11 +49,12 @@ const Question = () => {
           <div className={'display-questions__first-line'}>
             <span className={'display-questions__my-questions'}>My Questions</span>
               <Button size={'large'} style={{ backgroundColor: '#28A745', color: '#fff', border: 'none' }}
-                      type="primary" onClick={()=>setIsModalVisible(!isModalVisible)}>Create Question</Button>
+                      type="primary" onClick={()=>setIsModalVisible(!isModalVisible)}>create <span hidden={checkWidth(width)}>&nbsp;Question</span></Button>
           </div>
+          <div>
           <Input
             className={'display-questions__search'}
-            placeholder="Search Question"
+            placeholder="Search DisplayQuestion"
             onChange={e => {
               const currValue = e.target.value;
               if (currValue.length === 0) {
@@ -56,7 +65,9 @@ const Question = () => {
                 setDataSource(filteredData);
               }
             }}
+
           />
+            </div>
           {dataSource &&
           dataSource.map((question: any) => {
             return (
@@ -69,4 +80,4 @@ const Question = () => {
       </>
       );
       };
-      export default Question;
+      export default DisplayQuestion;

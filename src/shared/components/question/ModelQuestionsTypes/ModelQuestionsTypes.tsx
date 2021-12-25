@@ -19,7 +19,7 @@ function ModelQuestionTypes({ isModalVisible, setIsModalVisible }: any) {
       <Modal title="add candidate" visible={isModalVisible} onCancel={handleCancel} width={1200} okButtonProps={{style:{display:"none"}}}>
         <Row gutter={[16, 16]}>
           <Col sm={24} md={12} lg={12}>
-            <Card style={{ background: '#f8f9fa', textAlign: 'center' }} title="Multiple Choice Question (MCA)"
+            <Card style={{ background: '#f8f9fa', textAlign: 'center' }} title="Multiple Choice DisplayQuestion (MCA)"
                   bordered={false}>
               <img src={mca} alt="mca" className="ModelQuestionTypes__img-container"/>
               <p className="ModelQuestionTypes__desc-container">For questions with multiple answer options where more
@@ -27,11 +27,11 @@ function ModelQuestionTypes({ isModalVisible, setIsModalVisible }: any) {
               </p>
               <Link to={'/questions/edit?type=mca'}><Button block size='middle' className="ModelQuestionTypes__button"
                                                             type="primary"> Create Multiple Choice
-                Question </Button></Link>
+                DisplayQuestion </Button></Link>
             </Card>
           </Col>
           <Col sm={24} md={12} lg={12}>
-            <Card style={{ background: '#f8f9fa', textAlign: 'center' }} title="Multiple Choice Question (MCQ)"
+            <Card style={{ background: '#f8f9fa', textAlign: 'center' }} title="Multiple Choice DisplayQuestion (MCQ)"
                   bordered={false}>
               <img src={mcq} alt="mcq" className="ModelQuestionTypes__img-container"/>
               <p className="ModelQuestionTypes__desc-container">For questions with multiple answer options but there is only one
@@ -39,7 +39,7 @@ function ModelQuestionTypes({ isModalVisible, setIsModalVisible }: any) {
               </p>
               <Link to={'/questions/edit?type=mcq'}><Button block size='middle' className="ModelQuestionTypes__button"
                                                             type="primary"> Create Multiple Choice
-                Question </Button></Link>
+                DisplayQuestion </Button></Link>
             </Card>
           </Col>
         </Row>

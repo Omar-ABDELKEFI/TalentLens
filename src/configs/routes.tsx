@@ -14,7 +14,7 @@ const DisplayTests = React.lazy(() => import('@screens/displayTests/DisplayTests
 const DisplayQuiz = React.lazy(() => import('@screens/quiz/Quiz'));
 const StartTest = React.lazy(() => import('@screens/startTest/StartTest'));
 const DisplayCandidates = React.lazy(() => import('@screens/displayCandidates/DisplayCandidates'));
-const DisplayQuestions = React.lazy(() => import('@screens/question/Question'));
+const DisplayQuestions = React.lazy(() => import('@screens/question/DisplayQuestion'));
 const EditMcaQuestion = React.lazy(() =>
   import('@components/questions_types/EditMcaQuestion/EditMcaQuestion')
 );

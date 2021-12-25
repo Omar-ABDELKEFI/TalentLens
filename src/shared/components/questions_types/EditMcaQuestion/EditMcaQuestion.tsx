@@ -14,7 +14,7 @@ import { useParams } from 'react-router';
 import { history } from '@redux/store';
 import Header from '@layout/header/header';
 import "./EditMcaQuestion.less";
-import RadioChoices from '@components/RadioChoices/RadioChoices';
+import RadioChoices from '@components/question/RadioChoices/RadioChoices';
 
 interface Ichoice {
   choice_text: string;

@@ -16,7 +16,7 @@ import McaQuestion from '@components/Quiz/McaQuestion/McaQuestion';
 import { history } from '@redux/store';
 import { useWindowDimensions } from '@utils/common';
 import { useLocation } from 'react-router';
-import RadioChoices from '@components/RadioChoices/RadioChoices';
+import RadioChoices from '@components/question/RadioChoices/RadioChoices';
 
 interface Ichoice {
   choice_text: string;

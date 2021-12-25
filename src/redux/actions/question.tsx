@@ -24,7 +24,7 @@ export function createQuestion(question: any) {
     service.questions.editCreate(apiQuestion).then(
       () => {
         dispatch(success(undefined));
-        console.log('Question created successfully');
+        console.log('DisplayQuestion created successfully');
         console.log(getState().test.testID, 'getState:anygetState:any');
         if (getState().test.testID) {
           history.goBack();
