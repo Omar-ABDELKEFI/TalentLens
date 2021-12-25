@@ -26,7 +26,9 @@ function CreateTest() {
   useEffect(() => {
     dispatch(getTest(idTest));
   }, []);
+
   const test = useSelector((state: any) => (state.test.test));
+  console.log(test,"testtest");
   const handleTabChange = (key: string) => {
     if (key === '1') {
       setShowQuestionList(false);

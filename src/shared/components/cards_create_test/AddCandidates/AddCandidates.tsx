@@ -5,6 +5,8 @@ import { actionTest } from '@redux/actions';
 import ModelAddCandidates from '@components/cards_create_test/ModelAddCandidate/ModelAddCandidate';
 import { ArgsProps, ConfigProps, NotificationApi } from 'antd/lib/notification';
 import { useWindowDimensions } from '@utils/common';
+import { getTest } from '@redux/actions/tests';
+import DisplayCandidates from '@screens/displayCandidates/DisplayCandidates';
 
 function AddCandidates({ idTest, initialPassingScore }: any) {
   const dispatch = useDispatch();
@@ -12,6 +14,7 @@ function AddCandidates({ idTest, initialPassingScore }: any) {
   const loading = useSelector(((state: any) => state.test.loading));
   const questions = useSelector(((state: any) => state.test.test.questions));
   const errorDuplicate = useSelector(((state: any) => state.test.error_add_candidate));
+  const test = useSelector((state: any) => (state.test.test));
   const { height, width } = useWindowDimensions();
   console.log(errorDuplicate, 'errorDuplicate');
   const checkWidth = (width: number) =>{
@@ -22,6 +25,9 @@ function AddCandidates({ idTest, initialPassingScore }: any) {
         console.log(errorDuplicate, 'error1');
         errorDuplicate.map((email: any) => openNotificationWithIcon('error', `the candidate with email ${email} already invited`));
         dispatch(actionTest.removeError([]));
+      }
+      else{
+        dispatch(getTest(idTest));
       }
 
     }
@@ -54,7 +60,8 @@ function AddCandidates({ idTest, initialPassingScore }: any) {
       <Row justify="space-between">
 
         <Col order={1}>
-          <div>No candidates invited</div>
+          <div hidden={test.candidate.length !==0}>No candidates invited</div>
+          <div hidden={test.candidate.length ===0}>invite more candidate</div>
         </Col>
         <Col span={checkWidth(width)?8:24} order={!checkWidth(width)?3:2}>
 
@@ -102,15 +109,15 @@ function AddCandidates({ idTest, initialPassingScore }: any) {
           />
         </Col>
       </Row>
-
+      {test.candidate.length !==0&&<DisplayCandidates idTest={idTest}/>}
       <Row justify="center" style={{ margin: 20 }}>
         <Col span={24} lg={8}>
           <Row justify="center">
-            <div>Invite Candidates to Your Test</div>
+            <div hidden={test.candidate.length !==0}>Invite Candidates to Your Test</div>
           </Row>
 
           <Row justify="center">
-            <div style={{ textAlign: 'center' }}>invite candidates to take your test and you'll see a breakdown
+            <div hidden={test.candidate.length !==0} style={{ textAlign: 'center' }}>invite candidates to take your test and you'll see a breakdown
               of their performance across
               skills, time
               management and their attempts during the test

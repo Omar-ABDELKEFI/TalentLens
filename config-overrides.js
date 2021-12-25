@@ -1,5 +1,6 @@
 
 
+
 const path = require('path');
 const {addWebpackAlias, override, fixBabelImports, addLessLoader} = require('customize-cra');
 
@@ -9,6 +10,7 @@ function overrides(config, env) {
 
     return config
 }
+
 
 module.exports = override(
     overrides,
@@ -30,9 +32,11 @@ module.exports = override(
         '@redux': path.join(__dirname, 'src/redux'),
         '@utils': path.join(__dirname, 'src/utils')
     }),
+
     fixBabelImports('import', {
         libraryName: 'antd',
         libraryDirectory: 'es',
+
         style: true,
     }),
     addLessLoader({

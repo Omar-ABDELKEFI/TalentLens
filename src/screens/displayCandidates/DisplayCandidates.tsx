@@ -11,7 +11,7 @@ import { setCurrentScreen } from '@redux/actions/currentScreen';
 import { log } from 'util';
 import { useWindowDimensions } from '@utils/common';
 
-const DisplayCandidates = () => {
+const DisplayCandidates = ({idTest=""}) => {
   const dispatch = useDispatch();
   const [dataSource, setDataSource] = useState<any>([]);
   const [value, setValue] = useState('');
@@ -59,14 +59,14 @@ const DisplayCandidates = () => {
 
   },]
   useEffect(() => {
-    dispatch(setCurrentScreen('2'));
+    idTest===""&&dispatch(setCurrentScreen('2'));
     service.baseApiParams.headers = { 'Authorization': 'Bearer ' + localStorage.getItem('token') };
-    service.testsCandidates.testsCandidatesList().then(
+    service.testsCandidates.testsCandidatesList({ idTest }).then(
       (res: any) => {
         setData(res.data.data);
         setDataSource(res.data.data);
       },
-      (e) => {
+      (e:any) => {
         if (e.error.error === 'token invalid') {
           history.push('/403');
         }
@@ -98,11 +98,11 @@ const DisplayCandidates = () => {
   };
   return (<>{errorToken ? <></> :
       <>
-        <Header/>
+        {idTest===""&&<Header />}
         <div className={'display-candidates__main-container'}>
-          <div className={'display-candidates__container'}>
-            <div className={'display-candidates__title'}>My Candidates</div>
-            <div className={'display-candidates__filters'}>
+          <div style={idTest!==""?{width:"100%"}:{}} className={'display-candidates__container'}>
+            {idTest===""&&<div className={'display-candidates__title'}>My Candidates</div>}
+            <div style={idTest!==""?{marginTop:10}:{}}  className={'display-candidates__filters'}>
               <Input
                 className={'display-candidates__search'}
                 placeholder="Search Candidate"

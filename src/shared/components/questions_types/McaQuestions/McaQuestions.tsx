@@ -255,6 +255,9 @@ const Question = () => {
             <Form
               scrollToFirstError
               layout={checkWidth(width)?'horizontal':'vertical'}
+              labelCol={{
+                span:checkWidth(width)?4:24
+              }}
               colon={false}
               onFinishFailed={handleForm}
               onFinish={handleSubmit}

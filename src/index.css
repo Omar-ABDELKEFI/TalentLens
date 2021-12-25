@@ -1,3 +1,4 @@
+
 *{
   box-sizing: border-box;
 }
@@ -14,7 +15,7 @@ body {
   font-size: 15px;
   line-height: 1.42857;
   color: #525252;
-  background-color: #fff;
+  background-color: rgb(248, 249, 250) !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -ms-overflow-style: none;  /* IE and Edge */

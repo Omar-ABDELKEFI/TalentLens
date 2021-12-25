@@ -876,10 +876,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request GET:/testsCandidates
      * @secure
      */
-    testsCandidatesList: (params: RequestParams = {}) =>
+    testsCandidatesList:(query: { idTest: string }, params: RequestParams = {}) =>
       this.request<ModelsTestsCandidatesResponse[], any>({
         path: `/testsCandidates`,
         method: "GET",
+        query: query,
         secure: true,
         type: ContentType.Json,
         format: "json",
