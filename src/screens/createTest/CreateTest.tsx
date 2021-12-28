@@ -40,7 +40,7 @@ function CreateTest() {
         <div className={'create-test__main-container'}>
 
           <div className={'create-test__container'}>
-            <Layout style={{ minHeight: '100vh' }}>
+            <Layout style={{ backgroundColor:'rgb(248, 249, 250)',minHeight: '100vh' }}>
               <Content style={{ marginTop: 25,marginBottom:25 }}>
                 <div className="card-container">
                   <Row className={'create-test__title-container'} style={{ marginBottom: 15 }} align={'middle'}>

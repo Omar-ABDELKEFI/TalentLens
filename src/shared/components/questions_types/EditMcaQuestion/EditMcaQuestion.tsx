@@ -255,7 +255,7 @@ const EditMcaQuestion = () => {
       <Header/>
       <div className="EditMcaQuestions__main-container">
         <div className="EditMcaQuestions__container">
-          <h1 className="EditMcaQuestions__title">Edit Multiple Correct Answers Question</h1>
+          <h1 className="EditMcaQuestions__title">{question.type==="mca"?"New Multiple Correct Answers Question":"New Multiple Choices Question"}</h1>
           {
             question &&
             <Form
