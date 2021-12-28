@@ -251,7 +251,7 @@ const Question = () => {
         <Header/>
         <div className="McaQuestions__main-container">
           <div className="McaQuestions__container">
-            <h1 className="McaQuestions__title">New Multiple Correct Answers Question</h1>
+            <h1 className="McaQuestions__title">{type==="mca"?"New Multiple Correct Answers Question":"New Multiple Choices Question"}</h1>
             <Form
               scrollToFirstError
               layout={checkWidth(width)?'horizontal':'vertical'}

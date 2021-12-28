@@ -13,10 +13,10 @@ function ModelQuestionTypes({ isModalVisible, setIsModalVisible }: any) {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
-  const { Grid } = Card;
+  // const { Grid } = Card;
   return (
     <>
-      <Modal title="add candidate" visible={isModalVisible} onCancel={handleCancel} width={1200} okButtonProps={{style:{display:"none"}}}>
+      <Modal title="choose question type" visible={isModalVisible} onCancel={handleCancel} width={1200} okButtonProps={{style:{display:"none"}}}>
         <Row gutter={[16, 16]}>
           <Col sm={24} md={12} lg={12}>
             <Card style={{ background: '#f8f9fa', textAlign: 'center' }} title="Multiple Choice DisplayQuestion (MCA)"
@@ -26,8 +26,8 @@ function ModelQuestionTypes({ isModalVisible, setIsModalVisible }: any) {
                 than one answer is correct.
               </p>
               <Link to={'/questions/edit?type=mca'}><Button block size='middle' className="ModelQuestionTypes__button"
-                                                            type="primary"> Create Multiple Choice
-                DisplayQuestion </Button></Link>
+                                                            type="primary"> Create Multiple Correct Answers Question
+                 </Button></Link>
             </Card>
           </Col>
           <Col sm={24} md={12} lg={12}>
@@ -38,8 +38,8 @@ function ModelQuestionTypes({ isModalVisible, setIsModalVisible }: any) {
                 correct answer.
               </p>
               <Link to={'/questions/edit?type=mcq'}><Button block size='middle' className="ModelQuestionTypes__button"
-                                                            type="primary"> Create Multiple Choice
-                DisplayQuestion </Button></Link>
+                                                            type="primary"> Create Multiple Choices Question
+                 </Button></Link>
             </Card>
           </Col>
         </Row>

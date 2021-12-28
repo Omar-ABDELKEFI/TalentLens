@@ -9,17 +9,18 @@ const FinishQuiz = () => {
     <div className={'finish-quiz__container'}>
       {result.test_status === 'failed' ?
         <div>
-          <div>Sorry !</div>
-          <div>
+          <div style={{textAlign: 'center' }}>Sorry !</div>
+          <div style={{textAlign: 'center'}}>
             Your total score for the test was {result.score} %.
-            We invite you to retake the test after you have had some more practice, since, as the saying goes, practice
+            We invite you to take anther test after you have had some more practice, since, as the saying goes, practice
             makes perfect :)
           </div>
         </div>
         :
         <div>
-          <div>Congratulation !</div>
-          <div>Your total score for the test was {result.score} %.</div>
+          <div style={{textAlign: 'center'}}>Congratulation !</div>
+          <div style={{textAlign: 'center'}}>Your total score for the test was {result.score} %.</div>
+          <div style={{textAlign: 'center'}}>we will contact as soon as possible</div>
         </div>
       }
     </div>
