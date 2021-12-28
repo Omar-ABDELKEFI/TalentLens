@@ -1,7 +1,7 @@
 {
   "invalid_login": "invalid_login",
   "password_and_email_required": "password_and_email_required",
-  "password__required": "password__required",
+  "password_required": "password_required",
   "email_required": "email_required"
 }
 

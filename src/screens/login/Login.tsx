@@ -27,8 +27,9 @@ const Login = () => {
   };
   // show notification only when update error
   useEffect(() => {
-      if (error && error !== errorsTypes.invalid_login && constTypes.hasOwnProperty(error)) {
-        openNotificationWithIcon('error', constTypes[error as keyof IErrortypes]);
+      console.log(error && error.error !== errorsTypes.invalid_login && constTypes.hasOwnProperty(error.error) , 'error');
+      if (error && error.error !== errorsTypes.invalid_login && constTypes.hasOwnProperty(error.error)) {
+        openNotificationWithIcon('error', constTypes[error.error as keyof IErrortypes]);
       }
     }
     , [error]);
@@ -51,8 +52,8 @@ const Login = () => {
             onFinish={handleSubmit}
       >
         <h1 className="login__titre">Sign In</h1>
-        {error === errorsTypes.invalid_login && <div style={{ width: '33%', marginBottom: 5 }}><Alert
-          message="Error Text"
+        {error && error.error === errorsTypes.invalid_login && <div style={{ width: '33%', marginBottom: 5 }}><Alert
+          message="Bad credentials"
           description="incorrect username or password"
           type="error"
           closable={true}
@@ -85,7 +86,7 @@ const Login = () => {
                      {
                        required: true,
                        message: 'Please input your password!'
-                     }
+                   }
                    ]}
                    hasFeedback={true}
                    label={<label className="login__label">Password</label>}>
