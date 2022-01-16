@@ -45,24 +45,23 @@ export const testConstants = {
   CLONE_TEST_REQUEST: 'CLONE_TEST_REQUEST',
   CLONE_TEST_SUCCESS: 'CLONE_TEST_SUCCESS',
   CLONE_TEST_FAILURE: 'CLONE_TEST_FAILURE'
-
 };
 
 // action create test
 export function createTest() {
   return (dispatch: any) => {
     dispatch(request(true));
-    service.baseApiParams.headers = { 'Authorization': 'Bearer ' + localStorage.getItem('token') };
-    service.myTests.myTestsCreate({
-      passing_score: 50,
-      name: 'test demo',
-      show_score: false,
-      timing_policy: 'Medium',
-      time_limit: 3
-    }) // id create automatically
+    service.baseApiParams.headers = { Authorization: 'Bearer ' + localStorage.getItem('token') };
+    service.myTests
+      .myTestsCreate({
+        passing_score: 50,
+        name: 'test',
+        show_score: false,
+        timing_policy: 'Medium',
+        time_limit: 3
+      }) // id create automatically
       .then(
         (res: any) => {
-
           dispatch(success(false, res.data.test.ID));
           history.push(`/my-tests/${res.data.test.ID}`);
         },
@@ -93,22 +92,19 @@ export function createTest() {
 export function updateTest(testId: number, test: ModelsTest) {
   return (dispatch: any) => {
     dispatch(request(true));
-    service.baseApiParams.headers = { 'Authorization': 'Bearer ' + localStorage.getItem('token') };
-    service.myTests.updateTest(testId, test)
-      .then(
-        (res: any) => {
-          dispatch(success(test, false));
-          console.log(res, 'res updateTest');
-
-
-        },
-        (res: any) => {
-          if (res.error.error === 'token invalid') {
-            history.push('/403');
-          }
-          dispatch(failure(res.error.error.toString(), false));
+    service.baseApiParams.headers = { Authorization: 'Bearer ' + localStorage.getItem('token') };
+    service.myTests.updateTest(testId, test).then(
+      (res: any) => {
+        dispatch(success(test, false));
+        console.log(res, 'res updateTest');
+      },
+      (res: any) => {
+        if (res.error.error === 'token invalid') {
+          history.push('/403');
         }
-      );
+        dispatch(failure(res.error.error.toString(), false));
+      }
+    );
   };
 
   function request(loading: boolean) {
@@ -128,23 +124,19 @@ export function updateTest(testId: number, test: ModelsTest) {
 export function create_candidate(candidate: ModelsCandidateRequest[]) {
   return (dispatch: any) => {
     dispatch(request(true));
-    service.baseApiParams.headers = { 'Authorization': 'Bearer ' + localStorage.getItem('token') };
-    service.candidate.candidateCreate(candidate)
-      .then(
-        () => {
-          dispatch(success(candidate, false, []));
-
-
-        },
-        (res: any) => {
-          if (res.error.error === 'token invalid') {
-            history.push('/403');
-          }
-          console.log(res, 'res create_candidate ');
-          dispatch(failure(res.error.emailsDuplicate, true));
-
+    service.baseApiParams.headers = { Authorization: 'Bearer ' + localStorage.getItem('token') };
+    service.candidate.candidateCreate(candidate).then(
+      () => {
+        dispatch(success(candidate, false, []));
+      },
+      (res: any) => {
+        if (res.error.error === 'token invalid') {
+          history.push('/403');
         }
-      );
+        console.log(res, 'res create_candidate ');
+        dispatch(failure(res.error.emailsDuplicate, true));
+      }
+    );
   };
 
   function request(loading: boolean) {
@@ -163,10 +155,9 @@ export function create_candidate(candidate: ModelsCandidateRequest[]) {
 export function getMyTests() {
   return async (dispatch: any) => {
     dispatch(request(true));
-    service.baseApiParams.headers = { 'Authorization': 'Bearer ' + localStorage.getItem('token') };
+    service.baseApiParams.headers = { Authorization: 'Bearer ' + localStorage.getItem('token') };
     console.log(service.baseApiParams.headers, 'service.baseApiParams.headers');
     try {
-
       const res: any = await service.myTests.getMyTests();
 
       dispatch(success(res.data.test, false));
@@ -175,7 +166,6 @@ export function getMyTests() {
         history.push('/403');
       }
       dispatch(failure(e.error.error, false));
-
     }
   };
 
@@ -197,7 +187,6 @@ export function setTimeLimit(time: any) {
     type: testConstants.SET_TIME_LIMIT,
     payload: time
   };
-
 }
 
 export function setCandidates(candidates: any) {
@@ -218,19 +207,18 @@ export function removeError(error: any) {
 export function getTest(testId: any) {
   return (dispatch: any) => {
     dispatch(request());
-    service.baseApiParams.headers = { 'Authorization': 'Bearer ' + localStorage.getItem('token') };
-    service.myTests.getTest(testId)
-      .then(
-        (res: any) => {
-          res.data.data.questions && dispatch(success(res.data.data));
-        },
-        (res: any) => {
-          if (res.error.error === 'token invalid') {
-            history.push('/403');
-          }
-          dispatch(failure(res.error.error.toString()));
+    service.baseApiParams.headers = { Authorization: 'Bearer ' + localStorage.getItem('token') };
+    service.myTests.getTest(testId).then(
+      (res: any) => {
+        res.data.data.questions && dispatch(success(res.data.data));
+      },
+      (res: any) => {
+        if (res.error.error === 'token invalid') {
+          history.push('/403');
         }
-      );
+        dispatch(failure(res.error.error.toString()));
+      }
+    );
   };
 
   function request() {
@@ -250,15 +238,14 @@ export function cloneTest(testId: any, expectedTime: any) {
   return (dispatch: any) => {
     dispatch(request());
 
-    service.myTests.cloneTest(testId, { expected_time: expectedTime })
-      .then(
-        (res: any) => {
-          dispatch(success(res.data.data));
-        },
-        (res: any) => {
-          dispatch(failure(res.error.error.toString()));
-        }
-      );
+    service.myTests.cloneTest(testId, { expected_time: expectedTime }).then(
+      (res: any) => {
+        dispatch(success(res.data.data));
+      },
+      (res: any) => {
+        dispatch(failure(res.error.error.toString()));
+      }
+    );
   };
 
   function request() {
@@ -278,15 +265,14 @@ export function cloneTest(testId: any, expectedTime: any) {
 export function addTestQuestions(question: any, test_id: string) {
   return (dispatch: any) => {
     dispatch(request());
-    service.myTests.questionsCreate(test_id, { question_id: question.ID })
-      .then(
-        (res: any) => {
-          dispatch(success(question));
-        },
-        (res: any) => {
-          dispatch(failure(res.error.toString()));
-        }
-      );
+    service.myTests.questionsCreate(test_id, { question_id: question.ID }).then(
+      (res: any) => {
+        dispatch(success(question));
+      },
+      (res: any) => {
+        dispatch(failure(res.error.toString()));
+      }
+    );
   };
 
   function request() {
@@ -306,7 +292,8 @@ export function addTestQuestions(question: any, test_id: string) {
 export function removeTestQuestions(testId: string, question: any) {
   return (dispatch: any) => {
     dispatch(request());
-    service.myTests.questionsDeleteDelete({ test_id: Number(testId), question_id: question.ID })
+    service.myTests
+      .questionsDeleteDelete({ test_id: Number(testId), question_id: question.ID })
       .then(
         (res: any) => {
           dispatch(success(question));

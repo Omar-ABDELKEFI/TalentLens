@@ -1,11 +1,22 @@
 @module: EditMcaQuestions;
-
+.ck-editor__editable {
+  border: none !important;
+  min-height: 150px;
+}
+.ck-editor__main {
+  border: 1px solid #d9d9d9 !important;
+}
+.ck-editor__main:hover {
+  border-color: #006fad;
+}
+.ck-focused {
+  box-shadow: none !important;
+}
 .@{module} {
-
   &__main-container {
-    width: 100%;
     display: flex;
     justify-content: center;
+    width: 100%;
   }
 
   &__container {
@@ -17,12 +28,42 @@
 
   &__title {
     color: rgb(33, 37, 41);
-    font-family: "DM Sans", "Open Sans", "Segoe UI", sans-serif;
+    font-family: 'DM Sans', 'Open Sans', 'Segoe UI', sans-serif;
     font-size: 32px;
     margin: 25px 0;
     width: 100%;
-
   }
 
+  &__choices {
+    display: flex;
+    margin-bottom: 15px;
+  }
 
+  &__choices-checkbox {
+    align-items: center;
+    background-color: #eee;
+    border: 1px solid rgb(217, 217, 217);
+    border-right: none;
+    display: flex;
+    justify-content: center;
+    padding: 0 10px;
+  }
+  &__choices-icon {
+    align-items: center;
+    background-color: #eee;
+    border: 1px solid rgb(217, 217, 217);
+    border-left: none;
+    display: flex;
+    justify-content: center;
+    padding: 0 10px;
+  }
+  &__choices-icon:hover {
+    cursor: pointer;
+  }
+  &__add-skill {
+    display: flex;
+  }
+  &__ckEditor {
+    border: 1px solid red !important;
+  }
 }
