@@ -21,6 +21,7 @@ function AddCandidates({ idTest, initialPassingScore }: any) {
     return width > 650;
   }
   useEffect(() => {
+    
       if (errorDuplicate && errorDuplicate.length !== 0) {
         console.log(errorDuplicate, 'error1');
         errorDuplicate.map((email: any) => openNotificationWithIcon('error', `the candidate with email ${email} already invited`));
