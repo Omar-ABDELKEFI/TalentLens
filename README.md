@@ -4,7 +4,7 @@
 this is an application web of interview assessment tests for interviewing out of the box .
 
 ## Installation
-clone https://github.com/-dev/-test-react.git
+clone https://github.com/Omar-ABDELKEFI/TalentLens
 
 ## Usage with docker
 - first step: docker-compose build 
