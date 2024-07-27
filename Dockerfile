@@ -31,5 +31,3 @@ RUN cp env-config.js ./public
 
 #determines the command that will be executed when the container starts
 CMD [ "npm", "run", "start"]
-#CMD ["/bin/sh","docker cp front-app:/app/node_modules /home/oabdelkefi/htdocs/front-tekab-test/ && ls -la ./node-modules && npm run start"]
-#CMD ["/bin/sh", "-c", "ls -la /app/node_modules && ls -la /app/node_modules/ &&  cp -R /cache/node_modules/* /app/node_modules/ && ls -la /app/node_modules/ && pwd && npm run start"]

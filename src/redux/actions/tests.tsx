@@ -55,7 +55,7 @@ export function createTest() {
     service.myTests
       .myTestsCreate({
         passing_score: 50,
-        name: 'test tekab',
+        name: 'test ',
         show_score: false,
         timing_policy: 'Medium',
         time_limit: 3

@@ -423,7 +423,7 @@ export class HttpClient<SecurityDataType = unknown> {
 }
 
 /**
- * @title tekab-test
+ * @title -test
  * @version 1.0
  * @baseUrl /api
  * @contact
